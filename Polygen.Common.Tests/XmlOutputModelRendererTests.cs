@@ -32,7 +32,7 @@ namespace Polygen.Common.Tests
 <root xmlns='urn:test-ns'>
   <child a='testing' />
 </root>
-            ".Trim().Replace("'", "\"");
+            ".Trim().Replace("\r\n", "\n").Replace("'", "\"");
 
             xml.Trim().ShouldBeEquivalentTo(expected);
         }

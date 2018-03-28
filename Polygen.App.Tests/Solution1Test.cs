@@ -11,7 +11,7 @@ namespace Polygen.App.Tests
         [Fact]
         public void Generate_code_from_Solution1()
         {
-            var testProjectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."));
+            var testProjectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
 
             using (var tempFolder = new TempFolder())
             {
