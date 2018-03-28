@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Schemas\**" />
+	  <EmbeddedResource Remove="Schemas\**" />
+	  <None Remove="Schemas\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Templates\Entity\CustomClass.hbs" />
+	  <None Remove="Templates\Entity\Field.hbs" />
+	  <None Remove="Templates\Entity\GeneratedClass.hbs" />
+	  <None Remove="Templates\Entity\Property.hbs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Templates\Entity\CustomClass.hbs" />
+	  <EmbeddedResource Include="Templates\Entity\Field.hbs" />
+	  <EmbeddedResource Include="Templates\Entity\GeneratedClass.hbs" />
+	  <EmbeddedResource Include="Templates\Entity\Property.hbs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="4.4.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Polygen.Plugins.Base\Polygen.Plugins.Base.csproj" />
+	</ItemGroup>
+
+</Project>

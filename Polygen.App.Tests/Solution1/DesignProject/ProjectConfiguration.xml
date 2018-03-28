@@ -1,0 +1,6 @@
+﻿<ProjectConfiguration xmlns='uri:polygen/1.0/project-configuration'>
+    <Solution path='..'>
+        <Project name='DesignProject' path='DesignProject' type='Design' />
+        <Project name='DataProject' path='DataProject' type='Data' />
+    </Solution>
+</ProjectConfiguration>

@@ -1,0 +1,37 @@
+﻿<ProjectLayout xmlns='uri:polygen/1.0/project-configuration'>
+  <Entry>
+    <Output>
+      <OutputModel include="Entity.Class.*" project-type="Data" path="Entities" />
+    </Output>
+    <Templates>
+      <Template output-model="Entity.Generated" template="Entity/Generated" />
+      <Template output-model="Entity.Custom" template="Entity/Custom" />
+    </Templates>
+    <NamingConventions>
+      <NamingConvention platform="CSharp" name="CSharp" />
+      <NamingConvention platform="Javascript" name="ExtJS" />
+    </NamingConventions>
+  </Entry>
+
+  <Entry>
+    <Location>
+      <Namespace include="MyTest.*.Entity" />
+    </Location>
+    <Output>
+      <OutputModel include="Entity.Class.*" project-type="MyTest-Data" path="Entities/Test" />
+    </Output>
+    <Templates>
+      <Template output-model="Entity.Generated" template="Entity/Generated-MyTest" />
+      <Template output-model="Entity.Custom" template="Entity/Custom-MyTest" />
+    </Templates>
+  </Entry>
+
+  <Entry>
+    <Location>
+      <DesingModel include="MyTest.*.Entity.User" />
+    </Location>
+    <Output>
+      <OutputModel include="Entity.Class.*" project-type="Data" path="Entities/User" />
+    </Output>
+  </Entry>
+</ProjectLayout>

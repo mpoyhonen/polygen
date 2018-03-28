@@ -1,0 +1,27 @@
+﻿<xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+    <xs:element name='DesignModels'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs='1' minOccurs='0' name='Element'>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base='tns:enum-testEnum'/>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name='enum-testEnum'>
+        <xs:restriction base='xs:string'>
+            <xs:enumeration value='one'/>
+            <xs:enumeration value='two'>
+                <xs:annotation>
+                    <xs:documentation>
+                        Second
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

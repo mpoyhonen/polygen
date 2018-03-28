@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Polygen.App": {
+      "commandName": "Project",
+      "commandLineArgs": "--config ..\\Polygen.App.Tests\\Solution1\\DesignProject\\ProjectConfiguration.xml"
+    }
+  }
+}

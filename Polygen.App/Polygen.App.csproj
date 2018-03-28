@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Polygen.Common\Polygen.Common.csproj" />
+    <ProjectReference Include="..\Polygen.Core\Polygen.Core.csproj" />
+    <ProjectReference Include="..\Polygen.Plugins.Base\Polygen.Plugins.Base.csproj" />
+    <ProjectReference Include="..\Polygen.Plugins.Entity\Polygen.Plugins.Entity.csproj" />
+    <ProjectReference Include="..\Polygen.Templates.HandlebarsNet\Polygen.Templates.HandlebarsNet.csproj" />
+  </ItemGroup>
+
+</Project>

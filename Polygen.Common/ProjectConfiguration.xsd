@@ -1,0 +1,50 @@
+﻿<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="uri:polygen/1.0/project-configuration" elementFormDefault="qualified">
+  <xs:element name="ProjectConfiguration" >
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Solution">
+          <xs:annotation>
+            <xs:documentation>Defines project solution projects</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Project" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>Defines a project</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="name" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Project name</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="path" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Project location relative to the solution path</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="type" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Project type</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Namespaces" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Defines the namespaces to be used in design models</xs:documentation>
+                </xs:annotation>
+                <xs:complexType />
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="path" use="required">
+              <xs:annotation>
+                <xs:documentation>Solution path relative to this file</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

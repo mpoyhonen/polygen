@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <TargetFramework>netcoreapp2.0</TargetFramework>
+      <OutputType>exe</OutputType>
+      <AssemblyName>dotnet-bf-generate</AssemblyName>
+      <PackageType>DotnetCliTool</PackageType>
+      <PackageId>Elegance.CodeGeneration.DotnetTool</PackageId>
+      <Authors>2G B.V.</Authors>
+      <Company>2G B.V.</Company>
+      <Product>Elegance.CodeGeneration.DotnetTool</Product>
+      <ApplicationIcon />
+      <OutputTypeEx>exe</OutputTypeEx>
+      <StartupObject />
+      <Version>1.0.3</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.4.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
