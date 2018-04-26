@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Polygen.Core.Parser;
 
 namespace Polygen.Core.DesignModel
 {
@@ -19,8 +20,9 @@ namespace Polygen.Core.DesignModel
         /// Returns namespace by name or null if none was found.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="parseLocation">Optional parse location for the error message when the namespace was not found.</param>
         /// <returns></returns>
-        INamespace GetNamespace(string name);
+        INamespace GetNamespace(string name, IParseLocationInfo parseLocation = null);
         /// <summary>
         /// Creates a namespace with the given name or creates a new instance.
         /// </summary>
@@ -43,6 +45,14 @@ namespace Polygen.Core.DesignModel
         /// <param name="type"></param>
         /// <returns></returns>
         IEnumerable<IDesignModel> GetByType(string type);
+        /// <summary>
+        /// Returns a design model.
+        /// </summary>
+        /// <param name="type">Design model type</param>
+        /// <param name="name">Design model fully qualified name</param>
+        /// <param name="parseLocation">Optional parse location for the error message when the design model was not found.</param>
+        /// <returns></returns>
+        IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null);
         /// <summary>
         /// Returns a list of all configured design models.
         /// </summary>

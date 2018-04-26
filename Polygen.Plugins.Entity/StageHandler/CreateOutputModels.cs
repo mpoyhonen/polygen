@@ -33,7 +33,7 @@ namespace Polygen.Plugins.Entity.StageHandler
         {
             foreach (var entityDesignModel in this.DesignModels.RootNamespace.FindDesignModelsByType("Entity"))
             {
-                var entity = (DesignModel.Entity)entityDesignModel;
+                var entity = (Base.Models.Entity.Entity)entityDesignModel;
 
                 //this.OutputModels.AddOutputModel(this.EntityConverter.CreateEntityGeneratedClass(entity, BasePluginConstants.Language_CSharp));
                 //this.OutputModels.AddOutputModel(this.EntityConverter.CreateEntityCustomClass(entity, BasePluginConstants.Language_CSharp));

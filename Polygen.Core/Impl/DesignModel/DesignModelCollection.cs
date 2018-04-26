@@ -1,6 +1,8 @@
 ﻿using Polygen.Core.DesignModel;
 using System.Collections.Generic;
 using System.Linq;
+using Polygen.Core.Exceptions;
+using Polygen.Core.Parser;
 
 namespace Polygen.Core.Impl.DesignModel
 {
@@ -53,9 +55,33 @@ namespace Polygen.Core.Impl.DesignModel
             return list;
         }
 
-        public INamespace GetNamespace(string name)
+        public IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null)
         {
-            this._namespaceMap.TryGetValue(name, out var res);
+            var pos = name.LastIndexOf('.');
+            var ns = default(INamespace);
+
+            if (pos != -1)
+            {
+                ns = GetNamespace(name.Substring(0, pos), parseLocation);
+                name = name.Substring(pos + 1);
+            }
+            else
+            {
+                ns = RootNamespace;
+            }
+
+            return ns.GetDesignModel(type, name, parseLocation);
+        }
+
+        public INamespace GetNamespace(string name, IParseLocationInfo parseLocation = null)
+        {
+            if (!_namespaceMap.TryGetValue(name, out var res))
+            {
+                if (parseLocation != null)
+                {
+                    throw new ParseException(parseLocation, $"Namespace '{name}' not found");
+                }
+            }
 
             return res;
         }

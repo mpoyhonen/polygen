@@ -28,7 +28,8 @@ namespace Polygen.Core.Impl.Parser
             this._map[schemaElement] = generator;
         }
 
-        public void RegisterFactory(ISchemaElement schemaElement, Func<IXmlElement, DesignModelParseContext, IDesignModel> generatorFn)
+        public void RegisterFactory(ISchemaElement schemaElement,
+            Func<IXmlElement, DesignModelParseContext, IDesignModel> generatorFn, string id)
         {
             this.RegisterFactory(schemaElement, new FuncConverterImpl(generatorFn));
         }
@@ -42,9 +43,9 @@ namespace Polygen.Core.Impl.Parser
                 this._fn = fn;
             }
 
-            public IDesignModel GenerateDesignModel(IXmlElement designModelElement, DesignModelParseContext context)
+            public IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context)
             {
-                return this._fn(designModelElement, context);
+                return this._fn(xmlElement, context);
             }
         }
     }

@@ -45,5 +45,15 @@ namespace Polygen.Plugins.Base
         public const string Language_CSharp = "csharp";
         public const string Language_Javascript = "javascript";
         public const string Language_XML = "xml";
+
+        public static class ParserNames
+        {
+            public const string Entity = "Entity";
+            public const string EntityAttribute = "EntityAttribute";
+            public const string EntityRelation = "EntityRelation";
+            
+            public const string DataObject = "DataObject";
+            public const string DataObjectAttribute = "DataObjectAttribute";
+        }
     }
 }

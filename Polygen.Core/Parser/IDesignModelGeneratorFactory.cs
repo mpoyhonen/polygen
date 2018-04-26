@@ -20,12 +20,14 @@ namespace Polygen.Core.Parser
         /// <param name="schemaElement"></param>
         /// <param name="generator"></param>
         void RegisterFactory(ISchemaElement schemaElement, IDesignModelGenerator generator);
+
         /// <summary>
         /// Registers a new design model IDesignModelGenerator function for the given XML element.
         /// </summary>
         /// <param name="schemaElement"></param>
         /// <param name="generatorFn"></param>
-        void RegisterFactory(ISchemaElement schemaElement, Func<IXmlElement, DesignModelParseContext, IDesignModel> generatorFn);
+        /// <param name="id"></param>
+        void RegisterFactory(ISchemaElement schemaElement, Func<IXmlElement, DesignModelParseContext, IDesignModel> generatorFn, string id);
         /// <summary>
         /// Returns a design model generator registered for the given schema element.
         /// </summary>

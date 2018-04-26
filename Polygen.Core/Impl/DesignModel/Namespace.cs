@@ -3,6 +3,8 @@ using Polygen.Core.OutputConfiguration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using Polygen.Core.Exceptions;
+using Polygen.Core.Parser;
 
 namespace Polygen.Core.Impl.DesignModel
 {
@@ -66,6 +68,26 @@ namespace Polygen.Core.Impl.DesignModel
                 {
                     yield return designModel;
                 }
+            }
+        }
+
+        public IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null)
+        {
+            foreach (var designModel in FindDesignModelsByType(type, false))
+            {
+                if (designModel.Name == name)
+                {
+                    return designModel;
+                }
+            }
+
+            if (parseLocation != null)
+            {
+                throw new ParseException(parseLocation, $"{type} '{Name}.{name}' not found");
+            }
+            else
+            {
+                return null;
             }
         }
     }

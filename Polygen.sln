@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polygen.Plugins.Entity.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polygen.App.Tests", "Polygen.App.Tests\Polygen.App.Tests.csproj", "{AC452614-463B-4F08-8F1A-7A72C47FB8F3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{F80300E9-0AB0-4531-BE0E-14AB056F2F89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

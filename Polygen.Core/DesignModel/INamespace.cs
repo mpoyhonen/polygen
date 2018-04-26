@@ -1,5 +1,6 @@
 ﻿using Polygen.Core.OutputConfiguration;
 using System.Collections.Generic;
+using Polygen.Core.Parser;
 
 namespace Polygen.Core.DesignModel
 {
@@ -44,5 +45,13 @@ namespace Polygen.Core.DesignModel
         /// <param name="recursive"></param>
         /// <returns></returns>
         IEnumerable<IDesignModel> FindDesignModelsByType(string type, bool recursive = true);
+        /// <summary>
+        /// Returns a design model.
+        /// </summary>
+        /// <param name="type">Design model type</param>
+        /// <param name="name">Design model local name in this namespace</param>
+        /// <param name="parseLocation">Optional parse location for the error message when the design model was not found.</param>
+        /// <returns></returns>
+        IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null);
     }
 }

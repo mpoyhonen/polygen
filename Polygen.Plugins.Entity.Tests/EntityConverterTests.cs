@@ -9,6 +9,7 @@ using Xunit;
 using Polygen.Core.Impl.Project;
 using Polygen.Core.Utils;
 using Polygen.Core.Impl.TargetPlatform;
+using Polygen.Plugins.Base.Models.Entity;
 
 namespace Polygen.Plugins.Entity.Tests
 {
@@ -18,7 +19,7 @@ namespace Polygen.Plugins.Entity.Tests
         public void Test_entity_conversion_to_generated_class_output_model()
         {
             var ns = new Namespace("MyApp.MyTest", null);
-            var entity = new DesignModel.Entity(ns)
+            var entity = new Base.Models.Entity.Entity(ns)
             {
                 Name = "MyClass"
             };
@@ -26,8 +27,8 @@ namespace Polygen.Plugins.Entity.Tests
 
             targetPlatform.RegisterClassNamingConvention(BasePluginConstants.Language_CSharp, new CSharpClassNamingConvention());
 
-            entity.AddAttribute(new DesignModel.EntityAttribute(entity, "Id", "int"));
-            entity.AddAttribute(new DesignModel.EntityAttribute(entity, "Name", "string"));
+            entity.AddAttribute(new EntityAttribute(entity, "Id", "int"));
+            entity.AddAttribute(new EntityAttribute(entity, "Name", "string"));
             entity.OutputConfiguration.RegisterOutputFolder(new Filter(EntityPluginConstants.OutputModelType_Entity_GeneratedClass), new ProjectFolder(""));
             entity.OutputConfiguration.RegisterTargetPlatformForDesignModelType(entity.Type, targetPlatform);
 
@@ -61,7 +62,7 @@ namespace Polygen.Plugins.Entity.Tests
         public void Test_entity_conversion_to_custom_class_output_model()
         {
             var ns = new Namespace("MyApp.MyTest", null);
-            var entity = new DesignModel.Entity(ns)
+            var entity = new Base.Models.Entity.Entity(ns)
             {
                 Name = "MyClass"
             };
@@ -69,8 +70,8 @@ namespace Polygen.Plugins.Entity.Tests
 
             targetPlatform.RegisterClassNamingConvention(BasePluginConstants.Language_CSharp, new CSharpClassNamingConvention());
 
-            entity.AddAttribute(new DesignModel.EntityAttribute(entity, "Id", "int"));
-            entity.AddAttribute(new DesignModel.EntityAttribute(entity, "Name", "string"));
+            entity.AddAttribute(new EntityAttribute(entity, "Id", "int"));
+            entity.AddAttribute(new EntityAttribute(entity, "Name", "string"));
             entity.OutputConfiguration.RegisterOutputFolder(new Filter(EntityPluginConstants.OutputModelType_Entity_GeneratedClass), new ProjectFolder(""));
             entity.OutputConfiguration.RegisterOutputFolder(new Filter(EntityPluginConstants.OutputModelType_Entity_CustomClass), new ProjectFolder(""));
             entity.OutputConfiguration.RegisterTargetPlatformForDesignModelType(entity.Type, targetPlatform);

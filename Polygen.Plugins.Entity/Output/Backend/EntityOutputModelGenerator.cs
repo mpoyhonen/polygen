@@ -18,7 +18,7 @@ namespace Polygen.Plugins.Entity.Output.Backend
 
         public IEnumerable<IOutputModel> GenerateOutputModels(IDesignModel designModel)
         {
-            var entity = (DesignModel.Entity)designModel;
+            var entity = (Base.Models.Entity.Entity)designModel;
 
             return new[] {
                 this._entityConverter.CreateEntityGeneratedClass(entity, BasePluginConstants.Language_CSharp),

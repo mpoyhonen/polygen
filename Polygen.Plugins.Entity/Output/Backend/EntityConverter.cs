@@ -17,7 +17,7 @@ namespace Polygen.Plugins.Entity.Output.Backend
             this._templateCollection = templateCollection;
         }
 
-        public ClassOutputModel CreateEntityGeneratedClass(DesignModel.Entity entity, string language)
+        public ClassOutputModel CreateEntityGeneratedClass(Base.Models.Entity.Entity entity, string language)
         {
 
             var targetPlatform = entity.OutputConfiguration.GetTargetPlatformsForDesignModel(entity).FirstOrDefault();
@@ -43,7 +43,7 @@ namespace Polygen.Plugins.Entity.Output.Backend
             return builder.Build();
         }
 
-        public ClassOutputModel CreateEntityCustomClass(DesignModel.Entity entity, string language)
+        public ClassOutputModel CreateEntityCustomClass(Base.Models.Entity.Entity entity, string language)
         {
             var targetPlatform = entity.OutputConfiguration.GetTargetPlatformsForDesignModel(entity).FirstOrDefault();
 

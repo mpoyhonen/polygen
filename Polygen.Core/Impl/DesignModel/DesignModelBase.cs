@@ -48,7 +48,7 @@ namespace Polygen.Core.Impl.DesignModel
 
         private string GetFullyQualifiedName()
         {
-            if (this._fullyQualifiedName == null && this.Name != null)
+            if (this._fullyQualifiedName == null && this.Name != null && this.Namespace != null)
             {
                 this._fullyQualifiedName = this.Namespace.Name + "." + this.Name;
             }
