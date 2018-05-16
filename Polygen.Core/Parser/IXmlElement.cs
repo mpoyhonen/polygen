@@ -61,6 +61,12 @@ namespace Polygen.Core.Parser
         /// <returns></returns>
         IXmlElementAttribute GetAttribute(string name);
         /// <summary>
+        /// Returns all child elemenets which match the given name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        IEnumerable<IXmlElement> GetChildElments(XName name);
+            /// <summary>
         /// Returns the first matching child element (path can contain subpaths separated by '/').
         /// </summary>
         /// <param name="path"></param>

@@ -1,4 +1,5 @@
-﻿using Polygen.Core.DesignModel;
+﻿using Polygen.Core.DataType;
+using Polygen.Core.DesignModel;
 using Polygen.Core.NamingConvention;
 
 namespace Polygen.TestUtils.NamingConvention
@@ -30,6 +31,11 @@ namespace Polygen.TestUtils.NamingConvention
         public string GetPropertyName(string propertyName)
         {
             return propertyName;
+        }
+
+        public string GetTypeName(IDataType dataType)
+        {
+            return dataType.Name;
         }
     }
 }

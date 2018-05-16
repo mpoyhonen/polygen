@@ -9,12 +9,12 @@ namespace Polygen.Core.Exceptions
     public class DesignModelException : CodeGenerationException
     {
         public DesignModelException(IDesignModel model, string message)
-            : base(FormatMessage(model.Element.Definition.Name, model.Element.ParseLocation, message))
+            : base(FormatMessage(model.Element.Definition.Name, model.ParseLocation, message))
         {
         }
 
         public DesignModelException(IDesignModel model, string message, Exception innerException)
-             : base(FormatMessage(model.Element.Definition.Name, model.Element.ParseLocation, message), innerException)
+             : base(FormatMessage(model.Element.Definition.Name, model.ParseLocation, message), innerException)
         {
         }
 

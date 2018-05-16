@@ -20,10 +20,10 @@ namespace Polygen.Core.Impl.Schema
                 name = schema.Namespace + name.LocalName;
             }
 
-			this.Schema = schema;
-            this.Parent = parent;
-            this.Name = name;
-            this.Description = description;
+			Schema = schema;
+            Parent = parent;
+            Name = name;
+            Description = description;
         }
 
         /// <summary>
@@ -45,11 +45,11 @@ namespace Polygen.Core.Impl.Schema
         /// <summary>
         /// Defines the attributes for this element.
         /// </summary>
-        public IReadOnlyList<ISchemaElementAttribute> Attributes => this._attributes;
+        public IReadOnlyList<ISchemaElementAttribute> Attributes => _attributes;
         /// <summary>
         /// Defines the possible child elements for this element.
         /// </summary>
-        public IReadOnlyList<ISchemaElement> Children => this._children;
+        public IReadOnlyList<ISchemaElement> Children => _children;
 
         /// <summary>
         /// Whether this is an optional or mandatory element.
@@ -74,17 +74,17 @@ namespace Polygen.Core.Impl.Schema
         /// <param name="attribute"></param>
         public void AddAttribute(ISchemaElementAttribute attribute)
         {
-            if (this._attributes.Any(x => x.Name == attribute.Name))
+            if (_attributes.Any(x => x.Name == attribute.Name))
             {
-                throw new SchemaException($"Attribute '{attribute.Name}' is already defined for schema element '{this.Name}'.");
+                throw new SchemaException($"Attribute '{attribute.Name}' is already defined for schema element '{Name}'.");
             }
 
-            if (this._attributes.Any(x => x.Name == attribute.Name))
+            if (_attributes.Any(x => x.Name == attribute.Name))
             {
-                throw new SchemaException($"Attribute '{attribute.Name}' is already defined for schema element '{this.Name}'.");
+                throw new SchemaException($"Attribute '{attribute.Name}' is already defined for schema element '{Name}'.");
             }
 
-            this._attributes.Add(attribute);
+            _attributes.Add(attribute);
         }
 
         /// <summary>
@@ -93,17 +93,17 @@ namespace Polygen.Core.Impl.Schema
         /// <param name="schemaElement"></param>
         public void AddChildElement(ISchemaElement schemaElement)
         {
-            if (this.UseContentAsValue)
+            if (UseContentAsValue)
             {
-                throw new SchemaException($"Cannot add a child element to schema element '{this.Name}' as it uses the XML element content as element value.");
+                throw new SchemaException($"Cannot add a child element to schema element '{Name.LocalName}' as it uses the XML element content as element value.");
             }
 
-            if (this._children.Any(x => x.Name == schemaElement.Name))
+            if (_children.Any(x => x.Name == schemaElement.Name))
             {
-                throw new SchemaException($"Child element '{schemaElement.Name}' is already defined for schema element '{this.Name}'.");
+                throw new SchemaException($"Child element '{schemaElement.Name.LocalName}' is already defined for schema element '{Name.LocalName}'.");
             }
 
-            this._children.Add(schemaElement);
+            _children.Add(schemaElement);
         }
 
         /// <summary>
@@ -112,11 +112,11 @@ namespace Polygen.Core.Impl.Schema
         /// <param name="name"></param>
         public void RemoveAttribute(string name)
         {
-            var attribute = this._attributes.Find(x => x.Name == name);
+            var attribute = _attributes.Find(x => x.Name == name);
 
             if (attribute != null)
             {
-                this._attributes.Remove(attribute);
+                _attributes.Remove(attribute);
             }
         }
 
@@ -126,11 +126,11 @@ namespace Polygen.Core.Impl.Schema
         /// <param name="name"></param>
         public void RemoveChildElement(string name)
         {
-            var childElement = this._children.Find(x => x.Name == name);
+            var childElement = _children.Find(x => x.Name == name);
 
             if (childElement != null)
             {
-                this._children.Remove(childElement);
+                _children.Remove(childElement);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Polygen.Core.Impl.Schema
         {
             var pos = path.IndexOf('/');
             var name = pos > 0 ? path.Substring(0, pos) : path;
-            var match = this.Children.FirstOrDefault(x => x.Name.LocalName == name);
+            var match = Children.FirstOrDefault(x => x.Name.LocalName == name);
 
             if (match == null)
             {

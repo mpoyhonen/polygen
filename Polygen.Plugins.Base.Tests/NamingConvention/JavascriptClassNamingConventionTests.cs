@@ -12,7 +12,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetClassName("MyClass", false).ShouldBeEquivalentTo("MyClass");
+            namingConvention.GetClassName("MyClass", false).Should().Be("MyClass");
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetClassName("MyInterface", true).ShouldBeEquivalentTo("IMyInterface");
+            namingConvention.GetClassName("MyInterface", true).Should().Be("IMyInterface");
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetMethodName("MyMethod").ShouldBeEquivalentTo("myMethod");
+            namingConvention.GetMethodName("MyMethod").Should().Be("myMethod");
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetPropertyName("MyProperty").ShouldBeEquivalentTo("myProperty");
+            namingConvention.GetPropertyName("MyProperty").Should().Be("myProperty");
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetNamespaceName(new Namespace("MyApp", null)).ShouldBeEquivalentTo("MyApp");
+            namingConvention.GetNamespaceName(new Namespace("MyApp", null)).Should().Be("MyApp");
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetNamespaceName(new Namespace("MyApp.MyModule", null)).ShouldBeEquivalentTo("MyApp.mymodule");
+            namingConvention.GetNamespaceName(new Namespace("MyApp.MyModule", null)).Should().Be("MyApp.mymodule");
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetNamespaceName(new Namespace("MyApp.Views.MyModule", null)).ShouldBeEquivalentTo("MyApp.views.mymodule");
+            namingConvention.GetNamespaceName(new Namespace("MyApp.Views.MyModule", null)).Should().Be("MyApp.views.mymodule");
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new JavascriptClassNamingConvention();
 
-            namingConvention.GetOutputFolderPath(new Namespace("MyApp.MyModule", null)).ShouldBeEquivalentTo("MyApp/mymodule");
+            namingConvention.GetOutputFolderPath(new Namespace("MyApp.MyModule", null)).Should().Be("MyApp/mymodule");
         }
     }
 }

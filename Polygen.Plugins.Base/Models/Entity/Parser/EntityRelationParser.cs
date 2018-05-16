@@ -1,4 +1,6 @@
-﻿using Polygen.Core.DesignModel;
+﻿using System.Xml;
+using Polygen.Core.ClassModel;
+using Polygen.Core.DesignModel;
 using Polygen.Core.Parser;
 
 namespace Polygen.Plugins.Base.Models.Entity.Parser
@@ -11,21 +13,25 @@ namespace Polygen.Plugins.Base.Models.Entity.Parser
         private readonly IDesignModelCollection _designModelCollection;
 
         public EntityRelationParser(IDesignModelCollection designModelCollection) 
-            : base(nameof(EntityRelation), new[] { nameof(Entity) })
         {
             _designModelCollection = designModelCollection;
         }
 
         public override IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context)
         {
-            var source = (Entity)context.DesignModel;
-            var destination = (Entity)_designModelCollection.GetDesignModel("Entity", xmlElement.GetAttribute("destination")?.Value, xmlElement.ParseLocation);
-            var relation = new EntityRelation(source, destination, xmlElement);
-                    
-            source.AddOutgoingRelation(relation);
-            destination.AddIncomingRelation(relation);
+            var sourceEntity = (Entity) context.DesignModel;
+            var name = xmlElement.GetStringAttributeValue("name");
+            var relation = new EntityRelation(name, xmlElement, xmlElement.ParseLocation)
+            {
+                Source = sourceEntity,
+                DestinationReference = new ClassModelReference(xmlElement.GetStringAttributeValue("destination"),
+                    sourceEntity.Namespace, sourceEntity.Type, xmlElement.ParseLocation)
+            };
 
-            return relation;
+            sourceEntity.AddOutgoingRelation(relation);
+
+            // Don't register this design model globally.
+            return null;
         }
     }
 }

@@ -16,14 +16,14 @@ namespace Polygen.Templates.HandlebarsNet.Tests
             var template = collection.GetTemplate("test");
 
             template.Should().NotBeNull();
-            template.Name.ShouldBeEquivalentTo("test");
+            template.Name.Should().Be("test");
             template.RenderIntoString(new
             {
                 User = new
                 {
                     Name = "Test123"
                 }
-            }).ShouldBeEquivalentTo("Hi Test123");
+            }).Should().Be("Hi Test123");
         }
 
         [Fact]
@@ -41,8 +41,8 @@ namespace Polygen.Templates.HandlebarsNet.Tests
                 var templateA = collection.GetTemplate("template-a");
 
                 templateA.Should().NotBeNull();
-                templateA.Name.ShouldBeEquivalentTo("template-a");
-                templateA.RenderIntoString(new object()).ShouldBeEquivalentTo("Contents A");
+                templateA.Name.Should().Be("template-a");
+                templateA.RenderIntoString(new object()).Should().Be("Contents A");
             }
         }
 
@@ -59,8 +59,8 @@ namespace Polygen.Templates.HandlebarsNet.Tests
                 var templateA = collection.GetTemplate("folder/template-a");
 
                 templateA.Should().NotBeNull();
-                templateA.Name.ShouldBeEquivalentTo("folder/template-a");
-                templateA.RenderIntoString(new object()).ShouldBeEquivalentTo("Contents A");
+                templateA.Name.Should().Be("folder/template-a");
+                templateA.RenderIntoString(new object()).Should().Be("Contents A");
             }
         }
 
@@ -79,8 +79,8 @@ namespace Polygen.Templates.HandlebarsNet.Tests
                 var templateA = collection.GetTemplate("template-a");
 
                 templateA.Should().NotBeNull();
-                templateA.Name.ShouldBeEquivalentTo("template-a");
-                templateA.RenderIntoString(new object()).ShouldBeEquivalentTo("Contents B");
+                templateA.Name.Should().Be("template-a");
+                templateA.RenderIntoString(new object()).Should().Be("Contents B");
             }
         }
     }

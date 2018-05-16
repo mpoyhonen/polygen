@@ -35,11 +35,11 @@ namespace Polygen.Plugins.Base.Tests
                 var projectConfiguration = runner.Context.DesignModels.GetByType(Core.CoreConstants.DesignModelType_ProjectConfiguration).FirstOrDefault() as IProjectConfiguration;
 
                 projectConfiguration.Should().NotBeNull();
-                projectConfiguration.Projects.Projects.Count().ShouldBeEquivalentTo(2);
+                projectConfiguration.Projects.Projects.Count().Should().Be(2);
 
                 var projects = projectConfiguration.Projects.Projects.Select(x => (name: x.Name, path: x.SourceFolder, type: x.Type));
 
-                projects.ShouldBeEquivalentTo(new[] {
+                projects.Should().BeEquivalentTo(new[] {
                     (name: "DesignProject", path: tempFolder.GetPath("solution/DesignProject"), type: "Design"),
                     (name: "WebProject", path: tempFolder.GetPath("solution/WebProject"), type: "Web")
                 });

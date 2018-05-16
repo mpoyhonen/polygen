@@ -12,7 +12,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new CSharpClassNamingConvention();
 
-            namingConvention.GetClassName("MyClass", false).ShouldBeEquivalentTo("MyClass");
+            namingConvention.GetClassName("MyClass", false).Should().Be("MyClass");
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new CSharpClassNamingConvention();
 
-            namingConvention.GetClassName("MyInterface", true).ShouldBeEquivalentTo("IMyInterface");
+            namingConvention.GetClassName("MyInterface", true).Should().Be("IMyInterface");
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new CSharpClassNamingConvention();
 
-            namingConvention.GetMethodName("MyMethod").ShouldBeEquivalentTo("MyMethod");
+            namingConvention.GetMethodName("MyMethod").Should().Be("MyMethod");
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new CSharpClassNamingConvention();
 
-            namingConvention.GetPropertyName("MyProperty").ShouldBeEquivalentTo("MyProperty");
+            namingConvention.GetPropertyName("MyProperty").Should().Be("MyProperty");
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new CSharpClassNamingConvention();
 
-            namingConvention.GetNamespaceName(new Namespace("MyApp.MyModule", null)).ShouldBeEquivalentTo("MyApp.MyModule");
+            namingConvention.GetNamespaceName(new Namespace("MyApp.MyModule", null)).Should().Be("MyApp.MyModule");
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Polygen.Plugins.Base.Tests
         {
             var namingConvention = new CSharpClassNamingConvention();
 
-            namingConvention.GetOutputFolderPath(new Namespace("MyApp.MyModule", null)).ShouldBeEquivalentTo("MyApp/MyModule");
+            namingConvention.GetOutputFolderPath(new Namespace("MyApp.MyModule", null)).Should().Be("MyApp/MyModule");
         }
     }
 }

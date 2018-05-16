@@ -1,4 +1,5 @@
-﻿using Polygen.Core.DesignModel;
+﻿using Polygen.Core.DataType;
+using Polygen.Core.DesignModel;
 using Polygen.Core.Parser;
 
 namespace Polygen.Plugins.Base.Models.Entity.Parser
@@ -8,19 +9,24 @@ namespace Polygen.Plugins.Base.Models.Entity.Parser
     /// </summary>
     public class EntityRelationAttributeParser: DesignModelGeneratorBase
     {
-        public EntityRelationAttributeParser() 
-            : base(nameof(EntityRelationAttribute), new[] { nameof(EntityRelation) })
-        {
-        }
+        private readonly IDataTypeRegistry _dataTypeRegistry;
 
+        public EntityRelationAttributeParser(IDataTypeRegistry dataTypeRegistry)
+        {
+            _dataTypeRegistry = dataTypeRegistry;
+        }
+        
         public override IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context)
         {
             var relation = (EntityRelation)context.DesignModel;
-            var attribute = new EntityRelationAttribute(relation, xmlElement);
+            var name = xmlElement.GetStringAttributeValue("name");
+            var type = _dataTypeRegistry.Get(xmlElement.GetStringAttributeValue("type"));
+            var attribute = new EntityAttribute(name, type, xmlElement, xmlElement.ParseLocation);
             
             relation.AddAttribute(attribute);
             
-            return attribute;
+            // Don't register this design model globally.
+            return null;
         }
     }
 }

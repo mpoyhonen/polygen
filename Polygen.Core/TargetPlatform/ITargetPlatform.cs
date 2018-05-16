@@ -37,6 +37,7 @@ namespace Polygen.Core.TargetPlatform
         /// Gets the naming convention to use for the given output language.
         /// </summary>
         /// <param name="language"></param>
+        /// <param name="throwIfMissing"></param>
         /// <returns></returns>
         IClassNamingConvention GetClassNamingConvention(string language, bool throwIfMissing = true);
         /// <summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Polygen.Core.Exceptions;
 
 namespace Polygen.Core.Utils
 {
@@ -11,27 +12,34 @@ namespace Polygen.Core.Utils
     public class DependencyMap<T>
     {
         private List<Registration> _registrations = new List<Registration>();
+        private readonly ISet<string> _registrationIds = new HashSet<string>();
         private bool _sorted;
 
         public void Add(T item, string id, string[] dependsOn = null)
         {
-            if (this.ContainsId(id))
+            if (ContainsId(id))
             {
                 throw new ArgumentException($"Item already added with with ID '{id}'.");
             }
 
-            this._registrations.Add(new Registration(item, id, dependsOn));
-            this._sorted = false;
+            if (dependsOn != null && dependsOn.Contains(id))
+            {
+                throw new ArgumentException("Item cannot have a dependency on itself.");
+            }
+
+            _registrations.Add(new Registration(item, id, dependsOn, _registrations.Count + 1));
+            _registrationIds.Add(id);
+            _sorted = false;
         }
 
         public bool ContainsId(string id)
         {
-            return this._registrations.Any(x => x.Id == id);
+            return _registrationIds.Contains(id);
         }
 
         public T Get(string id)
         {
-            return this._registrations
+            return _registrations
                 .Where(x => x.Id == id)
                 .Select(x => x.Item)
                 .FirstOrDefault();
@@ -41,29 +49,29 @@ namespace Polygen.Core.Utils
         {
             get
             {
-                if (!this._sorted)
+                if (!_sorted)
                 {
-                    this.Sort();
+                    Sort();
                 }
 
-                return this._registrations.Select(x => x.Item);
+                return _registrations.Select(x => x.Item);
             }
         }
 
         private void Sort()
         {
-            if (this._registrations.Count <= 1)
+            if (_registrations.Count <= 1)
             {
+                _sorted = true;
                 return;
             }
 
-            var map = this._registrations
-                .ToDictionary(x => x.Id);
-            var toAssign = new List<Registration>(this._registrations);
+            var map = _registrations .ToDictionary(x => x.Id);
+            var toAssign = new Dictionary<string, Registration>();
             var sortIndexCounter = 1;
 
             // Find all registrations each registration depends on.
-            foreach (var registration in this._registrations)
+            foreach (var registration in _registrations)
             {
                 registration.Dependencies = new List<Registration>();
 
@@ -73,6 +81,10 @@ namespace Polygen.Core.Utils
                     {
                         registration.Dependencies.Add(reg);
                     }
+                    else
+                    {
+                        throw new ConfigurationException($"Entry '{registration.Id}' has a dependency on missing entry '{dependsOnId}'.");
+                    }
                 }
 
                 if (registration.Dependencies.Count == 0)
@@ -81,54 +93,53 @@ namespace Polygen.Core.Utils
                 }
                 else
                 {
-                    toAssign.Add(registration);
+                    toAssign.Add(registration.Id, registration);
                 }
             }
 
             // Assign the sort index to all registrations. If there is no change, then we have a loop.
-            while (toAssign.Count() > 0)
+            while (toAssign.Any())
             {
                 var toRemove = new List<Registration>();
                 var change = false;
 
-                toAssign
-                    .Where(x => x.Dependencies.All(y => y.SortIndex != null))
-                    .Select(x =>
-                    {
-                        x.SortIndex = sortIndexCounter++;
-                        return x;
-                    })
-                    .ToList()
-                    .Select(x =>
-                    {
-                        toAssign.Remove(x);
-                        change = true;
-                        return x;
-                    })
-                    .ToList();
+                foreach (var registration in toAssign.Values.OrderBy(x => x.OriginalIndex).Where(x => x.Dependencies.All(y => y.SortIndex != null)))
+                {
+                    registration.SortIndex = sortIndexCounter++;
+                    toRemove.Add(registration);
+                    change = true;
+                }
 
                 if (!change)
                 {
-                    throw new ArgumentException("Circular dependency with items: " + string.Join(", ", toAssign.Select(x => x.Id)));
+                    throw new ConfigurationException("Circular dependency with items: " + string.Join(", ", toAssign.Values.Select(x => x.Id)));
+                }
+
+                foreach (var registration in toRemove)
+                {
+                    toAssign.Remove(registration.Id);
                 }
             }
 
-            this._sorted = true;
+            _registrations = _registrations.OrderBy(x => x.SortIndex).ToList();
+            _sorted = true;
         }
 
         public class Registration
         {
-            internal Registration(T item, string id, string[] dependsOn)
+            internal Registration(T item, string id, string[] dependsOn, int originalIndex)
             {
-                this.Item = item;
-                this.Id = id;
-                this.DependsOn = dependsOn;
+                Item = item;
+                Id = id;
+                DependsOn = dependsOn;
+                OriginalIndex = originalIndex;
             }
 
             public T Item { get; }
             public string Id { get; }
             internal string[] DependsOn { get; }
             internal List<Registration> Dependencies { get; set; } 
+            internal int OriginalIndex { get; set; }
             internal int? SortIndex { get; set; }
         }
     }

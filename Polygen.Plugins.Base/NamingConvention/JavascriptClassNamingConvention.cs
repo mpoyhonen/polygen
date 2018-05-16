@@ -1,4 +1,5 @@
-﻿using Polygen.Core.DesignModel;
+﻿using Polygen.Core.DataType;
+using Polygen.Core.DesignModel;
 using Polygen.Core.NamingConvention;
 using Polygen.Core.Utils;
 
@@ -34,6 +35,12 @@ namespace Polygen.Plugins.Base.NamingConvention
         public string GetPropertyName(string propertyName)
         {
             return StringUtils.Uncapitalize(propertyName);
+        }
+        
+        public string GetTypeName(IDataType dataType)
+        {
+            // For now, just use the given name.
+            return dataType.Name;
         }
 
         public string GetOutputFolderPath(INamespace classNamespace)

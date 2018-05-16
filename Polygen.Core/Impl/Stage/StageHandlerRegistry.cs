@@ -10,7 +10,7 @@ namespace Polygen.Core.Impl.Stage
 {
     public class StageHandlerRegistry: IStageHandlerRegistry
     {
-        private Dictionary<StageType, DependencyMap<IStageHandler>> _hanlerMap = new Dictionary<StageType, DependencyMap<IStageHandler>>();
+        private readonly Dictionary<StageType, DependencyMap<IStageHandler>> _hanlerMap = new Dictionary<StageType, DependencyMap<IStageHandler>>();
 
         public StageHandlerRegistry(
             IEnumerable<IStageHandler> stageHandlers

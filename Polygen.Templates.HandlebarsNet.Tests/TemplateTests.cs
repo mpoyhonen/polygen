@@ -27,7 +27,7 @@ namespace Polygen.Templates.HandlebarsNet.Tests
             {
                 template.Render(data, writer);
 
-                writer.ToString().ShouldBeEquivalentTo("Hi Test123");
+                writer.ToString().Should().Be("Hi Test123");
             }
         }
 
@@ -48,7 +48,7 @@ namespace Polygen.Templates.HandlebarsNet.Tests
             {
                 template.Render(data, writer);
 
-                writer.ToString().ShouldBeEquivalentTo("Hi Test123, Included for Test123");
+                writer.ToString().Should().Be("Hi Test123, Included for Test123");
             }
         }
 
@@ -61,8 +61,8 @@ namespace Polygen.Templates.HandlebarsNet.Tests
             });
             var template = new Template("test", instance, TemplateSource.CreateForText("Hello {{name}}"));
 
-            template.Name.ShouldBeEquivalentTo("test");
-            template.RenderIntoString(new { name = "Test123" }).ShouldBeEquivalentTo("Hello Test123");
+            template.Name.Should().Be("test");
+            template.RenderIntoString(new { name = "Test123" }).Should().Be("Hello Test123");
         }
 
         [Fact]
@@ -74,8 +74,8 @@ namespace Polygen.Templates.HandlebarsNet.Tests
             });
             var template = new Template("test", instance, TemplateSource.CreateForText("|{{name}}|"));
 
-            template.Name.ShouldBeEquivalentTo("test");
-            template.RenderIntoString(new { name = "< > / \\ & $ # @" }).ShouldBeEquivalentTo("|< > / \\ & $ # @|");
+            template.Name.Should().Be("test");
+            template.RenderIntoString(new { name = "< > / \\ & $ # @" }).Should().Be("|< > / \\ & $ # @|");
         }
     }
 }

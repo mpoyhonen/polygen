@@ -8,13 +8,9 @@ namespace Polygen.Plugins.Base.Models.Entity.Parser
     /// </summary>
     public class EntityParser: DesignModelGeneratorBase
     {
-        public EntityParser() : base(nameof(Entity))
-        {
-        }
-
         public override IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context)
         {
-            return new Entity(context.Namespace, xmlElement);
+            return new Entity(xmlElement.GetStringAttributeValue("name"), context.Namespace, xmlElement);
         }
     }
 }

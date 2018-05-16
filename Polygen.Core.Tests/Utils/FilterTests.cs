@@ -1,20 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Polygen.Core.Impl;
-using Polygen.Core.Schema;
-using Xunit;
+﻿using Xunit;
 using FluentAssertions;
-using Polygen.Core.Impl.Schema;
-using System.Xml.Linq;
-using System.IO;
-using Polygen.Core.Exceptions;
-using System.Xml;
-using Polygen.Core.Impl.Project;
-using Polygen.TestUtils.DataType;
 using Polygen.Core.Utils;
 
 namespace Polygen.Core.Tests.Utils
@@ -27,7 +12,7 @@ namespace Polygen.Core.Tests.Utils
             var filter = new Filter();
 
             filter.AddInclude("test");
-            filter.Match("test").ShouldBeEquivalentTo(Filter.MatchStatus.Included);
+            filter.Match("test").Should().Be(Filter.MatchStatus.Included);
         }
 
         [Fact]
@@ -36,7 +21,7 @@ namespace Polygen.Core.Tests.Utils
             var filter = new Filter();
 
             filter.AddExclude("test");
-            filter.Match("tes").ShouldBeEquivalentTo(Filter.MatchStatus.None);
+            filter.Match("tes").Should().Be(Filter.MatchStatus.None);
         }
 
         [Fact]
@@ -45,7 +30,7 @@ namespace Polygen.Core.Tests.Utils
             var filter = new Filter();
 
             filter.AddExclude("test");
-            filter.Match("test").ShouldBeEquivalentTo(Filter.MatchStatus.Excluded);
+            filter.Match("test").Should().Be(Filter.MatchStatus.Excluded);
         }
         
         [Fact]
@@ -55,7 +40,7 @@ namespace Polygen.Core.Tests.Utils
 
             filter.AddInclude("test");
             filter.AddExclude("test");
-            filter.Match("test").ShouldBeEquivalentTo(Filter.MatchStatus.Excluded);
+            filter.Match("test").Should().Be(Filter.MatchStatus.Excluded);
         }
 
         [Fact]
@@ -64,7 +49,7 @@ namespace Polygen.Core.Tests.Utils
             var filter = new Filter();
 
             filter.AddInclude("t*");
-            filter.Match("test").ShouldBeEquivalentTo(Filter.MatchStatus.Included);
+            filter.Match("test").Should().Be(Filter.MatchStatus.Included);
         }
 
         [Fact]
@@ -73,8 +58,8 @@ namespace Polygen.Core.Tests.Utils
             var filter = new Filter();
 
             filter.AddInclude("test/**");
-            filter.Match("test").ShouldBeEquivalentTo(Filter.MatchStatus.None);
-            filter.Match("test/a").ShouldBeEquivalentTo(Filter.MatchStatus.Included);
+            filter.Match("test").Should().Be(Filter.MatchStatus.None);
+            filter.Match("test/a").Should().Be(Filter.MatchStatus.Included);
         }
 
         [Fact]
@@ -83,9 +68,9 @@ namespace Polygen.Core.Tests.Utils
             var filter = new Filter('.');
 
             filter.AddInclude("test.*");
-            filter.Match("test").ShouldBeEquivalentTo(Filter.MatchStatus.None);
-            filter.Match("testxa").ShouldBeEquivalentTo(Filter.MatchStatus.None);
-            filter.Match("test.a").ShouldBeEquivalentTo(Filter.MatchStatus.Included);
+            filter.Match("test").Should().Be(Filter.MatchStatus.None);
+            filter.Match("testxa").Should().Be(Filter.MatchStatus.None);
+            filter.Match("test.a").Should().Be(Filter.MatchStatus.Included);
         }
     }
 }

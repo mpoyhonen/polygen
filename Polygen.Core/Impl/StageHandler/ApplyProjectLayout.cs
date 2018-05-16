@@ -85,7 +85,7 @@ namespace Polygen.Core.Impl.StageHandler
                     {
                         if (locationFilter.DesignModelTypeFilter != null)
                         {
-                            if (locationFilter.DesignModelTypeFilter.Match(designModel.Type) == Filter.MatchStatus.Included)
+                            if (locationFilter.DesignModelTypeFilter.Match(designModel.DesignModelType) == Filter.MatchStatus.Included)
                             {
                                 yield return designModel.OutputConfiguration;
                             }

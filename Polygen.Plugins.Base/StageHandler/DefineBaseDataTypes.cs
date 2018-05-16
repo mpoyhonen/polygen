@@ -21,7 +21,7 @@ namespace Polygen.Plugins.Base.StageHandler
         public override void Execute()
         {
             // TODO: Find out the proper XSD data types!
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_bool, "bool"));
+            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_bool, "xs:boolean"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_byte, "byte"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_char, "char"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_decimal, "decimal"));
@@ -34,7 +34,7 @@ namespace Polygen.Plugins.Base.StageHandler
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_uint, "uint"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_ulong, "ulong"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_ushort, "ushort"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_string, "string"));
+            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_string, "xs:string"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_date, "date"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_time, "time"));
             this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_datetime, "datetime"));

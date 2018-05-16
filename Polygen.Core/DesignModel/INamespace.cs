@@ -1,6 +1,7 @@
 ﻿using Polygen.Core.OutputConfiguration;
 using System.Collections.Generic;
 using Polygen.Core.Parser;
+using Polygen.Core.Reference;
 
 namespace Polygen.Core.DesignModel
 {
@@ -48,10 +49,9 @@ namespace Polygen.Core.DesignModel
         /// <summary>
         /// Returns a design model.
         /// </summary>
-        /// <param name="type">Design model type</param>
-        /// <param name="name">Design model local name in this namespace</param>
-        /// <param name="parseLocation">Optional parse location for the error message when the design model was not found.</param>
+        /// <param name="reference">Design model reference to resolve. If this contains the a reference to the design model, it is returned.</param>
+        /// <param name="throwIfNotFound">Whether to throw an exception when the design model was not found.</param>
         /// <returns></returns>
-        IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null);
+        T GetDesignModel<T>(DesignModelReference<T> reference, bool throwIfNotFound) where T: IDesignModel;
     }
 }

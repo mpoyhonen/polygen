@@ -22,7 +22,7 @@ namespace Polygen.Core.Impl.StageHandler
             {
                 foreach (var targetPlatform in designModel.OutputConfiguration.GetTargetPlatformsForDesignModel(designModel))
                 {
-                    var generator = targetPlatform.GetOutputModelGenerator(designModel.Type);
+                    var generator = targetPlatform.GetOutputModelGenerator(designModel.DesignModelType);
 
                     foreach (var outputModel in generator.GenerateOutputModels(designModel))
                     {

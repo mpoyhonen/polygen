@@ -13,25 +13,25 @@ namespace Polygen.Core.Impl.Parser
 
         public IDesignModelGenerator GetGenerator(ISchemaElement schemaElement)
         {
-            this._map.TryGetValue(schemaElement, out var generator);
+            _map.TryGetValue(schemaElement, out var generator);
 
             return generator;
         }
 
         public void RegisterFactory(ISchemaElement schemaElement, IDesignModelGenerator generator)
         {
-            if (this._map.ContainsKey(schemaElement))
+            if (_map.ContainsKey(schemaElement))
             {
-                throw new ConfigurationException($"Design model generator already registered for schema element '{schemaElement.Name}'.");
+                throw new ConfigurationException($"Design model generator already registered for schema element '{schemaElement.Name.LocalName}'.");
             }
 
-            this._map[schemaElement] = generator;
+            _map[schemaElement] = generator;
         }
 
         public void RegisterFactory(ISchemaElement schemaElement,
             Func<IXmlElement, DesignModelParseContext, IDesignModel> generatorFn, string id)
         {
-            this.RegisterFactory(schemaElement, new FuncConverterImpl(generatorFn));
+            RegisterFactory(schemaElement, new FuncConverterImpl(generatorFn));
         }
 
         internal class FuncConverterImpl : IDesignModelGenerator
@@ -40,12 +40,12 @@ namespace Polygen.Core.Impl.Parser
 
             internal FuncConverterImpl(Func<IXmlElement, DesignModelParseContext, IDesignModel> fn)
             {
-                this._fn = fn;
+                _fn = fn;
             }
 
             public IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context)
             {
-                return this._fn(xmlElement, context);
+                return _fn(xmlElement, context);
             }
         }
     }

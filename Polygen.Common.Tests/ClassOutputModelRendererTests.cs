@@ -52,7 +52,7 @@ public class MyClass
                 actual = writer.ToString();
             }
 
-            actual.ShouldBeEquivalentTo(expected);
+            actual.Should().Be(expected);
         }
     }
 }

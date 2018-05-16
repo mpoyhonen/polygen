@@ -33,7 +33,7 @@ namespace Polygen.App
             var pluginAssemblies = new List<Assembly>
             {
                 Assembly.Load(new AssemblyName("Polygen.Plugins.Base")),
-                Assembly.Load(new AssemblyName("Polygen.Plugins.Entity"))
+                Assembly.Load(new AssemblyName("Polygen.Plugins.NHibernate"))
             };
 
             return pluginAssemblies;

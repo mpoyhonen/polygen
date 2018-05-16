@@ -1,0 +1,313 @@
+﻿<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="uri:polygen/1.0/designmodel" targetNamespace="uri:polygen/1.0/designmodel" elementFormDefault="qualified">
+  <xs:element name="DesignModels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Namespace" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Defines namespace for the design models</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Entity" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Defines an entity which is the root design model</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Attribute" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>Defines an entity attribute</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:attribute name="name" type="string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Attribute name</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="type" type="string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Attribute type</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Relation" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>Defines a relation to another entity</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Attribute" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation>Defines an entity attribute</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="name" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Attribute name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="type" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Attribute type</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string">
+                          <xs:annotation>
+                            <xs:documentation>Relation name</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="destination" type="string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Destination entity name</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="mandatory" type="xs:boolean" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Whether this is a mandatory relation</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="DeriveFrom" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>Defines a mapping from the source entity</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Attribute" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies how a specific attribute will be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="src" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Source design model attribute name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="dest" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Destination design model attribute name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="SkipAttribute" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies that the specific attribute will not be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="name" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Name of the attribute to skip</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Relation" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies how a specific attribute will be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="src" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Source design model relation name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="dest" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Destination design model relation name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="attributes" type="bool">
+                                <xs:annotation>
+                                  <xs:documentation>Whether to map attributes</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="add-missing" type="bool">
+                                <xs:annotation>
+                                  <xs:documentation>Whether to all attributes which exists at the source and not at the destination.</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="two-way" type="bool">
+                                <xs:annotation>
+                                  <xs:documentation>Whether to to create a mapping for both directions.</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="SkipRelation" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies that the specific relation will not be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="name" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Name of the attribute to skip</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="src" type="string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Source entity name</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="attributes" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to map attributes</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="relations" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to map relations</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="two-way" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to to create a mapping for both directions.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Mapping" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>Defines a mapping from the source entity</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Attribute" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies how a specific attribute will be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="src" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Source design model attribute name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="dest" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Destination design model attribute name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="SkipAttribute" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies that the specific attribute will not be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="name" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Name of the attribute to skip</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Relation" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies how a specific attribute will be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="src" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Source design model relation name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="dest" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Destination design model relation name</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="attributes" type="bool">
+                                <xs:annotation>
+                                  <xs:documentation>Whether to map attributes</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="add-missing" type="bool">
+                                <xs:annotation>
+                                  <xs:documentation>Whether to all attributes which exists at the source and not at the destination.</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="two-way" type="bool">
+                                <xs:annotation>
+                                  <xs:documentation>Whether to to create a mapping for both directions.</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="SkipRelation" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Specifies that the specific relation will not be mapped</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="name" type="string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Name of the attribute to skip</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="src" type="string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Source entity name</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="name" type="string">
+                          <xs:annotation>
+                            <xs:documentation>Mapping name. Needed if multiple mappings to the same design models are defined.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="dest" type="string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Destination entity name</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="attributes" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to map attributes</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="relations" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to map relations</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="two-way" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to to create a mapping for both directions.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="add-missing" type="bool">
+                          <xs:annotation>
+                            <xs:documentation>Whether to all attributes and relations which exists at the source and not at the destination.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Entity name</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="string" use="required">
+              <xs:annotation>
+                <xs:documentation>Namespace name</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

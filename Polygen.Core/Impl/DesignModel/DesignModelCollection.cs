@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Polygen.Core.Exceptions;
 using Polygen.Core.Parser;
+using Polygen.Core.Utils;
 
 namespace Polygen.Core.Impl.DesignModel
 {
     public class DesignModelCollection : IDesignModelCollection
     {
         private readonly Dictionary<string, INamespace> _namespaceMap = new Dictionary<string, INamespace>();
-        private readonly Dictionary<string, List<IDesignModel>> _designModelsByTypeMap = new Dictionary<string, List<IDesignModel>>();
+        private readonly ListDictionary<string, IDesignModel> _designModelsByTypeMap = new ListDictionary<string, IDesignModel>();
 
         public DesignModelCollection()
         {
@@ -47,30 +48,7 @@ namespace Polygen.Core.Impl.DesignModel
 
         public IEnumerable<IDesignModel> GetByType(string type)
         {
-            if (!this._designModelsByTypeMap.TryGetValue(type, out var list))
-            {
-                return Enumerable.Empty<IDesignModel>();
-            }
-
-            return list;
-        }
-
-        public IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null)
-        {
-            var pos = name.LastIndexOf('.');
-            var ns = default(INamespace);
-
-            if (pos != -1)
-            {
-                ns = GetNamespace(name.Substring(0, pos), parseLocation);
-                name = name.Substring(pos + 1);
-            }
-            else
-            {
-                ns = RootNamespace;
-            }
-
-            return ns.GetDesignModel(type, name, parseLocation);
+            return _designModelsByTypeMap.GetOrEmpty(type);
         }
 
         public INamespace GetNamespace(string name, IParseLocationInfo parseLocation = null)
@@ -93,13 +71,7 @@ namespace Polygen.Core.Impl.DesignModel
 
         public void AddDesignModel(IDesignModel designModel)
         {
-            if (!this._designModelsByTypeMap.TryGetValue(designModel.Type, out var list))
-            {
-                list = new List<IDesignModel>();
-                this._designModelsByTypeMap[designModel.Type] = list;
-            }
-
-            list.Add(designModel);
+            _designModelsByTypeMap.Add(designModel.DesignModelType, designModel);
         }
 
         public IEnumerable<IDesignModel> GetAllDesignModels()

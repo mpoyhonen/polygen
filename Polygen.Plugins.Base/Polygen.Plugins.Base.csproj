@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.4.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
@@ -11,12 +12,6 @@
     <ProjectReference Include="..\Polygen.Core\Polygen.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Namespace" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Models\Entity\Template\CustomClass.hbs" />
-    <EmbeddedResource Include="Models\Entity\Template\Field.hbs" />
-    <EmbeddedResource Include="Models\Entity\Template\GeneratedClass.hbs" />
-    <EmbeddedResource Include="Models\Entity\Template\Property.hbs" />
+    <Folder Include="Models\ClassModel" />
   </ItemGroup>
 </Project>

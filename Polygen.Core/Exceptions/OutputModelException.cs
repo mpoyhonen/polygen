@@ -34,7 +34,7 @@ namespace Polygen.Core.Exceptions
                 buf.Append(": ");
 
                 buf.Append(message);
-                buf.Append(" (").Append(designModelElement.ParseLocation).Append(")");
+                buf.Append(" (").Append(outputModel.DesignModel.ParseLocation).Append(")");
             }
 
             return buf.ToString();

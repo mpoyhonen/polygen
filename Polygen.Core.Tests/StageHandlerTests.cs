@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Polygen.Core.Impl;
-using Polygen.Core.Schema;
 using Xunit;
 using FluentAssertions;
 using Polygen.Core.Stage;
@@ -23,8 +17,8 @@ namespace Polygen.Core.Tests
 
             var stageHandlers = runner.Context.StageHandlers.GetHandlers(StageType.Initialize).ToList();
 
-            stageHandlers.Count.ShouldBeEquivalentTo(1);
-            stageHandlers[0].Id.ShouldBeEquivalentTo("one");
+            stageHandlers.Count.Should().Be(1);
+            stageHandlers[0].Id.Should().Be("one");
         }
 
         [Fact]

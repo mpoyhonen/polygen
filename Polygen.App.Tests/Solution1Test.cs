@@ -23,7 +23,7 @@ namespace Polygen.App.Tests
                     "--config", Path.Combine(tempFolder.GetPath("DesignProject/ProjectConfiguration.xml"))
                 });
 
-                exitCode.ShouldBeEquivalentTo(0);
+                exitCode.Should().Be(0);
 
                 var outputClassExists = File.Exists(tempFolder.GetPath("DataProject/Entity/TestApp/MyClasses/MyEntity.cs"));
 

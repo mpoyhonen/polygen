@@ -12,7 +12,7 @@ namespace Polygen.Plugins.Base.Models.ProjectConfiguration
     public class ProjectConfiguration : DesignModelBase, IProjectConfiguration
     {
         public ProjectConfiguration(string type, INamespace ns, IXmlElement designModelElement, IProjectCollection projects)
-            : base(type, ns, designModelElement)
+            : base(null, type, ns, designModelElement)
         {
             this.Projects = projects;
         }

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Polygen.Plugins.NHibernate</AssemblyName>
+    <RootNamespace>Polygen.Plugins.NHibernate</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Output\Template\**" />
+    <EmbeddedResource Include="Output\Templates\Entity\CustomClass.hbs" />
+    <EmbeddedResource Include="Output\Templates\Entity\Field.hbs" />
+    <EmbeddedResource Include="Output\Templates\Entity\GeneratedClass.hbs" />
+    <EmbeddedResource Include="Output\Templates\Entity\Property.hbs" />
+    <EmbeddedResource Include="Output\Template\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.4.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Polygen.Plugins.Base\Polygen.Plugins.Base.csproj" />
+  </ItemGroup>
+</Project>

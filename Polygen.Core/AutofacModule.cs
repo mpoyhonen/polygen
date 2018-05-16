@@ -2,7 +2,7 @@
 
 namespace Polygen.Core
 {
-    public class AutofacModule: Autofac.Module
+    public class AutofacModule: Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -53,6 +53,10 @@ namespace Polygen.Core
             builder
                 .RegisterType<Impl.TargetPlatform.TargetPlatformCollection>()
                 .As<TargetPlatform.ITargetPlatformCollection>()
+                .SingleInstance();
+            builder
+                .RegisterType<Impl.Reference.ReferenceRegistry>()
+                .As<Reference.IReferenceRegistry>()
                 .SingleInstance();
 
             // Register all stage handler implementation in the core assembly.

@@ -15,14 +15,6 @@ namespace Polygen.Core.Parser
     public interface IDesignModelGenerator
     {
         /// <summary>
-        /// Generator ID. Used by other generators to define dependencies on this generator.
-        /// </summary>
-        string Id { get; }
-        /// <summary>
-        /// IDs of generators which much be executed before this one.
-        /// </summary>
-        IEnumerable<string> Dependencies { get; }
-        /// <summary>
         /// Generates a new design model instance for the given XML element.
         /// </summary>
         /// <param name="xmlElement"></param>
@@ -36,18 +28,6 @@ namespace Polygen.Core.Parser
     /// </summary>
     public abstract class DesignModelGeneratorBase : IDesignModelGenerator
     {
-        public DesignModelGeneratorBase(string id, IEnumerable<string> dependencies = null)
-        {
-            Id = id;
-            Dependencies = dependencies ?? Enumerable.Empty<string>();
-        }
-
-        /// <inheritdoc />
-        public string Id { get; }
-
-        /// <inheritdoc />
-        public IEnumerable<string> Dependencies { get; }
-
         /// <inheritdoc />
         public abstract IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context);
     }

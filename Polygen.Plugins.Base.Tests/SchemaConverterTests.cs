@@ -1,12 +1,9 @@
-﻿using Polygen.Core.Tests;
-using FluentAssertions;
-using System.IO;
+﻿using FluentAssertions;
 using Xunit;
 using Polygen.Core.Impl.Schema;
 using Polygen.Plugins.Base.Output.Xsd;
 using System.Xml.Linq;
 using Polygen.TestUtils;
-using System;
 using Polygen.Core.Impl.DataType;
 
 namespace Polygen.Plugins.Base.Tests
@@ -32,7 +29,7 @@ namespace Polygen.Plugins.Base.Tests
 
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -59,7 +56,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -86,7 +83,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -114,7 +111,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -149,7 +146,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -181,7 +178,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -217,7 +214,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -253,7 +250,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>
@@ -300,7 +297,7 @@ namespace Polygen.Plugins.Base.Tests
             var outputXsd = new SchemaConverter().Convert(schema);
             var outputXsdStr = outputXsd.Element.ToTestString().Trim();
 
-            outputXsdStr.ShouldBeEquivalentTo(@"
+            outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
     <xs:element name='DesignModels'>
         <xs:complexType>

@@ -1,4 +1,5 @@
-﻿using Polygen.Core.DesignModel;
+﻿using Polygen.Core.DataType;
+using Polygen.Core.DesignModel;
 
 namespace Polygen.Core.NamingConvention
 {
@@ -25,23 +26,29 @@ namespace Polygen.Core.NamingConvention
         /// <returns></returns>
         string GetNamespaceName(INamespace classNamespace);
         /// <summary>
-        /// Returns class name.
+        /// Return name of a class to be used for the generated code.
         /// </summary>
         /// <param name="className"></param>
         /// <param name="isInterface"></param>
         /// <returns></returns>
         string GetClassName(string className, bool isInterface);
         /// <summary>
-        /// Returns method name.
+        /// Return name of a class method to be used for the generated code.
         /// </summary>
         /// <param name="methodName"></param>
         /// <returns></returns>
         string GetMethodName(string methodName);
         /// <summary>
-        /// Return property name.
+        /// Return name of a class property to be used for the generated code.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
         string GetPropertyName(string propertyName);
+        /// <summary>
+        /// Returns data type name used for the geneated code.
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        string GetTypeName(IDataType dataType);
     }
 }

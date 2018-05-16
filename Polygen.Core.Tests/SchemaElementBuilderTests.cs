@@ -26,8 +26,8 @@ namespace Polygen.Core.Tests
                     .CreateAttribute(NS1 + "attr", TestDataTypes.String)
                     .Element();
 
-            element.Name.ShouldBeEquivalentTo(NS1 + "root-element");
-            element.Attributes.Select(x => x.Name).ShouldBeEquivalentTo(new[] { NS1 + "attr" });
+            element.Name.Should().BeEquivalentTo(NS1 + "root-element");
+            element.Attributes.Select(x => x.Name).Should().BeEquivalentTo(new[] { NS1 + "attr" });
         }
 
         [Fact]
@@ -40,9 +40,9 @@ namespace Polygen.Core.Tests
                         .CreateAttribute(NS1 + "attr", TestDataTypes.String)
                         .Element();
 
-            element.Name.ShouldBeEquivalentTo(NS1 + "child-element");
-            element.Attributes.Select(x => (x.Name, x.Type?.Name)).ShouldBeEquivalentTo(new[] { (NS1 + "attr", TestDataTypes.String.Name) });
-            element.Parent.Name.ShouldBeEquivalentTo(NS1 + "root-element");
+            element.Name.Should().BeEquivalentTo(NS1 + "child-element");
+            element.Attributes.Select(x => (x.Name, x.Type?.Name)).Should().BeEquivalentTo(new[] { (NS1 + "attr", TestDataTypes.String.Name) });
+            element.Parent.Name.Should().BeEquivalentTo(NS1 + "root-element");
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Polygen.Core.Tests
                     })
                     .Element();
 
-            element.Name.ShouldBeEquivalentTo(NS1 + "child-element");
+            element.Name.Should().BeEquivalentTo(NS1 + "child-element");
             element.IsMandatory.Should().BeTrue();
             element.AllowMultiple.Should().BeTrue();
             element.UseContentAsValue.Should().BeTrue();
@@ -81,8 +81,8 @@ namespace Polygen.Core.Tests
 
             var attribute = element.Attributes[0];
 
-            attribute.Name.ShouldBeEquivalentTo(NS1 + "attr");
-            attribute.DefaultValue.ShouldBeEquivalentTo("123");
+            attribute.Name.Should().BeEquivalentTo(NS1 + "attr");
+            attribute.DefaultValue.Should().BeEquivalentTo("123");
             attribute.IsMandatory.Should().BeTrue();
         }
     }

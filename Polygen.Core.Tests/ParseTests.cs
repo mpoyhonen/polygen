@@ -62,11 +62,11 @@ namespace Polygen.Core.Tests
             var root = parser.Parse(new StringReader(xml), schema, new ProjectFile("file.xml"));
 
             root.Should().NotBeNull();
-            root.Definition.Name.ShouldBeEquivalentTo(NS1 + "root");
+            root.Definition.Name.Should().BeEquivalentTo(NS1 + "root");
 
             var attributes = root.Attributes.Select(x => (x.Definition.Name, x.Value));
 
-            attributes.ShouldBeEquivalentTo(new[] { (NS1 + "a", "va") });
+            attributes.Should().BeEquivalentTo(new[] { (NS1 + "a", "va") });
         }
 
         [Fact]
@@ -85,11 +85,11 @@ namespace Polygen.Core.Tests
             var child = root?.Children?.FirstOrDefault();
 
             child.Should().NotBeNull();
-            child.Definition.Name.ShouldBeEquivalentTo(NS1 + "child");
+            child.Definition.Name.Should().BeEquivalentTo(NS1 + "child");
 
             var attributes = child.Attributes.Select(x => (x.Definition.Name, x.Value));
 
-            attributes.ShouldBeEquivalentTo(new[] { (NS1 + "c", "vc"), (NS1 + "d", "vd") });
+            attributes.Should().BeEquivalentTo(new[] { (NS1 + "c", "vc"), (NS1 + "d", "vd") });
         }
 
         [Fact]
@@ -108,11 +108,11 @@ namespace Polygen.Core.Tests
             var child = root?.Children?.FirstOrDefault();
 
             child.Should().NotBeNull();
-            child.Definition.Name.ShouldBeEquivalentTo(NS1 + "child");
+            child.Definition.Name.Should().BeEquivalentTo(NS1 + "child");
 
             var attributes = child.Attributes.Select(x => (x.Definition.Name, x.Value));
 
-            attributes.ShouldBeEquivalentTo(new[] { (NS1 + "c", "vc"), (NS2 + "e", "ve") });
+            attributes.Should().BeEquivalentTo(new[] { (NS1 + "c", "vc"), (NS2 + "e", "ve") });
         }
 
         [Fact]
@@ -131,12 +131,12 @@ namespace Polygen.Core.Tests
             var child = root?.Children?.FirstOrDefault();
 
             child.Should().NotBeNull();
-            root.Definition.Name.ShouldBeEquivalentTo(NS1 + "root");
-            child.Definition.Name.ShouldBeEquivalentTo(NS2 + "child");
+            root.Definition.Name.Should().BeEquivalentTo(NS1 + "root");
+            child.Definition.Name.Should().BeEquivalentTo(NS2 + "child");
 
             var attributes = child.Attributes.Select(x => (x.Definition.Name, x.Value));
 
-            attributes.ShouldBeEquivalentTo(new[] { (NS2 + "x", "vx") });
+            attributes.Should().BeEquivalentTo(new[] { (NS2 + "x", "vx") });
         }
 
         [Fact]
@@ -157,12 +157,12 @@ namespace Polygen.Core.Tests
             var value = root?.Children?.FirstOrDefault();
 
             value.Should().NotBeNull();
-            value.Definition.Name.ShouldBeEquivalentTo(NS1 + "value");
+            value.Definition.Name.Should().BeEquivalentTo(NS1 + "value");
 
             var attributes = value.Attributes.Select(x => (x.Definition.Name, x.Value));
 
-            attributes.ShouldBeEquivalentTo(new[] { (NS1 + "f", "vf") });
-            value.Value.ShouldBeEquivalentTo("VALUE");
+            attributes.Should().BeEquivalentTo(new[] { (NS1 + "f", "vf") });
+            value.Value.Should().BeEquivalentTo("VALUE");
         }
 
         private ISchemaCollection CreateSchemas()

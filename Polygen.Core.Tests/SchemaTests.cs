@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Polygen.Core.Impl;
-using Polygen.Core.Schema;
+﻿using System.Linq;
 using Xunit;
 using FluentAssertions;
-using Polygen.Core.Impl.Schema;
 using System.Xml.Linq;
 using Polygen.TestUtils.DataType;
 
@@ -27,8 +19,8 @@ namespace Polygen.Core.Tests
                     .CreateAttribute(ns + "a", TestDataTypes.String);
 
             schema.RootElement.Should().NotBeNull();
-            schema.RootElement.Name.ShouldBeEquivalentTo(ns + "root");
-            schema.RootElement.Attributes.Select(x => x.Name).ShouldBeEquivalentTo(new[] { ns + "a" });
+            schema.RootElement.Name.Should().Be(ns + "root");
+            schema.RootElement.Attributes.Select(x => x.Name).Should().BeEquivalentTo(new[] { ns + "a" });
         }
 
         [Fact]
@@ -44,8 +36,8 @@ namespace Polygen.Core.Tests
                     .CreateElement(ns + "child")
                         .CreateAttribute(ns + "a", TestDataTypes.String);
 
-            schema.RootElement.Children.Count.ShouldBeEquivalentTo(1);
-            schema.RootElement.Children[0].Name.ShouldBeEquivalentTo(ns + "child");
+            schema.RootElement.Children.Count.Should().Be(1);
+            schema.RootElement.Children[0].Name.Should().Be(ns + "child");
         }
     }
 }

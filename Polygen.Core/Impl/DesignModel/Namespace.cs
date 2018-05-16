@@ -2,93 +2,109 @@
 using Polygen.Core.OutputConfiguration;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
 using Polygen.Core.Exceptions;
-using Polygen.Core.Parser;
+using Polygen.Core.Utils;
 
 namespace Polygen.Core.Impl.DesignModel
 {
-    [DebuggerDisplay("Namespace: {Name}")]
     public class Namespace : INamespace
     {
         private readonly List<INamespace> _children = new List<INamespace>();
         private readonly List<IDesignModel> _designModelList = new List<IDesignModel>();
-        private readonly Dictionary<string, List<IDesignModel>> _designModelsByTypeMap = new Dictionary<string, List<IDesignModel>>();
+        private readonly MultiKeyListDictionary<IDesignModel> _designModelMap = new MultiKeyListDictionary<IDesignModel>();
 
         public Namespace(IOutputConfiguration mainOutputConfiguration)
         {
-            this.OutputConfiguration = mainOutputConfiguration;
+            OutputConfiguration = mainOutputConfiguration;
         }
 
         public Namespace(string name, INamespace parent)
         {
-            this.Name = parent?.Name != null ? $"{parent.Name}.{name}" : name;
-            this.SegmentName = name;
-            this.OutputConfiguration = new OutputConfiguration.OutputConfiguration(parent?.OutputConfiguration);
+            Name = parent?.Name != null ? $"{parent.Name}.{name}" : name;
+            SegmentName = name;
+            OutputConfiguration = new OutputConfiguration.OutputConfiguration(parent?.OutputConfiguration);
         }
 
         public string Name { get; }
         public string SegmentName { get; }
         public INamespace Parent { get; set; }
-        public IReadOnlyList<INamespace> Children => this._children;
-        public IEnumerable<IDesignModel> DesignModels => this._designModelList;
+        public IReadOnlyList<INamespace> Children => _children;
+        public IEnumerable<IDesignModel> DesignModels => _designModelList;
         public IOutputConfiguration OutputConfiguration { get; }
 
         internal void AddChild(INamespace ns)
         {
-            this._children.Add(ns);
+            _children.Add(ns);
         }
 
+        /// <inheritdoc />
         public void AddDesignModel(IDesignModel designModel)
         {
-            this._designModelList.Add(designModel);
+            _designModelList.Add(designModel);
 
-            if (!this._designModelsByTypeMap.TryGetValue(designModel.Type, out var typeList))
-            {
-                typeList = new List<IDesignModel>();
-                this._designModelsByTypeMap[designModel.Type] = typeList;
-            }
-
-            typeList.Add(designModel);
+            _designModelMap.Add(nameof(IDesignModel.DesignModelType), designModel.DesignModelType, designModel);
+            _designModelMap.Add(nameof(IDesignModel.Name), designModel.Name, designModel);
         }
 
+        /// <inheritdoc />
         public IEnumerable<IDesignModel> FindDesignModelsByType(string type, bool recursive = true)
         {
-            if (this._designModelsByTypeMap.TryGetValue(type, out var typeList))
+            foreach (var designModel in _designModelMap.Get(nameof(IDesignModel.DesignModelType), type))
             {
-                foreach (var designModel in typeList)
-                {
-                    yield return designModel;
-                }
+                yield return designModel;
             }
 
             if (recursive)
             {
-                foreach (var designModel in this._children.Select(x => x.FindDesignModelsByType(type, recursive)).SelectMany(x => x))
+                foreach (var designModel in _children.Select(x => x.FindDesignModelsByType(type, recursive)).SelectMany(x => x))
                 {
                     yield return designModel;
                 }
             }
         }
 
-        public IDesignModel GetDesignModel(string type, string name, IParseLocationInfo parseLocation = null)
+        public T GetDesignModel<T>(DesignModelReference<T> reference, bool throwIfNotFound) where T: IDesignModel
         {
-            foreach (var designModel in FindDesignModelsByType(type, false))
+            if (reference.Target != null)
             {
-                if (designModel.Name == name)
-                {
-                    return designModel;
-                }
+                return reference.Target;
             }
 
-            if (parseLocation != null)
+            if (reference.Type != null)
             {
-                throw new ParseException(parseLocation, $"{type} '{Name}.{name}' not found");
+                foreach (var designModel in _designModelMap.Get(nameof(IDesignModel.Name), reference.Name))
+                {
+                    if (designModel.DesignModelType == reference.Type)
+                    {
+                        return (T) designModel;
+                    }
+                }
+
+                if (throwIfNotFound)
+                {
+                    throw new ParseException(reference.ParseLocation, $"{reference.Type} '{Name}.{reference.Name}' not found");
+                }
             }
             else
             {
-                return null;
+                var designModels = _designModelMap.Get(nameof(IDesignModel.Name), reference.Name).ToList();
+
+                if (designModels.Count == 1)
+                {
+                    return (T) designModels.First();
+                }
+
+                var error = designModels.Count > 1 
+                    ? $"More than one design model with name '{reference.Name}' found in namespace '{Name}'. Specify the design model type by using 'type:Name'" 
+                    : $"No design model with name '{reference.Name}' found in namespace '{Name}'.";
+
+                if (throwIfNotFound)
+                {
+                    throw new ParseException(reference.ParseLocation, error);
+                }
             }
+            
+            return default(T);
         }
     }
 }

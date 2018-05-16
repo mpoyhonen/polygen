@@ -4,6 +4,7 @@ using FluentAssertions;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using Polygen.TestUtils;
 using Xunit;
 
 namespace Polygen.Common.Tests
@@ -32,9 +33,9 @@ namespace Polygen.Common.Tests
 <root xmlns='urn:test-ns'>
   <child a='testing' />
 </root>
-            ".Trim().Replace("\r\n", "\n").Replace("'", "\"");
+            ";
 
-            xml.Trim().ShouldBeEquivalentTo(expected);
+            xml.FilterXmlString().Should().Be(expected.FilterXmlString());
         }
     }
 }

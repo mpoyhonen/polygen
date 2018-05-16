@@ -41,6 +41,7 @@ namespace Polygen.Core.Stage
         #region Design model parsing stage
         BeforeParseDesignModels,
         ParseDesignModels,
+        ResolveDesignModelReferences,
         AfterParseDesignModels,
         ValidateDesignModels,
         ApplyProjectLayout,

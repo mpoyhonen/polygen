@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using Polygen.Core.DesignModel;
 using Polygen.Core.Exceptions;
 using Polygen.Core.Parser;
@@ -33,6 +34,11 @@ namespace Polygen.Core.Impl.DesignModel
         public IXmlElementAttribute GetAttribute(string name)
         {
             return this._attributes.Find(x => x.Definition.Name.LocalName == name);
+        }
+
+        public IEnumerable<IXmlElement> GetChildElments(XName name)
+        {
+            return this._children.Where(x => x.Definition.Name.LocalName == name);
         }
 
         public IXmlElement FindChildElement(string path)

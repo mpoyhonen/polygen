@@ -14,7 +14,7 @@ namespace Polygen.Core.Impl.OutputConfiguration
 {
     public class OutputConfiguration : IOutputConfiguration
     {
-        private readonly Dictionary<string, List<ITargetPlatform>> _targetPlatformByDesignModelTypeMap = new Dictionary<string, List<ITargetPlatform>>();
+        private readonly ListDictionary<string, ITargetPlatform> _targetPlatformByDesignModelTypeMap = new ListDictionary<string, ITargetPlatform>();
         private readonly List<Tuple<Filter, IProjectFolder>> _outputFolderList = new List<Tuple<Filter, IProjectFolder>>();
 
         public OutputConfiguration(IOutputConfiguration parent)
@@ -26,9 +26,11 @@ namespace Polygen.Core.Impl.OutputConfiguration
 
         public IEnumerable<ITargetPlatform> GetTargetPlatformsForDesignModel(IDesignModel designModel)
         {
-            if (!this._targetPlatformByDesignModelTypeMap.TryGetValue(designModel.Type, out var res) && Parent != null)
+            var res = _targetPlatformByDesignModelTypeMap.GetOrNull(designModel.DesignModelType);
+            
+            if (res == null && Parent != null)
             {
-                return this.Parent.GetTargetPlatformsForDesignModel(designModel);
+                return Parent.GetTargetPlatformsForDesignModel(designModel);
             }
 
             return res ?? Enumerable.Empty<ITargetPlatform>();
@@ -36,18 +38,12 @@ namespace Polygen.Core.Impl.OutputConfiguration
 
         public void RegisterTargetPlatformForDesignModelType(string designModelType, ITargetPlatform targetPlatform, bool replace = false)
         {
-            if (!this._targetPlatformByDesignModelTypeMap.TryGetValue(designModelType, out var list))
+            if (replace && _targetPlatformByDesignModelTypeMap.ContainsKey(designModelType))
             {
-                list = new List<ITargetPlatform>();
-                this._targetPlatformByDesignModelTypeMap[designModelType] = list;
+                _targetPlatformByDesignModelTypeMap.Remove(designModelType);
             }
 
-            if (replace)
-            {
-                list.Clear();
-            }
-
-            list.Add(targetPlatform);
+            _targetPlatformByDesignModelTypeMap.Add(designModelType, targetPlatform);
         }
 
         public IProjectFolder GetOutputFolder(string outputModelType, bool throwIfMissing = true)
