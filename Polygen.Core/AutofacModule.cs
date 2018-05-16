@@ -54,10 +54,6 @@ namespace Polygen.Core
                 .RegisterType<Impl.TargetPlatform.TargetPlatformCollection>()
                 .As<TargetPlatform.ITargetPlatformCollection>()
                 .SingleInstance();
-            builder
-                .RegisterType<Impl.Reference.ReferenceRegistry>()
-                .As<Reference.IReferenceRegistry>()
-                .SingleInstance();
 
             // Register all stage handler implementation in the core assembly.
             builder
