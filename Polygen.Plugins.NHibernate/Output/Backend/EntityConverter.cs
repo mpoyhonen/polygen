@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Polygen.Common.Class.OutputModel;
 using Polygen.Core.Exceptions;
+using Polygen.Core.OutputModel;
 using Polygen.Core.Template;
 
 namespace Polygen.Plugins.NHibernate.Output.Backend
@@ -19,12 +20,12 @@ namespace Polygen.Plugins.NHibernate.Output.Backend
 
         public ClassOutputModel CreateEntityGeneratedClass(Base.Models.Entity.Entity entity, string language)
         {
-
             var targetPlatform = entity.OutputConfiguration.GetTargetPlatformsForDesignModel(entity).FirstOrDefault();
 
             if (targetPlatform == null)
             {
-                throw new ConfigurationException($"No target platforms defined for design model type '{entity.DesignModelType}'.");
+                throw new ConfigurationException(
+                    $"No target platforms defined for design model type '{entity.DesignModelType}'.");
             }
 
             var namingConvention = targetPlatform.GetClassNamingConvention(language);
@@ -32,7 +33,8 @@ namespace Polygen.Plugins.NHibernate.Output.Backend
             var builder = new ClassOutputModelBuilder(outputModelType, entity, namingConvention);
 
             builder.CreatePartialClass(entity.Name, entity.Namespace);
-            builder.SetOutputFile(entity.OutputConfiguration, namingConvention, fileExtension: ".gen.cs");
+            builder.SetOutputFile(entity.OutputConfiguration, namingConvention, fileExtension: ".gen.cs",
+                mergeMode: OutputModelMergeMode.Replace);
             builder.SetOutputRenderer(targetPlatform.GetOutputTemplate(outputModelType));
 
             foreach (var entityAttribute in entity.Attributes)
@@ -49,7 +51,8 @@ namespace Polygen.Plugins.NHibernate.Output.Backend
 
             if (targetPlatform == null)
             {
-                throw new ConfigurationException($"No target platforms defined for design model type '{entity.DesignModelType}'.");
+                throw new ConfigurationException(
+                    $"No target platforms defined for design model type '{entity.DesignModelType}'.");
             }
 
             var namingConvention = targetPlatform.GetClassNamingConvention(language);

@@ -5,6 +5,7 @@ using Polygen.Core.DataType;
 using Polygen.Core.DesignModel;
 using Polygen.Core.Exceptions;
 using Polygen.Core.Impl;
+using Polygen.Core.Impl.File;
 using Polygen.Core.Impl.Project;
 using Polygen.Core.NamingConvention;
 using Polygen.Core.OutputModel;
@@ -103,7 +104,7 @@ namespace Polygen.Core
 
             var schema = this._schemaCollection.GetSchemaByNamespace(CoreConstants.ProjectConfiguration_SchemaNamespace);
 
-            using (var reader = File.OpenText(projectConfigurationFile))
+            using (var reader = System.IO.File.OpenText(projectConfigurationFile))
             {
                 var dummyProject = new Impl.Project.Project("init", "init", Path.GetDirectoryName(projectConfigurationFile));
                 var dummyProjectFile = new ProjectFile(dummyProject, Path.GetFileName(projectConfigurationFile));
@@ -248,7 +249,10 @@ namespace Polygen.Core
                     Directory.CreateDirectory(projectFileDir);
                 }
 
-                File.Copy(outputModel.File.GetTempPath(true), projectFile);
+                var sourceFile = new FileInfo(outputModel.File.GetTempPath(true));
+                var destinationFile = new FileInfo(projectFile);
+                var fileMerger = FileMergerFactory.GetForMode(outputModel.MergeMode);
+                fileMerger.Merge(sourceFile, destinationFile);
             }
 
             this.FireStageEvent(StageType.AfterCopyOutputFiles);
