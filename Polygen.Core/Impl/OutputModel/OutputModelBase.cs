@@ -14,21 +14,27 @@ namespace Polygen.Core.Impl.OutputModel
     {
         private IEnumerable<IOutputModelFragment> _fragments;
 
-        public OutputModelBase(string type, INamespace ns, IDesignModel designModel = null, IProjectFile file = null)
+        public OutputModelBase(string type, INamespace ns, IDesignModel designModel = null, IProjectFile file = null,
+            OutputModelMergeMode mergeMode = OutputModelMergeMode.Skip)
         {
             this.Type = type;
             this.Namespace = ns;
             this.DesignModel = designModel;
             this.File = file;
             this.OutputConfiguration = new OutputConfiguration.OutputConfiguration(this.Namespace?.OutputConfiguration);
+            this.MergeMode = mergeMode;
         }
 
         public string Type { get; set; }
         public IDesignModel DesignModel { get; set; }
         public INamespace Namespace { get; set; }
         public IProjectFile File { get; set; }
+        public OutputModelMergeMode MergeMode { get; set; }
         public IOutputModelRenderer Renderer { get; set; }
-        public IEnumerable<IOutputModelFragment> Fragments => this._fragments ?? (this._fragments = new List<IOutputModelFragment>());
+
+        public IEnumerable<IOutputModelFragment> Fragments =>
+            this._fragments ?? (this._fragments = new List<IOutputModelFragment>());
+
         public IOutputConfiguration OutputConfiguration { get; }
     }
 }

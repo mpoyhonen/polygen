@@ -29,7 +29,7 @@ namespace Polygen.Plugins.Base.Models.Entity.Schema
 
             entityDesignModelElement.GetBuilder()
                 .CreateAttribute("name", stringType, "Entity name", c => c.IsMandatory = true)
-                .CreateElement("Attribute", "Defines an entity attribute")
+                .CreateElement("Attribute", "Defines an entity attribute", c => c.AllowMultiple = true)
                 .CreateAttribute("name", stringType, "Attribute name", c => c.IsMandatory = true)
                 .CreateAttribute("type", stringType, "Attribute type", c => c.IsMandatory = true);
 

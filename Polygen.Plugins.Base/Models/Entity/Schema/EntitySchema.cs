@@ -27,7 +27,7 @@ namespace Polygen.Plugins.Base.Models.Entity.Schema
                 .RootElement
                 .FindChildElement("Namespace")
                 .GetBuilder()
-                .CreateElement("Entity", "Defines an entity which is the root design model");
+                .CreateElement("Entity", "Defines an entity which is the root design model", c => c.AllowMultiple = true);
 
             // Register parser.
             var designModelElement = schema.RootElement.FindChildElement("Namespace/Entity");
