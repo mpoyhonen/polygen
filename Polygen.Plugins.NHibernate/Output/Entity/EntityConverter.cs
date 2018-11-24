@@ -3,7 +3,7 @@ using Polygen.Common.Class.OutputModel;
 using Polygen.Core.Exceptions;
 using Polygen.Core.Template;
 
-namespace Polygen.Plugins.NHibernate.Output.Backend
+namespace Polygen.Plugins.NHibernate.Output.Entity
 {
     /// <summary>
     /// Converts entities into backend output model.
@@ -28,7 +28,7 @@ namespace Polygen.Plugins.NHibernate.Output.Backend
             }
 
             var namingConvention = targetPlatform.GetClassNamingConvention(language);
-            var outputModelType = EntityPluginConstants.OutputModelType_Entity_GeneratedClass;
+            var outputModelType = NHibernatePluginConstants.OutputModelType_Entity_GeneratedClass;
             var builder = new ClassOutputModelBuilder(outputModelType, entity, namingConvention);
 
             builder.CreatePartialClass(entity.Name, entity.Namespace);
@@ -53,7 +53,7 @@ namespace Polygen.Plugins.NHibernate.Output.Backend
             }
 
             var namingConvention = targetPlatform.GetClassNamingConvention(language);
-            var outputModelType = EntityPluginConstants.OutputModelType_Entity_CustomClass;
+            var outputModelType = NHibernatePluginConstants.OutputModelType_Entity_CustomClass;
             var builder = new ClassOutputModelBuilder(outputModelType, entity, namingConvention);
 
             builder.CreatePartialClass(entity.Name, entity.Namespace);

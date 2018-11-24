@@ -9,17 +9,17 @@ namespace Polygen.Common.Class.OutputModel
 
         public Property(string name, string type, string defaultValue = null)
         {
-            this.Name = name;
-            this.Type = new TypeRef(type);
-            this.DefaultValue = defaultValue;
+            Name = name;
+            Type = new TypeRef(type);
+            DefaultValue = defaultValue;
         }
 
-        public List<Attribute> Attributes => this._attributeList.Value;
+        public List<Attribute> Attributes => _attributeList.Value;
         public List<string> Modifiers { get; } = new List<string>();
         public string Name { get; set; }
         public TypeRef Type { get; set; }
         public string DefaultValue { get; set; }
 
-        public string ModifiersString => string.Join(" ", this.Modifiers);
+        public string ModifiersString => string.Join(" ", Modifiers);
     }
 }

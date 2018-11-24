@@ -8,8 +8,8 @@ namespace Polygen.Core.Impl.Schema
     {
         public Schema(string name, XNamespace schemaNamespace)
         {
-            this.Name = name;
-            this.Namespace = schemaNamespace;
+            Name = name;
+            Namespace = schemaNamespace;
         }
 
         public string Name { get; }
@@ -18,19 +18,19 @@ namespace Polygen.Core.Impl.Schema
 
         public void SetRootElement(ISchemaElement element)
         {
-            this.RootElement = element;
+            RootElement = element;
         }
 
         public ISchemaElementBuilder CreateRootElement(XName name)
         {
-            if (this.RootElement != null)
+            if (RootElement != null)
             {
                 throw new SchemaException("Root element is already set.");
             }
 
-            this.RootElement = new SchemaElement(this, name, null);
+            RootElement = new SchemaElement(this, name, null);
 
-            return new SchemaElementBuilder(this.RootElement);
+            return new SchemaElementBuilder(RootElement);
         }
     }
 }

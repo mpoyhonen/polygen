@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using Polygen.Core;
 using Polygen.Core.DataType;
 using Polygen.Core.Schema;
+using Polygen.Plugins.Base.Output.DesignModelXsd;
 
 namespace Polygen.Plugins.Base.Output.Xsd
 {
     /// <summary>
-    /// Converts schema elements into XSD output mocel.
+    /// Converts schema elements into XSD output model.
     /// </summary>
     public class SchemaConverter
     {
         private static readonly XNamespace XsdNamespace = "http://www.w3.org/2001/XMLSchema";
 
-        private Dictionary<string, IDataType> _usedTypes = new Dictionary<string, IDataType>();
+        private readonly Dictionary<string, IDataType> _usedTypes = new Dictionary<string, IDataType>();
 
-        public SchemaXsdOutputModel Convert(ISchema schema)
+        public XsdOutputModel Convert(ISchema schema)
         {
             var rootXmlElement = new XElement(XsdNamespace + "schema",
                 new XAttribute(XNamespace.Xmlns + "xs", XsdNamespace.NamespaceName),
@@ -30,12 +29,12 @@ namespace Polygen.Plugins.Base.Output.Xsd
             rootXmlElement.Add(Convert(schema.RootElement));
 
             // Allow data types to do post processing.
-            foreach (var dataType in this._usedTypes.Values)
+            foreach (var dataType in _usedTypes.Values)
             {
                 dataType.PostProcessXsdDefinition(rootXmlElement);
             }
 
-            return new SchemaXsdOutputModel(rootXmlElement);
+            return new XsdOutputModel(rootXmlElement);
         }
 
         private XElement Convert(ISchemaElement schemaElement)
@@ -55,7 +54,7 @@ namespace Polygen.Plugins.Base.Output.Xsd
             }
 
             // Add the documentation element.
-            this.AddDocumentationElement(xmlElement, schemaElement.Description);
+            AddDocumentationElement(xmlElement, schemaElement.Description);
 
             // Create complexType element for attributes and child elements.
             var complexTypeXmlElement = new XElement(XsdNamespace + "complexType");
@@ -72,7 +71,7 @@ namespace Polygen.Plugins.Base.Output.Xsd
 
                 foreach (var childSchemaElement in schemaElement.Children)
                 {
-                    var childXmlElement = this.Convert(childSchemaElement);
+                    var childXmlElement = Convert(childSchemaElement);
 
                     allXmlElement.Add(childXmlElement);
                 }
@@ -92,7 +91,7 @@ namespace Polygen.Plugins.Base.Output.Xsd
                 simpleContentXmlElement.Add(extensionXmlElement);
                 complexTypeXmlElement.Add(simpleContentXmlElement);
                 attributeDestinationXmlElement = extensionXmlElement;
-                this.RegisterTypeDefinition(schemaElement.ValueType);
+                RegisterTypeDefinition(schemaElement.ValueType);
             }
 
             // Add all attributes.
@@ -103,10 +102,10 @@ namespace Polygen.Plugins.Base.Output.Xsd
                     throw new Exception($"Data type must be set for schema element attribute '{schemaElementAttribute.Name}");
                 }
 
-                var attributeXmlElement = this.CreateAttributeElement(schemaElementAttribute);
+                var attributeXmlElement = CreateAttributeElement(schemaElementAttribute);
 
                 attributeDestinationXmlElement.Add(attributeXmlElement);
-                this.RegisterTypeDefinition(schemaElementAttribute.Type);
+                RegisterTypeDefinition(schemaElementAttribute.Type);
             }
 
             // Remove the complexType element, if it is not needed after all.
@@ -124,9 +123,9 @@ namespace Polygen.Plugins.Base.Output.Xsd
         /// <param name="element"></param>
         private void RegisterTypeDefinition(IDataType dataType)
         {
-            if (!this._usedTypes.ContainsKey(dataType.Name))
+            if (!_usedTypes.ContainsKey(dataType.Name))
             {
-                this._usedTypes[dataType.Name] = dataType;
+                _usedTypes[dataType.Name] = dataType;
             }
         }
 
@@ -142,7 +141,7 @@ namespace Polygen.Plugins.Base.Output.Xsd
                 attributeXmlElement.Add(new XAttribute("use", "required"));
             }
 
-            this.AddDocumentationElement(attributeXmlElement, schemaElementAttribute.Description);
+            AddDocumentationElement(attributeXmlElement, schemaElementAttribute.Description);
 
             return attributeXmlElement;
         }

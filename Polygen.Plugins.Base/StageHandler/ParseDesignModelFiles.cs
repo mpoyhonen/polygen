@@ -23,20 +23,20 @@ namespace Polygen.Plugins.Base.StageHandler
 
         public override void Execute()
         {
-            var inputXmlFiles = this.ProjectCollection
+            var inputXmlFiles = ProjectCollection
                  .Projects
                  .SelectMany(x => x.DesignModelFiles)
                  .ToList();
 
-            var schema = this.Schemas.GetSchemaByNamespace(BasePluginConstants.DesignModel_SchemaNamespace);
+            var schema = Schemas.GetSchemaByNamespace(BasePluginConstants.DesignModel_SchemaNamespace);
 
-            this.ParseState.Elements = new List<IXmlElement>();
+            ParseState.Elements = new List<IXmlElement>();
 
             foreach (var inputXmlFile in inputXmlFiles)
             {
                 using (var reader = inputXmlFile.OpenAsTextForReading())
                 {
-                    this.ParseState.Elements.Add(this.XmlElementParser.Parse(reader, schema, inputXmlFile));
+                    ParseState.Elements.Add(XmlElementParser.Parse(reader, schema, inputXmlFile));
                 }
             }
         }

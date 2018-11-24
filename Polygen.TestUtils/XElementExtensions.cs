@@ -81,7 +81,7 @@ namespace Polygen.TestUtils
                 buf.Append($"<{elementName}");
                 AppendAttributes(element, prefixMap);
 
-                if (element.Elements().Count() == 0)
+                if (!element.Elements().Any())
                 {
                     if (!string.IsNullOrWhiteSpace(element.Value))
                     {
@@ -113,6 +113,11 @@ namespace Polygen.TestUtils
             Append(rootElement, 0, new Dictionary<string, string>());
 
             return buf.ToString();
+        }
+
+        public static string FixNewlines(this string str)
+        {
+            return str.Replace("\r\n", "\n");
         }
     }
 }

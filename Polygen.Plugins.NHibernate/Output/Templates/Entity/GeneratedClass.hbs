@@ -10,11 +10,11 @@ namespace {{Model.ClassNamespace}}
     {{Model.ModifiersString}} class {{Model.ClassName}}
     {
         {{#Model.Fields}}
-            {{> Entity/Field}}
+            {{> NHibernate/Entity/Field}}
         {{/Model.Fields}}
 
         {{#Model.Properties}}
-            {{> Entity/Property}}
+            {{> NHibernate/Entity/Property}}
         {{/Model.Properties}}
     }
 }

@@ -8,9 +8,9 @@ namespace Polygen.Core.Impl.DesignModel
     {
         public XmlAttribute(ISchemaElementAttribute definition, string value, IParseLocationInfo parseLocation)
         {
-            this.Definition = definition;
-            this.Value = value;
-            this.ParseLocation = parseLocation;
+            Definition = definition;
+            Value = value;
+            ParseLocation = parseLocation;
         }
 
         public ISchemaElementAttribute Definition { get; }

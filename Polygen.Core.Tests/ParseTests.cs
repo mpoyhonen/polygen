@@ -28,7 +28,7 @@ namespace Polygen.Core.Tests
         [InlineData(@"<?xml version='1.0' encoding='UTF-8' standalone='no' ?>")]
         public void No_root_element_throws_an_exception(string xml)
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var exception = Assert.Throws<XmlException>(() => parser.Parse(new StringReader(xml), schema, new ProjectFile("file.xml")));
@@ -41,7 +41,7 @@ namespace Polygen.Core.Tests
         [InlineData(@"<root2 xmlns='urn:test-ns1' />")]
         public void Invalid_root_element_throws_an_exception(string xml)
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var exception = Assert.Throws<ParseException>(() => parser.Parse(new StringReader(xml), schema, new ProjectFile("file.xml")));
@@ -52,7 +52,7 @@ namespace Polygen.Core.Tests
         [Fact]
         public void Parse_root_element()
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var xml = $@"
@@ -72,7 +72,7 @@ namespace Polygen.Core.Tests
         [Fact]
         public void Parse_one_child_element()
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var xml = $@"
@@ -95,7 +95,7 @@ namespace Polygen.Core.Tests
         [Fact]
         public void Parse_one_child_element_and_attribute_from_another_namespace()
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var xml = $@"
@@ -118,7 +118,7 @@ namespace Polygen.Core.Tests
         [Fact]
         public void Parse_child_element_from_another_namespace()
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var xml = $@"
@@ -142,7 +142,7 @@ namespace Polygen.Core.Tests
         [Fact]
         public void Parse_child_element_with_content_as_value()
         {
-            var schemas = this.CreateSchemas();
+            var schemas = CreateSchemas();
             var schema = schemas.GetSchemaByNamespace(NS1);
             var parser = new Impl.Parser.XmlElementParser();
             var xml = $@"
@@ -167,7 +167,7 @@ namespace Polygen.Core.Tests
 
         private ISchemaCollection CreateSchemas()
         {
-            var schemaCollection = new Impl.Schema.SchemaCollection();
+            var schemaCollection = new SchemaCollection();
             var schema1 = schemaCollection.AddSchema("schema1", NS1.NamespaceName);
 
             schema1

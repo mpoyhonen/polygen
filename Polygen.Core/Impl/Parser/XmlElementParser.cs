@@ -37,7 +37,7 @@ namespace Polygen.Core.Impl.Parser
                 throw new ParseException(elementLocationInfo, $"Invalid root XML element '{xmlElement.Name}'");
             }
 
-            return this.ParseXmlElement(schema.RootElement, xmlElement, null, file);
+            return ParseXmlElement(schema.RootElement, xmlElement, null, file);
         }
 
         private IXmlElement ParseXmlElement(ISchemaElement schemaElement, XElement sourceXmlElement, IXmlElement parentXmlElement, IProjectFile file)
@@ -77,7 +77,7 @@ namespace Polygen.Core.Impl.Parser
                         throw new ParseException(elementLocationInfo, $"Unknown child XML element '{childXmlElement.Name}'");
                     }
 
-                    var childDesignModelElement = this.ParseXmlElement(childSchemaElement, childXmlElement, xmlElement, file);
+                    var childDesignModelElement = ParseXmlElement(childSchemaElement, childXmlElement, xmlElement, file);
 
                     xmlElement.AddChildElement(childDesignModelElement);
                 }

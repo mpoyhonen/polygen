@@ -4,7 +4,7 @@ using Polygen.Core.Stage;
 using Polygen.Core.TargetPlatform;
 using Polygen.Core.Template;
 using Polygen.Plugins.Base;
-using Polygen.Plugins.NHibernate.Output.Backend;
+using Polygen.Plugins.NHibernate.Output.Entity;
 
 namespace Polygen.Plugins.NHibernate.StageHandler
 {
@@ -27,9 +27,9 @@ namespace Polygen.Plugins.NHibernate.StageHandler
             var targetPlatform = new TargetPlatform("NHibernate") as ITargetPlatform;
 
             targetPlatform.RegisterClassNamingConvention(BasePluginConstants.Language_CSharp, NamingConventionCollection.GetClassNamingConvention(BasePluginConstants.Language_CSharp));
-            targetPlatform.RegisterOutputModelGenerator(EntityPluginConstants.DesignModelType_Entity, EntityOutputModelGenerator, overwrite: true);
-            targetPlatform.RegisterOutputTemplate(EntityPluginConstants.OutputModelType_Entity_GeneratedClass, TemplateCollection.GetTemplate(EntityPluginConstants.OutputTemplateName_Entity_GeneratedClass));
-            targetPlatform.RegisterOutputTemplate(EntityPluginConstants.OutputModelType_Entity_CustomClass, TemplateCollection.GetTemplate(EntityPluginConstants.OutputTemplateName_Entity_CustomClass));
+            targetPlatform.RegisterOutputModelGenerator(BasePluginConstants.DesignModelType_Entity, EntityOutputModelGenerator, overwrite: true);
+            targetPlatform.RegisterOutputTemplate(NHibernatePluginConstants.OutputModelType_Entity_GeneratedClass, TemplateCollection.GetTemplate(NHibernatePluginConstants.OutputTemplateName_Entity_GeneratedClass));
+            targetPlatform.RegisterOutputTemplate(NHibernatePluginConstants.OutputModelType_Entity_CustomClass, TemplateCollection.GetTemplate(NHibernatePluginConstants.OutputTemplateName_Entity_CustomClass));
 
             TargetPlatformCollection.RegisterTargetPlatform(targetPlatform);
         }

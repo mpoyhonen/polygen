@@ -15,11 +15,11 @@ namespace Polygen.Core.Impl.Project
 
         public Project(string name, string type, string sourceFolder)
         {
-            this.Name = name;
-            this.Type = type;
-            this.SourceFolder = sourceFolder;
-            this.ProjectFolder = new ProjectFolder(this, "");
-            this.ProjectFile = new ProjectFile(this, this.Name + ".csproj");
+            Name = name;
+            Type = type;
+            SourceFolder = sourceFolder;
+            ProjectFolder = new ProjectFolder(this, "");
+            ProjectFile = new ProjectFile(this, Name + ".csproj");
         }
 
         public string Name { get; }
@@ -29,37 +29,37 @@ namespace Polygen.Core.Impl.Project
         public IProjectFile ProjectFile { get; set; }
         public IProjectFolder ProjectFolder { get; }
         public bool IsVisualStudioProject { get; set; }
-        public IEnumerable<IProjectFile> DesignModelFiles => this.GetDesignModelFiles();
+        public IEnumerable<IProjectFile> DesignModelFiles => GetDesignModelFiles();
 
         public void SetTempFolder(string tempFolder)
         {
-            this.TempFolder = tempFolder;
+            TempFolder = tempFolder;
         }
 
         public void SetDesignModelsFolder(string folders)
         {
-            this._designModelFolders = folders;
+            _designModelFolders = folders;
         }
 
         private IEnumerable<IProjectFile> GetDesignModelFiles()
         {
-            if (string.IsNullOrWhiteSpace(this._designModelFolders))
+            if (string.IsNullOrWhiteSpace(_designModelFolders))
             {
                 yield break;
             }
 
-            if (string.IsNullOrWhiteSpace(this.SourceFolder))
+            if (string.IsNullOrWhiteSpace(SourceFolder))
             {
                 throw new ConfigurationException("Source folder must be set.");
             }
 
-            var scanner = new FolderScanner(Path.GetFullPath(this.SourceFolder));
+            var scanner = new FolderScanner(Path.GetFullPath(SourceFolder));
 
-            foreach (var folder in scanner.Scan(this._designModelFolders))
+            foreach (var folder in scanner.Scan(_designModelFolders))
             {
                 foreach (var file in Directory.EnumerateFiles(folder, "*.xml", SearchOption.AllDirectories))
                 {
-                    var relativePath = PathUtils.GetRelativePath(this.SourceFolder, file);
+                    var relativePath = PathUtils.GetRelativePath(SourceFolder, file);
 
                     yield return new ProjectFile(this, relativePath);
                 }
@@ -75,5 +75,26 @@ namespace Polygen.Core.Impl.Project
         {
             return new ProjectFolder(this, path);
         }
+        
+        #region Equality comparison
+        
+        private bool Equals(IProject other)
+        {
+            return string.Equals(Name, other.Name);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((Project) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Name != null ? Name.GetHashCode() : 0);
+        }
+
+        #endregion
     }
 }

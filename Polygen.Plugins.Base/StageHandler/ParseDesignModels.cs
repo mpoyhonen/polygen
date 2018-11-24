@@ -21,17 +21,17 @@ namespace Polygen.Plugins.Base.StageHandler
 
         public override void Execute()
         {
-            if (this.ParseState?.Elements == null)
+            if (ParseState?.Elements == null)
             {
                 throw new ConfigurationException("No elements have been parsed.");
             }
 
             foreach (var xmlElement in ParseState.Elements)
             {
-                this.DesignModelParser.Parse(xmlElement, this.DesignModels);
+                DesignModelParser.Parse(xmlElement, DesignModels);
             }
 
-            this.ParseState.Elements = null;
+            ParseState.Elements = null;
         }
     }
 

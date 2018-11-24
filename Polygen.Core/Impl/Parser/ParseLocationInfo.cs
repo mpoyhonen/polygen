@@ -10,16 +10,16 @@ namespace Polygen.Core.Impl.Parser
     {
         public ParseLocationInfo(XElement element, IProjectFile file)
         {
-            this.Element = element;
-            this.LineInfo = element;
-            this.File = file;
+            Element = element;
+            LineInfo = element;
+            File = file;
         }
 
         public ParseLocationInfo(XAttribute attribute, IProjectFile file)
         {
-            this.Attribute = attribute;
-            this.LineInfo = attribute;
-            this.File = file;
+            Attribute = attribute;
+            LineInfo = attribute;
+            File = file;
         }
 
         public XElement Element { get; }
@@ -32,11 +32,11 @@ namespace Polygen.Core.Impl.Parser
             var buf = new StringBuilder(512);
 
             buf.Append("file: ");
-            buf.Append(this.File.GetSourcePath(false) ?? this.File.RelativePath);
+            buf.Append(File.GetSourcePath(false) ?? File.RelativePath);
 
-            if (this.LineInfo.HasLineInfo())
+            if (LineInfo.HasLineInfo())
             {
-                buf.Append(" , line: ").Append(this.LineInfo.LineNumber).Append(", column: ").Append(this.LineInfo.LinePosition);
+                buf.Append(" , line: ").Append(LineInfo.LineNumber).Append(", column: ").Append(LineInfo.LinePosition);
             }
 
             return buf.ToString();

@@ -7,7 +7,7 @@
     {
         public TypeRef(string typeName)
         {
-            this.TypeName = typeName;
+            TypeName = typeName;
         }
 
         public string TypeName { get; set; }

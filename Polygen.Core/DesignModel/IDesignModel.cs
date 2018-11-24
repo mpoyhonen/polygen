@@ -23,6 +23,10 @@ namespace Polygen.Core.DesignModel
         /// </summary>
         string FullyQualifiedName { get; }
         /// <summary>
+        /// Globally unique ID of this design model.
+        /// </summary>
+        string ObjectId { get; set; }
+        /// <summary>
         /// Design model element this model was parsed from.
         /// </summary>
         IXmlElement Element { get; }

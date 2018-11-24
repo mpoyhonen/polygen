@@ -21,24 +21,24 @@ namespace Polygen.Plugins.Base.StageHandler
         public override void Execute()
         {
             // TODO: Find out the proper XSD data types!
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_bool, "xs:boolean"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_byte, "byte"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_char, "char"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_decimal, "decimal"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_double, "double"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_float, "float"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_int, "int"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_long, "long"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_sbyte, "sbyte"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_short, "short"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_uint, "uint"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_ulong, "ulong"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_ushort, "ushort"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_string, "xs:string"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_date, "date"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_time, "time"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_datetime, "datetime"));
-            this.DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_guid, "guid"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_bool, "xs:boolean"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_byte, "byte"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_char, "char"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_decimal, "decimal"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_double, "double"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_float, "float"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_int, "int"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_long, "long"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_sbyte, "sbyte"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_short, "short"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_uint, "uint"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_ulong, "ulong"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_ushort, "ushort"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_string, "xs:string"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_date, "date"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_time, "time"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_datetime, "datetime"));
+            DataTypes.Add(new PrimitiveType(BasePluginConstants.DataType_guid, "guid"));
         }
     }
 }

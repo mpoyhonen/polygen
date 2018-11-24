@@ -22,7 +22,7 @@ namespace Polygen.Plugins.Base.Models.ProjectConfiguration.Parser
 
         public override IDesignModel GenerateDesignModel(IXmlElement xmlElement, DesignModelParseContext context)
         {
-            var projectConfiguration = new Models.ProjectConfiguration.ProjectConfiguration(
+            var projectConfiguration = new ProjectConfiguration(
                 CoreConstants.DesignModelType_ProjectConfiguration,
                 context.Namespace,
                 xmlElement,

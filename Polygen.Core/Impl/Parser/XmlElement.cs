@@ -16,9 +16,9 @@ namespace Polygen.Core.Impl.DesignModel
 
         public XmlElement(ISchemaElement definition, IXmlElement parentElement, IParseLocationInfo parseLocation)
         {
-            this.Definition = definition;
-            this.ParentElement = parentElement;
-            this.ParseLocation = parseLocation;
+            Definition = definition;
+            ParentElement = parentElement;
+            ParseLocation = parseLocation;
         }
 
         public ISchemaElement Definition { get; }
@@ -27,25 +27,25 @@ namespace Polygen.Core.Impl.DesignModel
         public string Value { get; set; }
         public INamespace Namespace { get; set; }
 
-        public IEnumerable<IXmlElementAttribute> Attributes => this._attributes;
-        public IEnumerable<IXmlElement> Children => this._children;
+        public IEnumerable<IXmlElementAttribute> Attributes => _attributes;
+        public IEnumerable<IXmlElement> Children => _children;
         public IDesignModel DesignModel { get; set; }
 
         public IXmlElementAttribute GetAttribute(string name)
         {
-            return this._attributes.Find(x => x.Definition.Name.LocalName == name);
+            return _attributes.Find(x => x.Definition.Name.LocalName == name);
         }
 
         public IEnumerable<IXmlElement> GetChildElments(XName name)
         {
-            return this._children.Where(x => x.Definition.Name.LocalName == name);
+            return _children.Where(x => x.Definition.Name.LocalName == name);
         }
 
         public IXmlElement FindChildElement(string path)
         {
             var pos = path.IndexOf('/');
             var name = pos > 0 ? path.Substring(0, pos) : path;
-            var match = this._children.Find(x => x.Definition.Name.LocalName == name);
+            var match = _children.Find(x => x.Definition.Name.LocalName == name);
 
             if (match == null)
             {
@@ -57,37 +57,37 @@ namespace Polygen.Core.Impl.DesignModel
 
         public void AddAttribute(IXmlElementAttribute attribute)
         {
-            if (this._attributes.Any(x => x.Definition.Name == attribute.Definition.Name))
+            if (_attributes.Any(x => x.Definition.Name == attribute.Definition.Name))
             {
                 throw new DesignModelElementException(this, $"Attribute '{attribute.Definition.Name}' is already defined for this element.");
             }
 
-            this._attributes.Add(attribute);
+            _attributes.Add(attribute);
         }
 
         public void AddChildElement(IXmlElement childElement)
         {
-            if (!childElement.Definition.AllowMultiple && this._children.Any(x => x.Definition.Name == childElement.Definition.Name))
+            if (!childElement.Definition.AllowMultiple && _children.Any(x => x.Definition.Name == childElement.Definition.Name))
             {
                 throw new DesignModelElementException(this, $"Child element '{childElement.Definition.Name.LocalName}' is already defined for this element.");
             }
 
-            this._children.Add(childElement);
+            _children.Add(childElement);
         }
 
         public void Validate()
         {
-            foreach (var attributeDef in this.Definition.Attributes)
+            foreach (var attributeDef in Definition.Attributes)
             {
-                if (attributeDef.IsMandatory && !this._attributes.Any(x => x.Definition.Name.LocalName == attributeDef.Name.LocalName))
+                if (attributeDef.IsMandatory && !_attributes.Any(x => x.Definition.Name.LocalName == attributeDef.Name.LocalName))
                 {
                     throw new DesignModelElementException(this, $"Attribute '{attributeDef.Name.LocalName}' is must be defined for this element.");
                 }
             }
 
-            foreach (var childElementDef in this.Definition.Children)
+            foreach (var childElementDef in Definition.Children)
             {
-                if (childElementDef.IsMandatory && !this._children.Any(x => x.Definition.Name == childElementDef.Name))
+                if (childElementDef.IsMandatory && !_children.Any(x => x.Definition.Name == childElementDef.Name))
                 {
                     throw new DesignModelElementException(this, $"Child element '{childElementDef.Name.LocalName}' is must be defined for this element.");
                 }

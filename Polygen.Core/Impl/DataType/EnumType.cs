@@ -12,9 +12,9 @@ namespace Polygen.Core.Impl.DataType
 	{
 		public EnumType(string name, params Value[] values)
 		{
-			this.Name = name;
-			this.XsdName = "tns:enum-" + name;
-            this.Values = values;
+			Name = name;
+			XsdName = "tns:enum-" + name;
+            Values = values;
 		}
 
 		public string Name { get; }
@@ -24,7 +24,7 @@ namespace Polygen.Core.Impl.DataType
 		public void PostProcessXsdDefinition(XElement schemaRootElement)
 		{
             var ns = schemaRootElement.Name.Namespace;
-            var valueElements = this.Values
+            var valueElements = Values
                 .Select(x =>
                 {
                     var enumValueElement = new XElement(ns + "enumeration", new XAttribute("value", x.Name));
@@ -42,7 +42,7 @@ namespace Polygen.Core.Impl.DataType
                 });
 
             var enumSimpleTypeElement = new XElement(ns + "simpleType",
-                new XAttribute("name", "enum-" + this.Name),
+                new XAttribute("name", "enum-" + Name),
                 new XElement(ns + "restriction",
                     new XAttribute("base", "xs:string"),
                     valueElements

@@ -14,37 +14,37 @@ namespace Polygen.Core.Tests
 
         public TempFolder(string baseFolderName = "Polygen")
         {
-            this._baseFolder = Path.Combine(Path.GetTempPath(), baseFolderName);
+            _baseFolder = Path.Combine(Path.GetTempPath(), baseFolderName);
         }
 
         public string GetRootPath()
         {
-            if (this._tempFolder == null)
+            if (_tempFolder == null)
             {
-                this._tempFolder = Path.Combine(this._baseFolder, Guid.NewGuid().ToString().Replace("-", ""));
-                Directory.CreateDirectory(this._tempFolder);
+                _tempFolder = Path.Combine(_baseFolder, Guid.NewGuid().ToString().Replace("-", ""));
+                Directory.CreateDirectory(_tempFolder);
             }
 
-            return this._tempFolder;
+            return _tempFolder;
         }
 
         public string GetPath(string path)
         {
-            return Path.GetFullPath(Path.Combine(this.GetRootPath(), path));
+            return Path.GetFullPath(Path.Combine(GetRootPath(), path));
         }
 
         public void Dispose()
         {
-            if (this._tempFolder != null)
+            if (_tempFolder != null)
             {
-                Directory.Delete(this._tempFolder, true);
-                this._tempFolder = null;
+                Directory.Delete(_tempFolder, true);
+                _tempFolder = null;
             }
         }
 
         public string CreateFolder(string dirPath)
         {
-            dirPath = this.GetPath(dirPath);
+            dirPath = GetPath(dirPath);
 
             if (!Directory.Exists(dirPath))
             {
@@ -56,7 +56,7 @@ namespace Polygen.Core.Tests
 
         public TextWriter OpenTextFileForWriting(string filePath)
         {
-            filePath = this.GetPath(filePath);
+            filePath = GetPath(filePath);
 
             var dirPath = Path.GetDirectoryName(filePath);
 
@@ -70,7 +70,7 @@ namespace Polygen.Core.Tests
 
         public void CreateWriteTextFile(string filePath, string text)
         {
-            using (var writer = this.OpenTextFileForWriting(filePath))
+            using (var writer = OpenTextFileForWriting(filePath))
             {
                 writer.Write(text);
             }
@@ -98,7 +98,7 @@ namespace Polygen.Core.Tests
                 }
             }
 
-            CopyAll(new DirectoryInfo(sourceDir), new DirectoryInfo(this.GetRootPath()));
+            CopyAll(new DirectoryInfo(sourceDir), new DirectoryInfo(GetRootPath()));
         }
     }
 }

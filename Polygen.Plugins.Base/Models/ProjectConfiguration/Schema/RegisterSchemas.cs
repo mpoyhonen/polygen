@@ -28,8 +28,8 @@ namespace Polygen.Plugins.Base.Models.ProjectConfiguration.StageHandler
 
         public override void Execute()
         {
-            var schema = this.Schemas.AddSchema(CoreConstants.ProjectConfiguration_SchemaName, CoreConstants.ProjectConfiguration_SchemaNamespace);
-			var stringType = this.DataTypeRegistry.Get(BasePluginConstants.DataType_string);
+            var schema = Schemas.AddSchema(CoreConstants.ProjectConfiguration_SchemaName, CoreConstants.ProjectConfiguration_SchemaNamespace);
+			var stringType = DataTypeRegistry.Get(BasePluginConstants.DataType_string);
 
 			schema
                 .CreateRootElement("ProjectConfiguration")
@@ -42,7 +42,7 @@ namespace Polygen.Plugins.Base.Models.ProjectConfiguration.StageHandler
                             .Parent()
                         .CreateElement("Namespaces", "Defines the namespaces to be used in design models");
 
-            this.DesignModelConverterFactory.RegisterFactory(schema.RootElement, new ProjectConfigurationParser(ProjectCollection));
+            DesignModelConverterFactory.RegisterFactory(schema.RootElement, new ProjectConfigurationParser(ProjectCollection));
         }
     }
 }

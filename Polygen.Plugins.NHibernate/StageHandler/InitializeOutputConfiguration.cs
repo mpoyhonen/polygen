@@ -24,16 +24,14 @@ namespace Polygen.Plugins.NHibernate.StageHandler
 
         public override void Execute()
         {
-            TemplateCollection.LoadTemplates(GetType().Assembly);
-
             var dataProject = Projects.GetFirstProjectByType(BasePluginConstants.ProjectType_Data);
             var mainOutputConfiguration = DesignModelCollection.RootNamespace.OutputConfiguration;
 
-            mainOutputConfiguration.RegisterTargetPlatformForDesignModelType(EntityPluginConstants.DesignModelType_Entity, TargetPlatformCollection.GetTargetPlatform("NHibernate"));
-            mainOutputConfiguration.RegisterOutputFolder(new Filter(EntityPluginConstants.OutputModelType_Entity_GeneratedClass), dataProject.GetFolder("Entity"));
-            mainOutputConfiguration.RegisterOutputFolder(new Filter(EntityPluginConstants.OutputModelType_Entity_CustomClass), dataProject.GetFolder("Entity"));
+            mainOutputConfiguration.RegisterTargetPlatformForDesignModelType(BasePluginConstants.DesignModelType_Entity, TargetPlatformCollection.GetTargetPlatform("NHibernate"));
+            mainOutputConfiguration.RegisterOutputFolder(new Filter(NHibernatePluginConstants.OutputModelType_Entity_GeneratedClass), dataProject.GetFolder("Entity"));
+            mainOutputConfiguration.RegisterOutputFolder(new Filter(NHibernatePluginConstants.OutputModelType_Entity_CustomClass), dataProject.GetFolder("Entity"));
 
-            mainOutputConfiguration.RegisterOutputFolder(new Filter(EntityPluginConstants.OutputModelType_Entity_CustomClass), dataProject.GetFolder("Entity"));
+            mainOutputConfiguration.RegisterOutputFolder(new Filter(NHibernatePluginConstants.OutputModelType_Mapping), dataProject.GetFolder("Mapping"));
         }
     }
 }

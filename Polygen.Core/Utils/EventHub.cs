@@ -15,12 +15,12 @@ namespace Polygen.Core.Utils
 
         public void AddListener(Action<EventT> handler, string pluginId, string[] dependsOnPlugins = null)
         {
-            this._registrations.Add(handler, pluginId, dependsOnPlugins);
+            _registrations.Add(handler, pluginId, dependsOnPlugins);
         }
 
         public void FireEvent(EventT evt)
         {
-            foreach (var handler in this._registrations.Entries)
+            foreach (var handler in _registrations.Entries)
             {
                 handler(evt);
             }

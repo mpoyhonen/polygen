@@ -17,12 +17,12 @@ namespace Polygen.Core.Utils
 
         public Filter(char pathSeparator = '/')
         {
-            this._pathSeparator = pathSeparator;
+            _pathSeparator = pathSeparator;
         }
 
         public Filter(string includeExpr, char pathSeparator = '/'): this(pathSeparator)
         {
-            this.AddInclude(includeExpr);
+            AddInclude(includeExpr);
         }
 
         /// <summary>
@@ -31,14 +31,14 @@ namespace Polygen.Core.Utils
         /// <param name="expr"></param>
         public void AddInclude(string expr)
         {
-            var regex = StringUtils.ConvertGlobToRegex(expr, this._pathSeparator);
+            var regex = StringUtils.ConvertGlobToRegex(expr, _pathSeparator);
 
             if (regex == null)
             {
                 throw new ConfigurationException("Invalid glob pattern: " + expr);
             }
 
-            this._entries.Add(Tuple.Create(regex, true, expr));
+            _entries.Add(Tuple.Create(regex, true, expr));
         }
 
         /// <summary>
@@ -47,14 +47,14 @@ namespace Polygen.Core.Utils
         /// <param name="expr"></param>
         public void AddExclude(string expr)
         {
-            var regex = StringUtils.ConvertGlobToRegex(expr, this._pathSeparator);
+            var regex = StringUtils.ConvertGlobToRegex(expr, _pathSeparator);
 
             if (regex == null)
             {
                 throw new ConfigurationException("Invalid glob pattern: " + expr);
             }
 
-            this._entries.Add(Tuple.Create(regex, false, expr));
+            _entries.Add(Tuple.Create(regex, false, expr));
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Polygen.Core.Utils
         {
             var result = MatchStatus.None;
 
-            foreach (var entry in this._entries)
+            foreach (var entry in _entries)
             {
                 if (!entry.Item1.IsMatch(str))
                 {
@@ -103,14 +103,14 @@ namespace Polygen.Core.Utils
         /// <returns></returns>
         public bool FilterEquals(Filter other)
         {
-            if (this._entries.Count != other._entries.Count)
+            if (_entries.Count != other._entries.Count)
             {
                 return false; 
             }
 
-            for (var i = 0; i < this._entries.Count; i++)
+            for (var i = 0; i < _entries.Count; i++)
             {
-                var a = this._entries[i];
+                var a = _entries[i];
                 var b = other._entries[i];
 
                 if (a.Item3 != b.Item3 || a.Item2 != b.Item2)
@@ -125,7 +125,7 @@ namespace Polygen.Core.Utils
 
         public override string ToString()
         {
-            return string.Join(", ", this._entries.Select(x => (x.Item2 ? "Include:" : "Exclude") + x.Item3));
+            return string.Join(", ", _entries.Select(x => (x.Item2 ? "Include:" : "Exclude") + x.Item3));
         }
     }
 }

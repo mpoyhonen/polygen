@@ -35,6 +35,7 @@ namespace Polygen.Core.Impl.DesignModel
         public string DesignModelType { get; }
         public string Name { get; }
         public string FullyQualifiedName => GetFullyQualifiedName();
+        public string ObjectId { get; set; }
         public IXmlElement Element { get; }
         public IParseLocationInfo ParseLocation { get; }
         public INamespace Namespace { get; }
@@ -104,5 +105,27 @@ namespace Polygen.Core.Impl.DesignModel
 
             return _fullyQualifiedName;
         }
+        
+        #region Equality comparison
+
+        private bool Equals(DesignModelBase other)
+        {
+            return string.Equals(GetFullyQualifiedName(), other.GetFullyQualifiedName());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((DesignModelBase) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return GetFullyQualifiedName().GetHashCode();
+        }
+
+        #endregion
     }
 }

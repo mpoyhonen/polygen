@@ -11,9 +11,9 @@ namespace Polygen.Core.Stage
     {
         public StageHandlerBase(StageType stageType, string Id, params string[] dependencies)
         {
-            this.Stage = stageType;
+            Stage = stageType;
             this.Id = Id;
-            this.Dependencies = dependencies;
+            Dependencies = dependencies;
         }
 
         public string Id { get; protected set; }

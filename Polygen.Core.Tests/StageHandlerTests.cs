@@ -79,7 +79,7 @@ namespace Polygen.Core.Tests
 
             public override void Execute()
             {
-                this.InitializeCalled = true;
+                InitializeCalled = true;
             }
         }
     }

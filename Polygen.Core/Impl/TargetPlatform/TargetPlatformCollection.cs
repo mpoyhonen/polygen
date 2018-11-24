@@ -12,7 +12,7 @@ namespace Polygen.Core.Impl.TargetPlatform
 
         public ITargetPlatform GetTargetPlatform(string name, bool throwIfMissing = true)
         {
-            if (!this._map.TryGetValue(name, out var targetPlatform) && throwIfMissing)
+            if (!_map.TryGetValue(name, out var targetPlatform) && throwIfMissing)
             {
                 throw new ConfigurationException($"Target platform '{name}' not found.");
             }
@@ -22,11 +22,11 @@ namespace Polygen.Core.Impl.TargetPlatform
 
         public void RegisterTargetPlatform(ITargetPlatform targetPlatform, bool overwrite = false)
         {
-            if (this._map.ContainsKey(targetPlatform.Name))
+            if (_map.ContainsKey(targetPlatform.Name))
             {
                 if (overwrite)
                 {
-                    this._map.Remove(targetPlatform.Name);
+                    _map.Remove(targetPlatform.Name);
                 }
                 else
                 {
@@ -34,7 +34,7 @@ namespace Polygen.Core.Impl.TargetPlatform
                 }
             }
 
-            this._map[targetPlatform.Name] = targetPlatform;
+            _map[targetPlatform.Name] = targetPlatform;
         }
     }
 }

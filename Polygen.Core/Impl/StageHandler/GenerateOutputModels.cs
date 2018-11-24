@@ -5,7 +5,7 @@ using Polygen.Core.Stage;
 namespace Polygen.Core.Impl.StageHandler
 {
     /// <summary>
-    /// Generates output models from the desing models.
+    /// Generates output models from the design models.
     /// </summary>
     public class GenerateOutputModels: StageHandlerBase
     {
@@ -18,7 +18,7 @@ namespace Polygen.Core.Impl.StageHandler
 
         public override void Execute()
         {
-            foreach (var designModel in this.DesignModels.GetAllDesignModels())
+            foreach (var designModel in DesignModels.GetAllDesignModels())
             {
                 foreach (var targetPlatform in designModel.OutputConfiguration.GetTargetPlatformsForDesignModel(designModel))
                 {
@@ -26,7 +26,7 @@ namespace Polygen.Core.Impl.StageHandler
 
                     foreach (var outputModel in generator.GenerateOutputModels(designModel))
                     {
-                        this.OutputModels.AddOutputModel(outputModel);
+                        OutputModels.AddOutputModel(outputModel);
                     }
                 }
             }

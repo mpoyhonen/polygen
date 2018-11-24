@@ -11,11 +11,11 @@ namespace Polygen.Core.Impl.OutputModel
     {
         private readonly List<IOutputModel> _models = new List<IOutputModel>();
 
-        public IEnumerable<IOutputModel> Models => this._models;
+        public IEnumerable<IOutputModel> Models => _models;
 
         public void AddOutputModel(IOutputModel outputModel)
         {
-            this._models.Add(outputModel);
+            _models.Add(outputModel);
         }
     }
 }

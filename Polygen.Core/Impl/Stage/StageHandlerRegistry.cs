@@ -18,12 +18,12 @@ namespace Polygen.Core.Impl.Stage
         {
             foreach (var handler in stageHandlers)
             {
-                if (!this._hanlerMap.ContainsKey(handler.Stage))
+                if (!_hanlerMap.ContainsKey(handler.Stage))
                 {
-                    this._hanlerMap[handler.Stage] = new DependencyMap<IStageHandler>();
+                    _hanlerMap[handler.Stage] = new DependencyMap<IStageHandler>();
                 }
 
-                var handlerMap = this._hanlerMap[handler.Stage];
+                var handlerMap = _hanlerMap[handler.Stage];
 
                 if (handlerMap.ContainsId(handler.Id))
                 {
@@ -39,7 +39,7 @@ namespace Polygen.Core.Impl.Stage
 
         public IEnumerable<IStageHandler> GetHandlers(StageType stage)
         {
-            if (this._hanlerMap.TryGetValue(stage, out var map))
+            if (_hanlerMap.TryGetValue(stage, out var map))
             {
                 return map.Entries;
             }

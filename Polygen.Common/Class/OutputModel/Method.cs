@@ -9,10 +9,10 @@ namespace Polygen.Common.Class.OutputModel
         private readonly LazyList<string> _modifierList = new LazyList<string>();
         private readonly LazyList<MethodArgument> _argumentList = new LazyList<MethodArgument>();
 
-        public List<Attribute> Attributes => this._attributeList.Value;
-        public List<string> Modifiers => this._modifierList.Value;
+        public List<Attribute> Attributes => _attributeList.Value;
+        public List<string> Modifiers => _modifierList.Value;
         public string Name { get; set; }
         public TypeRef ReturnType { get; set; }
-        public List<MethodArgument> Arguments => this._argumentList.Value;
+        public List<MethodArgument> Arguments => _argumentList.Value;
     }
 }

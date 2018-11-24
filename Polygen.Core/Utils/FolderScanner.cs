@@ -17,7 +17,7 @@ namespace Polygen.Core.Utils
 
         public FolderScanner(string rootFolder)
         {
-            this._rootFolder = rootFolder;
+            _rootFolder = rootFolder;
         }
 
         public IEnumerable<string> Scan(string pattern)
@@ -31,7 +31,7 @@ namespace Polygen.Core.Utils
 
             foreach (var p in pattern.Split(',').Select(x => x.Trim()).Where(x => x.Length > 0))
             {
-                this.ExpandFolderPath(Path.GetFullPath(this._rootFolder), p, res);
+                ExpandFolderPath(Path.GetFullPath(_rootFolder), p, res);
             }
 
             return res;
@@ -59,13 +59,13 @@ namespace Polygen.Core.Utils
                 {
                     foreach (var childFolder in Directory.EnumerateDirectories(parentPath))
                     {
-                        this.ExpandFolderPath(Path.Combine(parentPath, childFolder), rest, res);
+                        ExpandFolderPath(Path.Combine(parentPath, childFolder), rest, res);
                     }
                 }
             }
             else
             {
-                this.ExpandFolderPath(Path.Combine(parentPath, folderName), rest, res);
+                ExpandFolderPath(Path.Combine(parentPath, folderName), rest, res);
             }
         }
     }

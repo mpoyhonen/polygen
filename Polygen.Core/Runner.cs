@@ -35,11 +35,11 @@ namespace Polygen.Core
             IEnumerable<IClassNamingConvention> classNamingConventions
         )
         {
-            this._schemaCollection = schemaCollection;
-            this._xmlElementParser = xmlElementParser;
-            this._designModelParser = designModelParser;
+            _schemaCollection = schemaCollection;
+            _xmlElementParser = xmlElementParser;
+            _designModelParser = designModelParser;
 
-            this._context = new Context
+            _context = new Context
             {
                 Schemas = schemaCollection,
                 DesignModels = designModelCollection,
@@ -50,7 +50,7 @@ namespace Polygen.Core
             };
         }
 
-        public IContext Context => this._context;
+        public IContext Context => _context;
 
         /// <summary>
         /// Runs the code generation process.
@@ -58,21 +58,21 @@ namespace Polygen.Core
         /// <param name="config"></param>
         public virtual void Execute(RunnerConfiguration config)
         {
-            this._configration = config;
+            _configration = config;
 
-            this.Initialize();
-            this.RegisterSchemas();
-            this.ParseProjectConfiguration(config.ProjectConfigurationFile);
-            this.RegisterTemplates();
-            this.ConfigureTargetPlatforms();
-            this.InitializeOutputConfiguration();
-            this.ParseInputXmlFilesFiles();
-            this.ParseDesignModels();
-            this.ApplyProjectLayout();
-            this.GenerateOutputModels();
-            this.WriteOutputFiles(config.TempFolder);
-            this.CopyOutputFilesToProjectFolders();
-            this.Cleanup();
+            Initialize();
+            RegisterSchemas();
+            ParseProjectConfiguration(config.ProjectConfigurationFile);
+            RegisterTemplates();
+            ConfigureTargetPlatforms();
+            InitializeOutputConfiguration();
+            ParseInputXmlFilesFiles();
+            ParseDesignModels();
+            ApplyProjectLayout();
+            GenerateOutputModels();
+            WriteOutputFiles(config.TempFolder);
+            CopyOutputFilesToProjectFolders();
+            Cleanup();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Polygen.Core
         public virtual void Initialize()
         {
             // Indicate that the context has been initialize.
-            this.FireStageEvent(StageType.Initialize);
+            FireStageEvent(StageType.Initialize);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Polygen.Core
         public virtual void RegisterSchemas()
         {
             // Fire the generic event.
-            this.FireStageEvent(StageType.RegisterSchemas);
+            FireStageEvent(StageType.RegisterSchemas);
         }
 
         /// <summary>
@@ -99,19 +99,19 @@ namespace Polygen.Core
         /// <param name="projectConfigurationFile"></param>
         public virtual void ParseProjectConfiguration(string projectConfigurationFile)
         {
-            this.FireStageEvent(StageType.BeforeParseProjectConfiguration);
+            FireStageEvent(StageType.BeforeParseProjectConfiguration);
 
-            var schema = this._schemaCollection.GetSchemaByNamespace(CoreConstants.ProjectConfiguration_SchemaNamespace);
+            var schema = _schemaCollection.GetSchemaByNamespace(CoreConstants.ProjectConfiguration_SchemaNamespace);
 
             using (var reader = File.OpenText(projectConfigurationFile))
             {
                 var dummyProject = new Impl.Project.Project("init", "init", Path.GetDirectoryName(projectConfigurationFile));
                 var dummyProjectFile = new ProjectFile(dummyProject, Path.GetFileName(projectConfigurationFile));
-                var projectConfigurationElement = this._xmlElementParser.Parse(reader, schema, dummyProjectFile);
+                var projectConfigurationElement = _xmlElementParser.Parse(reader, schema, dummyProjectFile);
 
-                this._designModelParser.Parse(projectConfigurationElement, this._context.DesignModels);
+                _designModelParser.Parse(projectConfigurationElement, _context.DesignModels);
 
-                var parsedDesignModel = this._context.DesignModels.GetByType(CoreConstants.DesignModelType_ProjectConfiguration).FirstOrDefault();
+                var parsedDesignModel = _context.DesignModels.GetByType(CoreConstants.DesignModelType_ProjectConfiguration).FirstOrDefault();
 
                 if (parsedDesignModel == null)
                 {
@@ -120,12 +120,12 @@ namespace Polygen.Core
 
                 var projectConfiguration = parsedDesignModel as IProjectConfiguration;
 
-                this._context.Configuration = projectConfiguration ?? throw new ConfigurationException("Project configuration object must implement interface IProjectConfiguration");
-                this._context.Projects = projectConfiguration.Projects;
+                _context.Configuration = projectConfiguration ?? throw new ConfigurationException("Project configuration object must implement interface IProjectConfiguration");
+                _context.Projects = projectConfiguration.Projects;
             }
 
-            this.FireStageEvent(StageType.AfterParseProjectConfiguration);
-            this.FireStageEvent(StageType.ValidateProjectConfiguration);
+            FireStageEvent(StageType.AfterParseProjectConfiguration);
+            FireStageEvent(StageType.ValidateProjectConfiguration);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Polygen.Core
         /// </summary>
         public virtual void RegisterTemplates()
         {
-            this.FireStageEvent(StageType.RegisterTemplates);
+            FireStageEvent(StageType.RegisterTemplates);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Polygen.Core
         /// </summary>
         public virtual void ConfigureTargetPlatforms()
         {
-            this.FireStageEvent(StageType.ConfigureTargetPlatforms);
+            FireStageEvent(StageType.ConfigureTargetPlatforms);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Polygen.Core
         /// </summary>
         public virtual void InitializeOutputConfiguration()
         {
-            this.FireStageEvent(StageType.InitializeOutputConfiguration);
+            FireStageEvent(StageType.InitializeOutputConfiguration);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Polygen.Core
         /// </summary>
         public virtual void ParseInputXmlFilesFiles()
         {
-            this.FireStageEvent(StageType.BeforeParseInputXmlFiles);
-            this.FireStageEvent(StageType.ParseInputXmlFiles);
-            this.FireStageEvent(StageType.AfterParseInputXmlFiles);
+            FireStageEvent(StageType.BeforeParseInputXmlFiles);
+            FireStageEvent(StageType.ParseInputXmlFiles);
+            FireStageEvent(StageType.AfterParseInputXmlFiles);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace Polygen.Core
         /// <param name="designModelFiles"></param>
         public virtual void ParseDesignModels()
         {
-            this.FireStageEvent(StageType.BeforeParseDesignModels);
-            this.FireStageEvent(StageType.ParseDesignModels);
-            this.FireStageEvent(StageType.AfterParseDesignModels);
+            FireStageEvent(StageType.BeforeParseDesignModels);
+            FireStageEvent(StageType.ParseDesignModels);
+            FireStageEvent(StageType.AfterParseDesignModels);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Polygen.Core
         /// </summary>
         public virtual void ApplyProjectLayout()
         {
-            this.FireStageEvent(StageType.ApplyProjectLayout);
+            FireStageEvent(StageType.ApplyProjectLayout);
         }
 
         /// <summary>
@@ -186,9 +186,9 @@ namespace Polygen.Core
         /// </summary>
         public void GenerateOutputModels()
         {
-            this.FireStageEvent(StageType.BeforeGenerateOutputModels);
-            this.FireStageEvent(StageType.GenerateOutputModels);
-            this.FireStageEvent(StageType.AfterOutputModelsGenerated);
+            FireStageEvent(StageType.BeforeGenerateOutputModels);
+            FireStageEvent(StageType.GenerateOutputModels);
+            FireStageEvent(StageType.AfterOutputModelsGenerated);
         }
 
         /// <summary>
@@ -197,14 +197,14 @@ namespace Polygen.Core
         /// <param name="outputFolder"></param>
         public void WriteOutputFiles(string outputFolder)
         {
-            foreach (var project in this._context.Projects.Projects)
+            foreach (var project in _context.Projects.Projects)
             {
                 ((Impl.Project.Project)project).SetTempFolder(Path.Combine(outputFolder, project.Name));
             }
 
-            this.FireStageEvent(StageType.BeforeWriteOutputFiles);
+            FireStageEvent(StageType.BeforeWriteOutputFiles);
 
-            foreach (var outputModel in this._context.OutputModels.Models)
+            foreach (var outputModel in _context.OutputModels.Models)
             {
                 if (outputModel.File == null)
                 {
@@ -222,7 +222,7 @@ namespace Polygen.Core
                 }
             }
 
-            this.FireStageEvent(StageType.AfterWriteOutputFiles);
+            FireStageEvent(StageType.AfterWriteOutputFiles);
         }
 
         /// <summary>
@@ -231,9 +231,9 @@ namespace Polygen.Core
         /// </summary>
         public void CopyOutputFilesToProjectFolders()
         {
-            this.FireStageEvent(StageType.BeforeCopyOutputFiles);
+            FireStageEvent(StageType.BeforeCopyOutputFiles);
 
-            foreach (var outputModel in this._context.OutputModels.Models)
+            foreach (var outputModel in _context.OutputModels.Models)
             {
                 if (outputModel.File == null)
                 {
@@ -251,7 +251,7 @@ namespace Polygen.Core
                 File.Copy(outputModel.File.GetTempPath(true), projectFile);
             }
 
-            this.FireStageEvent(StageType.AfterCopyOutputFiles);
+            FireStageEvent(StageType.AfterCopyOutputFiles);
         }
 
         /// <summary>
@@ -259,8 +259,8 @@ namespace Polygen.Core
         /// </summary>
         public void Cleanup()
         {
-            this.FireStageEvent(StageType.Cleanup);
-            this.FireStageEvent(StageType.Finished);
+            FireStageEvent(StageType.Cleanup);
+            FireStageEvent(StageType.Finished);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Polygen.Core
         /// <param name="stage"></param>
         private void FireStageEvent(StageType stage)
         {
-            foreach (var handler in this._context.StageHandlers.GetHandlers(stage))
+            foreach (var handler in _context.StageHandlers.GetHandlers(stage))
             {
                 handler.Execute();
             }

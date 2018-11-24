@@ -51,7 +51,7 @@ namespace Polygen.Core.Tests
         {
             return Create(builder =>
             {
-                builder.RegisterModule(new Core.AutofacModule());
+                builder.RegisterModule(new AutofacModule());
                 builder.RegisterTypes(stageHandlerTypes.ToArray())
                     .As<IStageHandler>()
                     .PropertiesAutowired();
@@ -62,7 +62,7 @@ namespace Polygen.Core.Tests
         {
             return Create(builder =>
             {
-                builder.RegisterModule(new Core.AutofacModule());
+                builder.RegisterModule(new AutofacModule());
 
                 foreach (var stageHandler in stageHandlers)
                 {

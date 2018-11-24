@@ -16,9 +16,9 @@ namespace Polygen.Templates.HandlebarsNet
 
         public Template(string name, IHandlebars handlebars, TemplateSource source)
         {
-            this.Name = name;
-            this._handlebars = handlebars;
-            this.Source = source;
+            Name = name;
+            _handlebars = handlebars;
+            Source = source;
         }
 
         public string Name { get; }
@@ -27,37 +27,37 @@ namespace Polygen.Templates.HandlebarsNet
 
         public string GetTemplateText()
         {
-            if (this._templateText == null)
+            if (_templateText == null)
             {
-                if (this.Source.IsFile)
+                if (Source.IsFile)
                 {
-                    this._templateText = File.ReadAllText(this.Source.FilePath, Encoding.UTF8);
+                    _templateText = File.ReadAllText(Source.FilePath, Encoding.UTF8);
                 }
                 else
                 {
-                    this._templateText = this.Source.Text;
+                    _templateText = Source.Text;
                 }
             }
 
-            return this._templateText;
+            return _templateText;
         }
 
         public void Render(Dictionary<string, object> data, TextWriter writer)
         {
-            this.GetRenderFn()(writer, data);
+            GetRenderFn()(writer, data);
         }
 
         public Action<TextWriter, object> GetRenderFn()
         {
-            if (this._compiledTemplateInstance == null)
+            if (_compiledTemplateInstance == null)
             {
-                using (var reader = new StringReader(this.GetTemplateText()))
+                using (var reader = new StringReader(GetTemplateText()))
                 {
-                    this._compiledTemplateInstance = this._handlebars.Compile(reader);
+                    _compiledTemplateInstance = _handlebars.Compile(reader);
                 }
             }
 
-            return this._compiledTemplateInstance;
+            return _compiledTemplateInstance;
         }
     }
 }

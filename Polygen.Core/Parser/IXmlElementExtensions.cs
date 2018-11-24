@@ -69,7 +69,7 @@ namespace Polygen.Core.Parser
             }
             catch (Exception e)
             {
-                throw new ParseException(element.ParseLocation, $"Invalid integer value: {value}");
+                throw new ParseException(element.ParseLocation, $"Invalid integer value: {value}", e);
             }
         }
     }

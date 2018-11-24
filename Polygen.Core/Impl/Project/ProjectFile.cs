@@ -18,12 +18,12 @@ namespace Polygen.Core.Impl.Project
 
         public TextReader OpenAsTextForReading()
         {
-            return new StreamReader(File.Open(this.GetSourcePath(true), FileMode.Open), Encoding.UTF8);
+            return new StreamReader(File.Open(GetSourcePath(true), FileMode.Open), Encoding.UTF8);
         }
 
         public TextWriter OpenAsTextForWriting()
         {
-            var path = this.GetTempPath(true);
+            var path = GetTempPath(true);
             var dir = Path.GetDirectoryName(path);
 
             if (!Directory.Exists(dir))
@@ -36,7 +36,7 @@ namespace Polygen.Core.Impl.Project
 
         public string ReadText()
         {
-            using (var reader = this.OpenAsTextForReading())
+            using (var reader = OpenAsTextForReading())
             {
                 return reader.ReadToEnd();
             }
@@ -44,7 +44,7 @@ namespace Polygen.Core.Impl.Project
 
         public void WriteText(string text)
         {
-            using (var writer = this.OpenAsTextForWriting())
+            using (var writer = OpenAsTextForWriting())
             {
                 writer.Write(text);
             }

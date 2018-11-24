@@ -36,7 +36,7 @@ namespace Polygen.Plugins.Base.NamingConvention
 
         public string GetOutputFolderPath(INamespace classNamespace)
         {
-            return this.GetNamespaceName(classNamespace).Replace(".", "/");
+            return GetNamespaceName(classNamespace).Replace(".", "/");
         }
     }
 }

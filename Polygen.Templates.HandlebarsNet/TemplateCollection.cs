@@ -13,7 +13,7 @@ namespace Polygen.Templates.HandlebarsNet
 {
     public class TemplateCollection : ITemplateCollection
     {
-        private Dictionary<string, Template> _templateMap = new Dictionary<string, Template>();
+        private readonly Dictionary<string, Template> _templateMap = new Dictionary<string, Template>();
 
         public TemplateCollection()
         {
@@ -24,14 +24,14 @@ namespace Polygen.Templates.HandlebarsNet
                 TextEncoder = new NoopTextEncoder()
             };
 
-            this.Instance = Handlebars.Create(config);
+            Instance = Handlebars.Create(config);
         }
 
         public IHandlebars Instance { get; }
 
         public ITemplate GetTemplate(string name, bool throwIfMissing = true)
         {
-            if (!this._templateMap.TryGetValue(name, out var template) && throwIfMissing)
+            if (!_templateMap.TryGetValue(name, out var template) && throwIfMissing)
             {
                 throw new ConfigurationException($"Template '{name}' is not registered.");
             }
@@ -41,9 +41,9 @@ namespace Polygen.Templates.HandlebarsNet
 
         public void AddTemplate(string name, string templateText, bool overrideExisting = false)
         {
-            var template = new Template(name, this.Instance, TemplateSource.CreateForText(templateText));
+            var template = new Template(name, Instance, TemplateSource.CreateForText(templateText));
 
-            this.RegisterTemplate(template, overrideExisting);
+            RegisterTemplate(template, overrideExisting);
         }
 
         public void LoadTemplates(params string[] folders)
@@ -60,41 +60,38 @@ namespace Polygen.Templates.HandlebarsNet
                         templateName = templateDir + "/" + templateName;
                     }
 
-                    var template = new Template(templateName, this.Instance, TemplateSource.CreateForFile(file));
+                    var template = new Template(templateName, Instance, TemplateSource.CreateForFile(file));
 
-                    this.RegisterTemplate(template, true);
+                    RegisterTemplate(template, true);
                 }
             }
         }
 
-        public void LoadTemplates(params Assembly[] assemblies)
+        public void LoadTemplates(Assembly assembly, string templatePath, string templateNamePrefix)
         {
-            var pattern = new Regex(@"^.*\.Templates\.(.+)\.hbs$", RegexOptions.IgnoreCase);
+            var pattern = new Regex($@"^{Regex.Escape(templatePath)}\.(.+)\.hbs$", RegexOptions.IgnoreCase);
 
-            foreach (var assembly in assemblies)
+            foreach (var resourceName in assembly.GetManifestResourceNames())
             {
-                foreach (var resourceName in assembly.GetManifestResourceNames())
+                var match = pattern.Match(resourceName);
+
+                if (!match.Success)
                 {
-                    var match = pattern.Match(resourceName);
-
-                    if (!match.Success)
-                    {
-                        continue;
-                    }
-
-                    var contents = default(string);
-
-                    using (var stream = assembly.GetManifestResourceStream(resourceName))
-                    using (var reader = new StreamReader(stream, Encoding.UTF8))
-                    {
-                        contents = reader.ReadToEnd();
-                    }
-
-                    var templateName = match.Groups[1].Value.Replace('.', '/');
-                    var template = new Template(templateName, this.Instance, TemplateSource.CreateForText(contents));
-
-                    this.RegisterTemplate(template, true);
+                    continue;
                 }
+
+                var contents = default(string);
+
+                using (var stream = assembly.GetManifestResourceStream(resourceName))
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    contents = reader.ReadToEnd();
+                }
+
+                var templateName = templateNamePrefix + "/" + match.Groups[1].Value.Replace('.', '/');
+                var template = new Template(templateName, Instance, TemplateSource.CreateForText(contents));
+
+                RegisterTemplate(template, true);
             }
         }
 
@@ -107,7 +104,7 @@ namespace Polygen.Templates.HandlebarsNet
                 throw new CodeGenerationException("Template must be of type HandlebarsNetTemplate");
             }
 
-            if (this._templateMap.ContainsKey(internalTemplate.Name))
+            if (_templateMap.ContainsKey(internalTemplate.Name))
             {
                 if (!overrideExisting)
                 {
@@ -115,12 +112,12 @@ namespace Polygen.Templates.HandlebarsNet
                 }
                 else
                 {
-                    this._templateMap.Remove(internalTemplate.Name);
+                    _templateMap.Remove(internalTemplate.Name);
                 }
             }
 
-            this._templateMap.Add(internalTemplate.Name, internalTemplate);
-            this.Instance.RegisterTemplate(internalTemplate.Name, (writer, data) =>
+            _templateMap.Add(internalTemplate.Name, internalTemplate);
+            Instance.RegisterTemplate(internalTemplate.Name, (writer, data) =>
             {
                 internalTemplate.GetRenderFn().Invoke(writer, data);
             });

@@ -27,15 +27,15 @@ namespace Polygen.Core.Parser
     {
         public DesignModelParseContext(IDesignModelCollection collection)
         {
-            this.Collection = collection;
+            Collection = collection;
         }
 
         public DesignModelParseContext(DesignModelParseContext parent)
         {
-            this.Collection = parent.Collection;
-            this.XmlElement = parent.XmlElement;
-            this.DesignModel = parent.DesignModel;
-            this.Namespace = parent.Namespace;
+            Collection = parent.Collection;
+            XmlElement = parent.XmlElement;
+            DesignModel = parent.DesignModel;
+            Namespace = parent.Namespace;
         }
 
         /// <summary>

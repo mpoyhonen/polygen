@@ -7,7 +7,7 @@ namespace Polygen.Common.Class.OutputModel
     {
         private readonly LazyList<Attribute> _attributeList = new LazyList<Attribute>();
 
-        public List<Attribute> Attributes => this._attributeList.Value;
+        public List<Attribute> Attributes => _attributeList.Value;
         public TypeRef Type { get; set; }
         public string Name { get; set; }
     }

@@ -14,18 +14,18 @@ namespace Polygen.App
 
         public Program()
         {
-            this.Name = "Polygen";
-            this.Description = "Code generator application";
+            Name = "Polygen";
+            Description = "Code generator application";
 
-            this.HelpOption("-?|-h|--help");
-            this._projectConfigurationFileOption = this.Option("-c|--config <file>",
+            HelpOption("-?|-h|--help");
+            _projectConfigurationFileOption = Option("-c|--config <file>",
                 "Path to the ProjectConfiguration.xml file.",
                 CommandOptionType.SingleValue);
-            this._tempDirOption = this.Option("--tempdir <dir>",
+            _tempDirOption = Option("--tempdir <dir>",
                 "Path to the temporary directory used during code generation.",
                 CommandOptionType.SingleValue);
 
-            this.OnExecute(() => this.ExecuteApp());
+            OnExecute(() => ExecuteApp());
         }
 
         private List<Assembly> LoadPluginAssemblies()
@@ -62,9 +62,9 @@ namespace Polygen.App
             var currentDir = Directory.GetCurrentDirectory();
             var projectConfigurationFilePath = Path.Combine(currentDir, "ProjectConfiguration.xml");
 
-            if (this._projectConfigurationFileOption.HasValue())
+            if (_projectConfigurationFileOption.HasValue())
             {
-                projectConfigurationFilePath = Path.GetFullPath(this._projectConfigurationFileOption.Value());
+                projectConfigurationFilePath = Path.GetFullPath(_projectConfigurationFileOption.Value());
             }
 
             if (!File.Exists(projectConfigurationFilePath))
@@ -74,9 +74,9 @@ namespace Polygen.App
 
             var tempDirPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
-            if (this._tempDirOption.HasValue())
+            if (_tempDirOption.HasValue())
             {
-                tempDirPath = Path.GetFullPath(this._tempDirOption.Value());
+                tempDirPath = Path.GetFullPath(_tempDirOption.Value());
             }
 
             if (!Directory.Exists(tempDirPath))
@@ -97,7 +97,7 @@ namespace Polygen.App
 
             try
             {
-                pluginAssemblies = this.LoadPluginAssemblies();
+                pluginAssemblies = LoadPluginAssemblies();
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Polygen.App
 
             try
             {
-                this.ExecuteRunner(runner);
+                ExecuteRunner(runner);
             }
             catch (Exception e)
             {

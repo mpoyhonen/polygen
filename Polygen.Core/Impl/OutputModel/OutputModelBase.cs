@@ -16,11 +16,11 @@ namespace Polygen.Core.Impl.OutputModel
 
         public OutputModelBase(string type, INamespace ns, IDesignModel designModel = null, IProjectFile file = null)
         {
-            this.Type = type;
-            this.Namespace = ns;
-            this.DesignModel = designModel;
-            this.File = file;
-            this.OutputConfiguration = new OutputConfiguration.OutputConfiguration(this.Namespace?.OutputConfiguration);
+            Type = type;
+            Namespace = ns;
+            DesignModel = designModel;
+            File = file;
+            OutputConfiguration = new OutputConfiguration.OutputConfiguration(Namespace?.OutputConfiguration);
         }
 
         public string Type { get; set; }
@@ -28,7 +28,7 @@ namespace Polygen.Core.Impl.OutputModel
         public INamespace Namespace { get; set; }
         public IProjectFile File { get; set; }
         public IOutputModelRenderer Renderer { get; set; }
-        public IEnumerable<IOutputModelFragment> Fragments => this._fragments ?? (this._fragments = new List<IOutputModelFragment>());
+        public IEnumerable<IOutputModelFragment> Fragments => _fragments ?? (_fragments = new List<IOutputModelFragment>());
         public IOutputConfiguration OutputConfiguration { get; }
     }
 }

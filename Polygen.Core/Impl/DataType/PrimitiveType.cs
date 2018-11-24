@@ -11,8 +11,8 @@ namespace Polygen.Core.Impl.DataType
 	{
 		public PrimitiveType(string name, string xsdName)
 		{
-			this.Name = name;
-			this.XsdName = xsdName;
+			Name = name;
+			XsdName = xsdName;
 
 		}
 		public string Name { get; }

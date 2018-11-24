@@ -3,7 +3,7 @@ using Polygen.Core.DesignModel;
 using Polygen.Core.OutputModel;
 using Polygen.Plugins.Base;
 
-namespace Polygen.Plugins.NHibernate.Output.Backend
+namespace Polygen.Plugins.NHibernate.Output.Entity
 {
     public class EntityOutputModelGenerator : IOutputModelGenerator
     {

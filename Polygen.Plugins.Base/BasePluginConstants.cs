@@ -36,24 +36,14 @@ namespace Polygen.Plugins.Base
         #endregion region
 
         #region Desing model types
-        public const string DesignModelType_DesignModel = "DesignModel";
+        public const string DesignModelType_Entity = "Entity";
         #endregion
 
+
         public const string OutputModelName_SchemaXSD = "SchemaXSD";
-        public const string OutputModelName_DesignModel = "SchemaXSD";
 
         public const string Language_CSharp = "csharp";
         public const string Language_Javascript = "javascript";
         public const string Language_XML = "xml";
-
-        public static class ParserNames
-        {
-            public const string Entity = "Entity";
-            public const string EntityAttribute = "EntityAttribute";
-            public const string EntityRelation = "EntityRelation";
-            
-            public const string DataObject = "DataObject";
-            public const string DataObjectAttribute = "DataObjectAttribute";
-        }
     }
 }

@@ -15,7 +15,7 @@ namespace Polygen.Common.Class.Renderer
 
         public ClassOutputModelRenderer(ITemplate template)
         {
-            this._template = template;
+            _template = template;
         }
 
         public void Render(IOutputModel outputModel, TextWriter writer)
@@ -34,11 +34,11 @@ namespace Polygen.Common.Class.Renderer
                     { "Model", classOutputModel }
                 };
 
-                this._template.Render(data, writer);
+                _template.Render(data, writer);
             }
             catch (Exception e)
             {
-                throw new RenderException($"Error while rendering template '{this._template.Name}': {e.Message}", e);
+                throw new RenderException($"Error while rendering template '{_template.Name}': {e.Message}", e);
             }
         }
     }

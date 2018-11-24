@@ -16,15 +16,15 @@ namespace Polygen.Common.Class.OutputModel
 
         public Attribute(string name, params ValueTuple<string, object>[] arguments)
         {
-            this.Name = name;
+            Name = name;
 
             if (arguments != null)
             {
-                this.Arguments.AddRange(arguments);
+                Arguments.AddRange(arguments);
             }
         }
 
         public string Name { get; set; }
-        public List<ValueTuple<string, object>> Arguments => this._attributeList.Value;
+        public List<ValueTuple<string, object>> Arguments => _attributeList.Value;
     }
 }

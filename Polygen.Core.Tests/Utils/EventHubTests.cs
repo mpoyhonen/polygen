@@ -131,8 +131,8 @@ namespace Polygen.Core.Tests.Utils
 
             public Handler(string pluginId, List<string> eventList = null)
             {
-                this.PluginId = pluginId;
-                this._eventList = eventList;
+                PluginId = pluginId;
+                _eventList = eventList;
             }
 
             public string PluginId { get; set; }
@@ -140,8 +140,8 @@ namespace Polygen.Core.Tests.Utils
 
             public void Handle(TestEvent evt)
             {
-                this.Event = evt;
-                this._eventList?.Add(this.PluginId);
+                Event = evt;
+                _eventList?.Add(PluginId);
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Polygen.Core.Impl.OutputConfiguration
 
         public OutputConfiguration(IOutputConfiguration parent)
         {
-            this.Parent = parent;
+            Parent = parent;
         }
 
         public IOutputConfiguration Parent { get; }
@@ -48,7 +48,7 @@ namespace Polygen.Core.Impl.OutputConfiguration
 
         public IProjectFolder GetOutputFolder(string outputModelType, bool throwIfMissing = true)
         {
-            foreach (var entry in this._outputFolderList)
+            foreach (var entry in _outputFolderList)
             {
                 if (entry.Item1.Match(outputModelType) == Filter.MatchStatus.Included)
                 {
@@ -56,23 +56,23 @@ namespace Polygen.Core.Impl.OutputConfiguration
                 }
             }
 
-            if (this.Parent == null)
+            if (Parent == null)
             {
                 throw new ConfigurationException($"No output folder configured project output model type '{outputModelType}'");
             }
 
-            return this.Parent.GetOutputFolder(outputModelType, throwIfMissing);
+            return Parent.GetOutputFolder(outputModelType, throwIfMissing);
         }
 
         public void RegisterOutputFolder(Filter outputModelTypeFilter, IProjectFolder projectFolder, bool overwrite = true)
         {
-            var prevItem = this._outputFolderList.FirstOrDefault(x => x.Item1.FilterEquals(outputModelTypeFilter));
+            var prevItem = _outputFolderList.FirstOrDefault(x => x.Item1.FilterEquals(outputModelTypeFilter));
 
             if (prevItem != null)
             {
                 if (overwrite)
                 {
-                    this._outputFolderList.Remove(prevItem);
+                    _outputFolderList.Remove(prevItem);
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Polygen.Core.Impl.OutputConfiguration
                 }
             }
 
-            this._outputFolderList.Add(Tuple.Create(outputModelTypeFilter, projectFolder));
+            _outputFolderList.Add(Tuple.Create(outputModelTypeFilter, projectFolder));
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
 using Xunit;
 using Polygen.Core.Impl.Schema;
-using Polygen.Plugins.Base.Output.Xsd;
 using System.Xml.Linq;
 using Polygen.TestUtils;
 using Polygen.Core.Impl.DataType;
+using Polygen.Plugins.Base.Output.ProjectConfigurationXsd;
+using Polygen.Plugins.Base.Output.Xsd;
 
 namespace Polygen.Plugins.Base.Tests
 {
@@ -27,7 +28,7 @@ namespace Polygen.Plugins.Base.Tests
 
             outputXsd.Should().NotBeNull();
 
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -39,7 +40,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
         [Fact]
@@ -54,7 +55,7 @@ namespace Polygen.Plugins.Base.Tests
                     .CreateElement("Element", null, c => c.IsMandatory = true);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -66,7 +67,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
         [Fact]
@@ -81,7 +82,7 @@ namespace Polygen.Plugins.Base.Tests
                     .CreateElement("Element", null, c => c.AllowMultiple = true);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -93,7 +94,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
 
@@ -109,7 +110,7 @@ namespace Polygen.Plugins.Base.Tests
                     .CreateElement("Element", "Empty element");
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -127,7 +128,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
         [Fact]
@@ -144,7 +145,7 @@ namespace Polygen.Plugins.Base.Tests
                         .CreateAttribute("attrib", stringType);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -160,7 +161,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
         [Fact]
@@ -176,7 +177,7 @@ namespace Polygen.Plugins.Base.Tests
                     .CreateElementWithValue("Element", stringType);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -194,7 +195,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
         [Fact]
@@ -212,7 +213,7 @@ namespace Polygen.Plugins.Base.Tests
                         .CreateAttribute("attrib", intType);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -232,7 +233,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:complexType>
     </xs:element>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
 
         [Fact]
@@ -248,7 +249,7 @@ namespace Polygen.Plugins.Base.Tests
                     .CreateElementWithValue("Element", enumType);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -278,7 +279,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
     }
 
         [Fact]
@@ -295,7 +296,7 @@ namespace Polygen.Plugins.Base.Tests
                         .CreateAttribute("attrib", enumType);
 
             var outputXsd = new SchemaConverter().Convert(schema);
-            var outputXsdStr = outputXsd.Element.ToTestString().Trim();
+            var outputXsdStr = outputXsd.Element.ToTestString().FixNewlines().Trim();
 
             outputXsdStr.Should().Be(@"
 <xs:schema elementFormDefault='qualified' targetNamespace='uri:test-schema' xmlns:tns='uri:test-schema' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
@@ -323,7 +324,7 @@ namespace Polygen.Plugins.Base.Tests
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
-".Trim());
+".FixNewlines().Trim());
         }
     }
 }

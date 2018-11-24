@@ -11,7 +11,7 @@ namespace Polygen.Core.Impl.Parser
 
         public DesignModelParser(IDesignModelGeneratorFactory designModelConverterFactory)
         {
-            this._designModelConverterFactory = designModelConverterFactory;
+            _designModelConverterFactory = designModelConverterFactory;
         }
 
         public void Parse(IXmlElement rootElement, IDesignModelCollection collection)
@@ -22,12 +22,12 @@ namespace Polygen.Core.Impl.Parser
                 XmlElement = rootElement
             };
 
-            this.ParseDesignModelElements(context);
+            ParseDesignModelElements(context);
         }
 
         private void ParseDesignModelElements(DesignModelParseContext context)
         {
-            var designModelConverter = this._designModelConverterFactory.GetGenerator(context.XmlElement.Definition);
+            var designModelConverter = _designModelConverterFactory.GetGenerator(context.XmlElement.Definition);
             var designModel = designModelConverter?.GenerateDesignModel(context.XmlElement, context);
 
             if (designModel != null)
@@ -50,7 +50,7 @@ namespace Polygen.Core.Impl.Parser
                     XmlElement = childElement
                 };
 
-                this.ParseDesignModelElements(childContext);
+                ParseDesignModelElements(childContext);
             }
         }
 

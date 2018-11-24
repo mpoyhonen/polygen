@@ -25,14 +25,14 @@ namespace Polygen.Common.Class.OutputModel
         public string ClassNamespace { get; set; }
         public string ClassName { get; set; }
 
-        public ISet<string> NamespaceImports => this._namespaceImportSet;
-        public List<Attribute> Attributes => this._attributeList.Value;
-        public List<string> Modifiers => this._modifierList;
-        public List<Property> Fields => this._fieldList.Value;
-        public List<Method> Constructors => this._constructorList.Value;
-        public List<Property> Properties => this._propertyList;
-        public List<Method> Methods => this._methodList;
+        public ISet<string> NamespaceImports => _namespaceImportSet;
+        public List<Attribute> Attributes => _attributeList.Value;
+        public List<string> Modifiers => _modifierList;
+        public List<Property> Fields => _fieldList.Value;
+        public List<Method> Constructors => _constructorList.Value;
+        public List<Property> Properties => _propertyList;
+        public List<Method> Methods => _methodList;
 
-        public string ModifiersString => string.Join(" ", this._modifierList);
+        public string ModifiersString => string.Join(" ", _modifierList);
     }
 }

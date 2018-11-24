@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Polygen.Core.Stage;
-using Polygen.Plugins.NHibernate.Output.Backend;
+using Polygen.Plugins.NHibernate.Output.Entity;
 
 namespace Polygen.Plugins.NHibernate
 {

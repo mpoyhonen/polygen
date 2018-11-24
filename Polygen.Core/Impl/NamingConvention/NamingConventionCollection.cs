@@ -14,18 +14,18 @@ namespace Polygen.Core.Impl.NamingConvention
         {
             foreach (var classNamingConvention in classNamingConventions)
             {
-                if (this._classNamingConventionMap.ContainsKey(classNamingConvention.Language))
+                if (_classNamingConventionMap.ContainsKey(classNamingConvention.Language))
                 {
                     throw new ConfigurationException($"Duplication class naming convention for language '{classNamingConvention.Language}'.");
                 }
 
-                this._classNamingConventionMap[classNamingConvention.Language] = classNamingConvention;
+                _classNamingConventionMap[classNamingConvention.Language] = classNamingConvention;
             }
         }
 
         public IClassNamingConvention GetClassNamingConvention(string name, bool throwIfMissing = true)
         {
-            if (! this._classNamingConventionMap.TryGetValue(name, out var result) && throwIfMissing)
+            if (! _classNamingConventionMap.TryGetValue(name, out var result) && throwIfMissing)
             {
                 throw new ConfigurationException($"Class naming convention not found for language '{name}'.");
             }

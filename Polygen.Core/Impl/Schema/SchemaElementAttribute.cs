@@ -16,10 +16,10 @@ namespace Polygen.Core.Impl.Schema
                 name = element.Schema.Namespace + name.LocalName;
             }
 
-            this.Element = element;
-            this.Name = name;
-            this.Type = type;
-            this.Description = description;
+            Element = element;
+            Name = name;
+            Type = type;
+            Description = description;
         }
 
         /// <summary>

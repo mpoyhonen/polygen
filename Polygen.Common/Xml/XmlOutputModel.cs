@@ -10,8 +10,8 @@ namespace Polygen.Common.Xml
         public XmlOutputModel(XElement element, INamespace ns, IProjectFile file = null, string type = null) : base(
             type, ns, file: file)
         {
-            this.Element = element;
-            this.Type = type ?? Constants.OutputModelType_Xml;
+            Element = element;
+            Type = type ?? Constants.OutputModelType_Xml;
         }
 
         public XElement Element { get; set; }

@@ -16,12 +16,12 @@ namespace Polygen.Core.Impl.Project
 
         public IProjectFile GetFile(string path)
         {
-            return new ProjectFile(this.Project, $"{this.RelativePath}/{path}");
+            return new ProjectFile(Project, $"{RelativePath}/{path}");
         }
 
         public IProjectFolder GetFolder(string path)
         {
-            return new ProjectFolder(this.Project, $"{this.RelativePath}/{path}");
+            return new ProjectFolder(Project, $"{RelativePath}/{path}");
         }
     }
 }

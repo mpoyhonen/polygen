@@ -4,7 +4,7 @@
     {
         public OutputModelFragment(string type)
         {
-            this.Type = type;
+            Type = type;
         }
 
         /// <summary>

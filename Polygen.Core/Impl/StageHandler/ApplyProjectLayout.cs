@@ -30,11 +30,11 @@ namespace Polygen.Core.Impl.StageHandler
 
         public override void Execute()
         {
-            foreach (var entry in this.ProjectLayout.Entries)
+            foreach (var entry in ProjectLayout.Entries)
             {
-                foreach (var outputConfiguration in this.GetOutputConfigurations(entry))
+                foreach (var outputConfiguration in GetOutputConfigurations(entry))
                 {
-                    this.UpdateOutputConfiguration(entry, outputConfiguration);
+                    UpdateOutputConfiguration(entry, outputConfiguration);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace Polygen.Core.Impl.StageHandler
             {
                 foreach (var output in entry.Outputs)
                 {
-                    outputConfiguration.RegisterOutputFolder(output.OutputModelTypeFilter, this.GetProjectFolder(output));
+                    outputConfiguration.RegisterOutputFolder(output.OutputModelTypeFilter, GetProjectFolder(output));
                 }
             }
 
@@ -53,7 +53,7 @@ namespace Polygen.Core.Impl.StageHandler
             {
                 foreach (var targetPlatformEntry in entry.TargetPlatforms)
                 {
-                    var targetPlatform = this.TargetPlatformCollection.GetTargetPlatform(targetPlatformEntry.TargerPlatformName);
+                    var targetPlatform = TargetPlatformCollection.GetTargetPlatform(targetPlatformEntry.TargerPlatformName);
 
                     outputConfiguration.RegisterTargetPlatformForDesignModelType(targetPlatformEntry.DesignModelType, targetPlatform, true);
                 }
@@ -64,14 +64,14 @@ namespace Polygen.Core.Impl.StageHandler
         {
             if (entry.LocationFilters == null)
             {
-                yield return this.DesignModelCollection.RootNamespace.OutputConfiguration;
+                yield return DesignModelCollection.RootNamespace.OutputConfiguration;
             }
 
             foreach (var locationFilter in entry.LocationFilters)
             {
                 if (locationFilter.NamespaceFilter != null)
                 {
-                    foreach (var ns in this.DesignModelCollection.GetAllNamespaces())
+                    foreach (var ns in DesignModelCollection.GetAllNamespaces())
                     {
                         if (locationFilter.NamespaceFilter.Match(ns.Name) == Filter.MatchStatus.Included)
                         {
@@ -81,7 +81,7 @@ namespace Polygen.Core.Impl.StageHandler
                 }
                 else 
                 {
-                    foreach (var designModel in this.GetAllDesignModels())
+                    foreach (var designModel in GetAllDesignModels())
                     {
                         if (locationFilter.DesignModelTypeFilter != null)
                         {
@@ -108,11 +108,11 @@ namespace Polygen.Core.Impl.StageHandler
             
             if (!string.IsNullOrWhiteSpace(entry.ProjectType))
             {
-                project = this.ProjectCollection.GetFirstProjectByType(entry.ProjectType);
+                project = ProjectCollection.GetFirstProjectByType(entry.ProjectType);
             }
             else
             {
-                project = this.ProjectCollection.GetProjectByName(entry.ProjectName);
+                project = ProjectCollection.GetProjectByName(entry.ProjectName);
             }
 
             return project.GetFolder(entry.FolderPath);
@@ -120,12 +120,12 @@ namespace Polygen.Core.Impl.StageHandler
 
         private IEnumerable<IDesignModel> GetAllDesignModels()
         {
-            if (this._allDesignModels == null)
+            if (_allDesignModels == null)
             {
-                this._allDesignModels = this.DesignModelCollection.GetAllDesignModels().ToList();
+                _allDesignModels = DesignModelCollection.GetAllDesignModels().ToList();
             }
 
-            return this._allDesignModels;
+            return _allDesignModels;
         }
     }
 }

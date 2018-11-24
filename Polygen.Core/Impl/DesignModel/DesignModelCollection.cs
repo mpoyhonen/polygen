@@ -14,27 +14,27 @@ namespace Polygen.Core.Impl.DesignModel
 
         public DesignModelCollection()
         {
-            this.RootNamespace = new Namespace(new OutputConfiguration.OutputConfiguration(null));
+            RootNamespace = new Namespace(new OutputConfiguration.OutputConfiguration(null));
         }
 
         public INamespace RootNamespace { get; }
 
         public INamespace DefineNamespace(string ns)
         {
-            if (!this._namespaceMap.TryGetValue(ns, out var res))
+            if (!_namespaceMap.TryGetValue(ns, out var res))
             {
                 var parts = ns.Split('.');
-                var parent = this.RootNamespace;
+                var parent = RootNamespace;
 
                 foreach (var part in parts)
                 {
                     var name = parent?.Name != null ? $"{parent.Name}.{part}" : part;
 
-                    if (!this._namespaceMap.TryGetValue(name, out var segment))
+                    if (!_namespaceMap.TryGetValue(name, out var segment))
                     {
                         segment = new Namespace(part, parent);
                         ((Namespace)parent).AddChild(segment);
-                        this._namespaceMap.Add(segment.Name, segment);
+                        _namespaceMap.Add(segment.Name, segment);
                     }
 
                     parent = segment;
@@ -66,7 +66,7 @@ namespace Polygen.Core.Impl.DesignModel
 
         public IEnumerable<INamespace> GetAllNamespaces()
         {
-            return this._namespaceMap.Values;
+            return _namespaceMap.Values;
         }
 
         public void AddDesignModel(IDesignModel designModel)
@@ -76,7 +76,7 @@ namespace Polygen.Core.Impl.DesignModel
 
         public IEnumerable<IDesignModel> GetAllDesignModels()
         {
-            return this._designModelsByTypeMap
+            return _designModelsByTypeMap
                 .Values
                 .SelectMany(x => x);
         }

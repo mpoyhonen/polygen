@@ -106,5 +106,22 @@ namespace Polygen.Core.Impl.DesignModel
             
             return default(T);
         }
+
+        private bool Equals(INamespace other)
+        {
+            return string.Equals(Name, other.Name);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((Namespace) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
     }
 }

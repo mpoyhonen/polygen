@@ -17,79 +17,103 @@ namespace Polygen.Core.Impl.Project
 
         public ProjectFileSystemEntryBase(string path, bool isFolder)
         {
-            this.RelativePath = path;
-            this._isFolder = isFolder;
-            this._name = Path.GetFileName(path);
+            RelativePath = path;
+            _isFolder = isFolder;
+            _name = Path.GetFileName(path);
         }
 
         public ProjectFileSystemEntryBase(IProject project, string relativePath, bool isFolder) : this(relativePath, isFolder)
         {
-            this.Project = project;
+            Project = project;
         }
 
         public IProject Project { get; }
         public string RelativePath { get; }
-        public string Name => this._name ?? (this._name = Path.GetFileName(this.RelativePath));
-        public string Extension => this._extension ?? (this._extension = Path.GetExtension(this.RelativePath));
+        public string Name => _name ?? (_name = Path.GetFileName(RelativePath));
+        public string Extension => _extension ?? (_extension = Path.GetExtension(RelativePath));
 
         public string GetSourcePath(bool throwIfNotSet = false)
         {
-            if (this._sourcePath == null)
+            if (_sourcePath == null)
             {
-                if (this.Project == null)
+                if (Project == null)
                 {
                     if (throwIfNotSet)
                     {
-                        throw new ConfigurationException($"Project is not set for file '{this.RelativePath}'.");
+                        throw new ConfigurationException($"Project is not set for file '{RelativePath}'.");
                     }
                 }
                 else
                 {
-                    if (this.Project.SourceFolder == null)
+                    if (Project.SourceFolder == null)
                     {
-                        throw new ConfigurationException($"Project '{this.Project.Name}' source folder is not set.");
+                        throw new ConfigurationException($"Project '{Project.Name}' source folder is not set.");
                     }
 
-                    this._sourcePath = Path.Combine(this.Project.SourceFolder, this.RelativePath);
+                    _sourcePath = Path.Combine(Project.SourceFolder, RelativePath);
                 }
 
-                if (this._sourcePath == null && throwIfNotSet)
+                if (_sourcePath == null && throwIfNotSet)
                 {
-                    throw new ConfigurationException($"Source path is not set for file '{this.RelativePath}'.");
+                    throw new ConfigurationException($"Source path is not set for file '{RelativePath}'.");
                 }
             }
 
-            return this._sourcePath;
+            return _sourcePath;
         }
 
         public string GetTempPath(bool throwIfNotSet = false)
         {
-            if (this._tempPath == null)
+            if (_tempPath == null)
             {
-                if (this.Project == null)
+                if (Project == null)
                 {
                     if (throwIfNotSet)
                     {
-                        throw new ConfigurationException($"Project is not set for file '{this.RelativePath}'.");
+                        throw new ConfigurationException($"Project is not set for file '{RelativePath}'.");
                     }
                 }
                 else
                 {
-                    if (this.Project.TempFolder == null)
+                    if (Project.TempFolder == null)
                     {
-                        throw new ConfigurationException($"Project '{this.Project.Name}' temp folder is not set.");
+                        throw new ConfigurationException($"Project '{Project.Name}' temp folder is not set.");
                     }
 
-                    this._tempPath = Path.Combine(this.Project.TempFolder, this.RelativePath);
+                    _tempPath = Path.Combine(Project.TempFolder, RelativePath);
                 }
 
-                if (this._tempPath == null && throwIfNotSet)
+                if (_tempPath == null && throwIfNotSet)
                 {
-                    throw new ConfigurationException($"Temp path is not set for file '{this.RelativePath}'.");
+                    throw new ConfigurationException($"Temp path is not set for file '{RelativePath}'.");
                 }
             }
 
-            return this._tempPath;
+            return _tempPath;
         }
+
+        #region Equality comparison
+
+        private bool Equals(ProjectFileSystemEntryBase other)
+        {
+            return Project.Equals(other.Project) && string.Equals(RelativePath, other.RelativePath);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((ProjectFileSystemEntryBase) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Project.GetHashCode() * 397) ^ RelativePath.GetHashCode();
+            }
+        }       
+        
+        #endregion
     }
 }

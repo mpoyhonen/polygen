@@ -11,7 +11,7 @@ namespace Polygen.Core.Impl.Project
     {
         private List<ProjectLayoutEntry> _entries = new List<ProjectLayoutEntry>();
         
-        public ReadOnlyCollection<ProjectLayoutEntry> Entries => this._entries.AsReadOnly();
+        public ReadOnlyCollection<ProjectLayoutEntry> Entries => _entries.AsReadOnly();
 
         public void AddEntry(ProjectLayoutEntry entry)
         {
@@ -19,11 +19,11 @@ namespace Polygen.Core.Impl.Project
             {
                 foreach (var outputEntry in entry.Outputs)
                 {
-                    this.ValidateOutputEntry(outputEntry);
+                    ValidateOutputEntry(outputEntry);
                 }
             }
 
-            this._entries.Add(entry);
+            _entries.Add(entry);
         }
 
         private void ValidateOutputEntry(ProjectLayoutOutput entry)

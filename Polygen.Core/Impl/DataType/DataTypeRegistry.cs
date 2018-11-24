@@ -12,7 +12,7 @@ namespace Polygen.Core.Impl.DataType
 
         public IDataType Get(string name, bool throwIfMissing)
         {
-            if (this._dataTypes.TryGetValue(name, out var res))
+            if (_dataTypes.TryGetValue(name, out var res))
             {
                 return res;
             }
@@ -22,12 +22,12 @@ namespace Polygen.Core.Impl.DataType
 
         public void Add(IDataType dataType)
         {
-            if (this._dataTypes.TryGetValue(dataType.Name, out var res))
+            if (_dataTypes.TryGetValue(dataType.Name, out var res))
             {
                 throw new Exception($"Data type '{dataType.Name}' is already registered.");
             }
 
-            this._dataTypes.Add(dataType.Name, dataType);
+            _dataTypes.Add(dataType.Name, dataType);
         }
     }
 }

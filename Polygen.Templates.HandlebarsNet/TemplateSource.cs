@@ -8,7 +8,7 @@ namespace Polygen.Templates.HandlebarsNet
     /// </summary>
     public class TemplateSource
     {
-        public bool IsFile => this.FilePath != null;
+        public bool IsFile => FilePath != null;
         public string FilePath { get; private set; }
         public string Text { get; private set; }
 
