@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,7 +65,7 @@ namespace Polygen.Core.Tests
                 Directory.CreateDirectory(dirPath);
             }
 
-            return new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8);
+            return new StreamWriter(System.IO.File.Open(filePath, FileMode.Create), Encoding.UTF8);
         }
 
         public void CreateWriteTextFile(string filePath, string text)

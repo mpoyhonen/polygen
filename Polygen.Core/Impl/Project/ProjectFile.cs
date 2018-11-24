@@ -1,4 +1,4 @@
-﻿using Polygen.Core.Project;
+using Polygen.Core.Project;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
@@ -18,7 +18,7 @@ namespace Polygen.Core.Impl.Project
 
         public TextReader OpenAsTextForReading()
         {
-            return new StreamReader(File.Open(GetSourcePath(true), FileMode.Open), Encoding.UTF8);
+            return new StreamReader(System.IO.File.Open(GetSourcePath(true), FileMode.Open), Encoding.UTF8);
         }
 
         public TextWriter OpenAsTextForWriting()
@@ -31,7 +31,7 @@ namespace Polygen.Core.Impl.Project
                 Directory.CreateDirectory(dir);
             }
 
-            return new StreamWriter(File.Open(path, FileMode.Create), Encoding.UTF8);
+            return new StreamWriter(System.IO.File.Open(path, FileMode.Create), Encoding.UTF8);
         }
 
         public string ReadText()

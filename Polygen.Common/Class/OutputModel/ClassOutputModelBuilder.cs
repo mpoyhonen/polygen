@@ -5,6 +5,7 @@ using Polygen.Core.NamingConvention;
 using Polygen.Core.OutputConfiguration;
 using Polygen.Core.Template;
 using System;
+using Polygen.Core.OutputModel;
 
 namespace Polygen.Common.Class.OutputModel
 {
@@ -15,7 +16,8 @@ namespace Polygen.Common.Class.OutputModel
         private readonly string _outputModelType;
         private ClassOutputModel _outputModel;
 
-        public ClassOutputModelBuilder(string outputModelType, IDesignModel designModel, IClassNamingConvention namingConvention)
+        public ClassOutputModelBuilder(string outputModelType, IDesignModel designModel,
+            IClassNamingConvention namingConvention)
         {
             _namingConvention = namingConvention;
             _designModel = designModel;
@@ -95,14 +97,17 @@ namespace Polygen.Common.Class.OutputModel
             return res;
         }
 
-        public void SetOutputFile(IOutputConfiguration outputConfiguration, IClassNamingConvention namingConvention, string fileExtension)
+        public void SetOutputFile(IOutputConfiguration outputConfiguration, IClassNamingConvention namingConvention,
+            string fileExtension, OutputModelMergeMode mergeMode = OutputModelMergeMode.Skip)
         {
             CheckOutputModel();
 
             var outputFolder = outputConfiguration.GetOutputFolder(_outputModel.Type);
-            var outputFile = namingConvention.GetOutputFolderPath(_outputModel.Namespace) + "/" + _outputModel.ClassName + fileExtension;
+            var outputFile = namingConvention.GetOutputFolderPath(_outputModel.Namespace) + "/" +
+                             _outputModel.ClassName + fileExtension;
 
             _outputModel.File = outputFolder.GetFile(outputFile);
+            _outputModel.MergeMode = mergeMode;
         }
 
         public void SetOutputRenderer(ITemplate template)
