@@ -1,7 +1,7 @@
 ﻿<DesignModels xmlns='uri:polygen/1.0/designmodel'>
     <Namespace name='TestApp.MyClasses'>
         <Entity name='MyEntity'>
-            <Attribute name='Name' type='string' />
+            <Attribute name='Name' type='' />
         </Entity>
     </Namespace>
 </DesignModels>

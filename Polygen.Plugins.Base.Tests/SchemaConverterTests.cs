@@ -2,10 +2,12 @@
 using Xunit;
 using Polygen.Core.Impl.Schema;
 using System.Xml.Linq;
+using Polygen.Core.DataType;
 using Polygen.TestUtils;
 using Polygen.Core.Impl.DataType;
 using Polygen.Plugins.Base.Output.ProjectConfigurationXsd;
 using Polygen.Plugins.Base.Output.Xsd;
+using Polygen.TestUtils.DataType;
 
 namespace Polygen.Plugins.Base.Tests
 {
@@ -137,7 +139,7 @@ namespace Polygen.Plugins.Base.Tests
             var xsd = XsdNamespace;
             var ns = "uri:test-schema";
             var schema = new Schema("test", ns);
-            var stringType = new PrimitiveType("string", "xs:string");
+            var stringType = TestDataTypes.String;
 
             schema
                 .CreateRootElement("DesignModels")
@@ -170,7 +172,7 @@ namespace Polygen.Plugins.Base.Tests
             var xsd = XsdNamespace;
             var ns = "uri:test-schema";
             var schema = new Schema("test", ns);
-            var stringType = new PrimitiveType("string", "xs:string");
+            var stringType = TestDataTypes.String;
 
             schema
                 .CreateRootElement("DesignModels")
@@ -204,8 +206,8 @@ namespace Polygen.Plugins.Base.Tests
             var xsd = XsdNamespace;
             var ns = "uri:test-schema";
             var schema = new Schema("test", ns);
-            var stringType = new PrimitiveType("string", "xs:string");
-            var intType = new PrimitiveType("int", "xs:int");
+            var stringType = TestDataTypes.String;
+            var intType = TestDataTypes.Int;
 
             schema
                 .CreateRootElement("DesignModels")
@@ -242,7 +244,7 @@ namespace Polygen.Plugins.Base.Tests
             var xsd = XsdNamespace;
             var ns = "uri:test-schema";
             var schema = new Schema("test", ns);
-            var enumType = new EnumType("testEnum", new EnumType.Value("one"), new EnumType.Value("two", "Second"));
+            var enumType = new EnumType("testEnum", "testEnum desc", new EnumDataTypeValue("one"), new EnumDataTypeValue("two", "Second"));
 
             schema
                 .CreateRootElement("DesignModels")
@@ -288,7 +290,7 @@ namespace Polygen.Plugins.Base.Tests
             var xsd = XsdNamespace;
             var ns = "uri:test-schema";
             var schema = new Schema("test", ns);
-            var enumType = new EnumType("testEnum", new EnumType.Value("one"), new EnumType.Value("two", "Second"));
+            var enumType = new EnumType("testEnum", "testEnum desc", new EnumDataTypeValue("one"), new EnumDataTypeValue("two", "Second"));
 
             schema
                 .CreateRootElement("DesignModels")

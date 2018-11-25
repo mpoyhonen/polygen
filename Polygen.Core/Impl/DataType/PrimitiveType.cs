@@ -9,16 +9,17 @@ namespace Polygen.Core.Impl.DataType
 	/// </summary>
 	public class PrimitiveType : IDataType
 	{
-		public PrimitiveType(string name, string xsdName)
+		public PrimitiveType(string name, string xsdName, string description)
 		{
 			Name = name;
 			XsdName = xsdName;
-
+		    Description = description;
 		}
 		public string Name { get; }
 		public string XsdName { get; }
+	    public string Description { get; }
 
-        public void PostProcessXsdDefinition(XElement schemaRootElement)
+	    public void PostProcessXsdDefinition(XElement schemaRootElement)
         {
         }
     }

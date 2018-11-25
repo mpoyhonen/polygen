@@ -24,6 +24,7 @@ namespace Polygen.Plugins.Base.Models.Entity.Schema
             // Define the schema elements.
             var schema = Schemas.GetSchemaByNamespace(BasePluginConstants.DesignModel_SchemaNamespace);
             var stringType = DataTypeRegistry.Get(BasePluginConstants.DataType_string);
+            var allTypesType = DataTypeRegistry.GetAvailableTypesEnumType();
 
             var entityDesignModelElement = schema.RootElement.FindChildElement("Namespace/Entity");
 
@@ -31,7 +32,7 @@ namespace Polygen.Plugins.Base.Models.Entity.Schema
                 .CreateAttribute("name", stringType, "Entity name", c => c.IsMandatory = true)
                 .CreateElement("Attribute", "Defines an entity attribute", c => c.AllowMultiple = true)
                 .CreateAttribute("name", stringType, "Attribute name", c => c.IsMandatory = true)
-                .CreateAttribute("type", stringType, "Attribute type", c => c.IsMandatory = true);
+                .CreateAttribute("type", allTypesType, "Attribute type", c => c.IsMandatory = true);
 
             var designModelElement = entityDesignModelElement.FindChildElement("Attribute");
 

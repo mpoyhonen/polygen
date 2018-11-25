@@ -166,7 +166,6 @@ namespace Polygen.Core
         /// <summary>
         /// Parses all design model elements into design models.
         /// </summary>
-        /// <param name="designModelFiles"></param>
         public virtual void ParseDesignModels()
         {
             FireStageEvent(StageType.BeforeParseDesignModels);

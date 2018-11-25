@@ -3,12 +3,14 @@ using Polygen.Core.Parser;
 using Polygen.Core.DataType;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Polygen.Core.Impl.DataType
 {
     public class DataTypeRegistry : IDataTypeRegistry
     {
-        private Dictionary<string, IDataType> _dataTypes = new Dictionary<string, IDataType>();
+        private readonly Dictionary<string, IDataType> _dataTypes = new Dictionary<string, IDataType>();
+        private IEnumDataType _availableTypesEnumType;
 
         public IDataType Get(string name, bool throwIfMissing)
         {
@@ -18,6 +20,18 @@ namespace Polygen.Core.Impl.DataType
             }
 
             throw new Exception($"Data type '{name}' is not registered.");
+        }
+
+        public IEnumDataType GetAvailableTypesEnumType()
+        {
+            if (_availableTypesEnumType == null)
+            {
+                var values = _dataTypes.Values.Select(dataType => new EnumDataTypeValue(dataType.Name, dataType.Description));
+                
+                _availableTypesEnumType = new EnumType("AvailableTypes", "Defines all registered types", values.ToArray());
+            }
+
+            return _availableTypesEnumType;
         }
 
         public void Add(IDataType dataType)

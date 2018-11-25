@@ -16,6 +16,10 @@ namespace Polygen.Core.DataType
         /// </summary>
         string XsdName { get; }
         /// <summary>
+        /// Description of this data types used for documentation.
+        /// </summary>
+        string Description { get; }
+        /// <summary>
         /// Called for each data type which is used in the schema, so the type implementations
         /// can add additional data in the generated XSD.
         /// </summary>

@@ -7,7 +7,7 @@ namespace Polygen.Core.Impl.File
     public class FileMergerFactory
     {
         /// <summary>
-        /// Return the FileMerger to use based on the mergemode
+        /// Return the FileMerger to use based on the merge mode
         /// </summary>
         /// <param name="outputModelMergeMode"></param>
         /// <returns></returns>
@@ -18,16 +18,12 @@ namespace Polygen.Core.Impl.File
             {
                 case OutputModelMergeMode.Replace:
                     return new ReplaceFileMerger();
-                    break;
                 case OutputModelMergeMode.Skip:
                     return new SkipFileMerger();
-                    break;
                 case OutputModelMergeMode.MergeUpdateRegions:
                     throw new NotImplementedException($"File merger for mode {OutputModelMergeMode.MergeUpdateRegions} is not yet implemented");
-                    break;
                 case OutputModelMergeMode.MergePreserveRegions:
                     throw new NotImplementedException($"File merger for mode {OutputModelMergeMode.MergePreserveRegions} is not yet implemented");
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(outputModelMergeMode), outputModelMergeMode, null);
             }

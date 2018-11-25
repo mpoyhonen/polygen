@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using Polygen.Core.DataType;
 
@@ -8,23 +9,34 @@ namespace Polygen.Core.Impl.DataType
 	/// <summary>
 	/// Data type implementation for an enumeration type.
 	/// </summary>
-	public class EnumType : IDataType
+	public class EnumType : IEnumDataType
 	{
-		public EnumType(string name, params Value[] values)
+	    /// <summary>
+	    /// Data type prefix used in XSD.
+	    /// </summary>
+	    private const string XsdTypePrefix = "enum-";
+	    /// <summary>
+	    /// Contains the enumeration values.
+	    /// </summary>
+	    private readonly List<EnumDataTypeValue> _values;
+	    
+		public EnumType(string name, string description, params EnumDataTypeValue[] values)
 		{
 			Name = name;
-			XsdName = "tns:enum-" + name;
-            Values = values;
+		    Description = description;
+		    XsdName = "tns:enum-" + name;
+            _values = values.ToList();
 		}
 
 		public string Name { get; }
 		public string XsdName { get; }
-        public Value[] Values { get; }
+	    public string Description { get; }
+	    public IEnumerable<EnumDataTypeValue> Values => _values;
 
 		public void PostProcessXsdDefinition(XElement schemaRootElement)
 		{
             var ns = schemaRootElement.Name.Namespace;
-            var valueElements = Values
+            var valueElements = _values
                 .Select(x =>
                 {
                     var enumValueElement = new XElement(ns + "enumeration", new XAttribute("value", x.Name));
@@ -51,17 +63,5 @@ namespace Polygen.Core.Impl.DataType
 
             schemaRootElement.Add(enumSimpleTypeElement);
 		}
-
-        public class Value
-        {
-            public Value(string name, string description = null)
-            {
-                Name = name;
-                Description = description;
-            }
-
-            public string Name { get; set; }
-            public string Description { get; set; }
-        }
 	}
 }

@@ -120,7 +120,7 @@ namespace Polygen.Plugins.Base.Output.Xsd
         /// <summary>
         /// Registers the used data type definition for post-processing.
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="dataType"></param>
         private void RegisterTypeDefinition(IDataType dataType)
         {
             if (!_usedTypes.ContainsKey(dataType.Name))
@@ -131,9 +131,11 @@ namespace Polygen.Plugins.Base.Output.Xsd
 
         private XElement CreateAttributeElement(ISchemaElementAttribute schemaElementAttribute)
         {
+            var name = schemaElementAttribute.Name.LocalName;
+            var type = schemaElementAttribute.Type.XsdName;
             var attributeXmlElement = new XElement(XsdNamespace + "attribute",
-                new XAttribute("name", schemaElementAttribute.Name.LocalName),
-                new XAttribute("type", schemaElementAttribute.Type.XsdName)
+                new XAttribute("name", name),
+                new XAttribute("type", type)
             );
 
             if (schemaElementAttribute.IsMandatory)
