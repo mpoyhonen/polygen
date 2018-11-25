@@ -7,12 +7,8 @@ namespace Polygen.Core.NamingConvention
     /// Provides methods for creating names in a generated class. 
     /// The names include the namespace, class, method and property names.
     /// </summary>
-    public interface IClassNamingConvention
+    public interface IClassNamingConvention: INamingConvention
     {
-        /// <summary>
-        /// Language this naming convention is used for.
-        /// </summary>
-        string Language { get; }
         /// <summary>
         /// Returns the output folder path for this class.
         /// </summary>
@@ -45,7 +41,7 @@ namespace Polygen.Core.NamingConvention
         /// <returns></returns>
         string GetPropertyName(string propertyName);
         /// <summary>
-        /// Returns data type name used for the geneated code.
+        /// Returns data type name used for the generated code.
         /// </summary>
         /// <param name="dataType"></param>
         /// <returns></returns>

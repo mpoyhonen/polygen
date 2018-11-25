@@ -11,9 +11,9 @@ namespace Polygen.Core.Impl.TargetPlatform
 {
     public class TargetPlatform : ITargetPlatform
     {
-        private Dictionary<string, IClassNamingConvention> _classNamingConventionMap = new Dictionary<string, IClassNamingConvention>();
-        private Dictionary<string, IOutputModelGenerator> _outputModelGeneratorMap = new Dictionary<string, IOutputModelGenerator>();
-        private Dictionary<string, ITemplate> _outputTemplateMap = new Dictionary<string, ITemplate>();
+        private readonly Dictionary<string, INamingConvention> _namingConventionMap = new Dictionary<string, INamingConvention>();
+        private readonly Dictionary<string, IOutputModelGenerator> _outputModelGeneratorMap = new Dictionary<string, IOutputModelGenerator>();
+        private readonly Dictionary<string, ITemplate> _outputTemplateMap = new Dictionary<string, ITemplate>();
 
         public TargetPlatform(string name)
         {
@@ -22,31 +22,31 @@ namespace Polygen.Core.Impl.TargetPlatform
 
         public string Name { get; set; }
 
-        public IClassNamingConvention GetClassNamingConvention(string language, bool throwIfMissing = true)
+        public INamingConvention GetNamingConvention(string language, bool throwIfMissing = true)
         {
-            if (!_classNamingConventionMap.TryGetValue(language, out var res) && throwIfMissing)
+            if (!_namingConventionMap.TryGetValue(language, out var res) && throwIfMissing)
             {
-                throw new ConfigurationException($"Class naming convention not configured for language '{language}' in target platform {Name}'.");
+                throw new ConfigurationException($"Naming convention not configured for language '{language}' in target platform {Name}'.");
             }
 
             return res;
         }
 
-        public void RegisterClassNamingConvention(string language, IClassNamingConvention namingConvention, bool overwrite = true)
+        public void RegisterNamingConvention(string language, INamingConvention namingConvention, bool overwrite = true)
         {
-            if (_classNamingConventionMap.ContainsKey(language))
+            if (_namingConventionMap.ContainsKey(language))
             {
                 if (overwrite)
                 {
-                    _classNamingConventionMap.Remove(language);
+                    _namingConventionMap.Remove(language);
                 }
                 else
                 {
-                    throw new ConfigurationException($"Class naming convention already configured for language '{language}' in target platform {Name}'.");
+                    throw new ConfigurationException($"Naming convention already configured for language '{language}' in target platform {Name}'.");
                 }
             }
 
-            _classNamingConventionMap[language] = namingConvention;
+            _namingConventionMap[language] = namingConvention;
         }
 
         public IOutputModelGenerator GetOutputModelGenerator(string designModelType, bool throwIfMissing = true)
@@ -92,11 +92,11 @@ namespace Polygen.Core.Impl.TargetPlatform
             {
                 if (overwrite)
                 {
-                    _classNamingConventionMap.Remove(outputModelType);
+                    _namingConventionMap.Remove(outputModelType);
                 }
                 else
                 {
-                    throw new ConfigurationException($"Output tempalte already configured for output model type '{outputModelType}' in target platform {Name}'.");
+                    throw new ConfigurationException($"Output template already configured for output model type '{outputModelType}' in target platform {Name}'.");
                 }
             }
 

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Polygen.Common.Class.OutputModel;
 using Polygen.Core.Exceptions;
+using Polygen.Core.NamingConvention;
 using Polygen.Core.OutputModel;
 using Polygen.Core.Template;
 
@@ -28,7 +29,7 @@ namespace Polygen.Plugins.NHibernate.Output.Entity
                     $"No target platforms defined for design model type '{entity.DesignModelType}'.");
             }
 
-            var namingConvention = targetPlatform.GetClassNamingConvention(language);
+            var namingConvention = (IClassNamingConvention) targetPlatform.GetNamingConvention(language);
             var outputModelType = NHibernatePluginConstants.OutputModelType_Entity_GeneratedClass;
             var builder = new ClassOutputModelBuilder(outputModelType, entity, namingConvention);
 
@@ -55,7 +56,7 @@ namespace Polygen.Plugins.NHibernate.Output.Entity
                     $"No target platforms defined for design model type '{entity.DesignModelType}'.");
             }
 
-            var namingConvention = targetPlatform.GetClassNamingConvention(language);
+            var namingConvention = (IClassNamingConvention) targetPlatform.GetNamingConvention(language);
             var outputModelType = NHibernatePluginConstants.OutputModelType_Entity_CustomClass;
             var builder = new ClassOutputModelBuilder(outputModelType, entity, namingConvention);
 

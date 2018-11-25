@@ -5,11 +5,11 @@
     <RootNamespace>Polygen.Plugins.NHibernate</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Templates\Entity\CustomClass.hbs" />
+    <EmbeddedResource Include="Templates\Entity\Field.hbs" />
+    <EmbeddedResource Include="Templates\Entity\GeneratedClass.hbs" />
+    <EmbeddedResource Include="Templates\Entity\Property.hbs" />
     <None Remove="Output\Template\**" />
-    <EmbeddedResource Include="Output\Templates\Entity\CustomClass.hbs" />
-    <EmbeddedResource Include="Output\Templates\Entity\Field.hbs" />
-    <EmbeddedResource Include="Output\Templates\Entity\GeneratedClass.hbs" />
-    <EmbeddedResource Include="Output\Templates\Entity\Property.hbs" />
     <EmbeddedResource Include="Output\Template\**" />
   </ItemGroup>
   <ItemGroup>

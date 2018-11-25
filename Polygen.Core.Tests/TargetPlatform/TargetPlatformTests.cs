@@ -15,8 +15,8 @@ namespace Polygen.Core.Tests.OutputConfiguration
             var targetPlatform = new Impl.TargetPlatform.TargetPlatform("x") as ITargetPlatform;
             var namingConvention = new TestClassNamingConvention();
 
-            targetPlatform.RegisterClassNamingConvention("test", namingConvention);
-            targetPlatform.GetClassNamingConvention("test").Should().BeSameAs(namingConvention);
+            targetPlatform.RegisterNamingConvention("test", namingConvention);
+            targetPlatform.GetNamingConvention("test").Should().BeSameAs(namingConvention);
         }
         
         [Fact]
@@ -26,9 +26,9 @@ namespace Polygen.Core.Tests.OutputConfiguration
             var namingConvention1 = new TestClassNamingConvention();
             var namingConvention2 = new TestClassNamingConvention();
 
-            targetPlatform.RegisterClassNamingConvention("test", namingConvention1);
-            targetPlatform.RegisterClassNamingConvention("test", namingConvention2, overwrite: true);
-            targetPlatform.GetClassNamingConvention("test").Should().BeSameAs(namingConvention2);
+            targetPlatform.RegisterNamingConvention("test", namingConvention1);
+            targetPlatform.RegisterNamingConvention("test", namingConvention2, overwrite: true);
+            targetPlatform.GetNamingConvention("test").Should().BeSameAs(namingConvention2);
         }
     }
 }

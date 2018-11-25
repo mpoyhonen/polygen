@@ -33,21 +33,23 @@ namespace Polygen.Core.TargetPlatform
         /// <param name="outputModelGenerator"></param>
         /// <param name="overwrite"></param>
         void RegisterOutputModelGenerator(string designModelType, IOutputModelGenerator outputModelGenerator, bool overwrite = false);
+
         /// <summary>
         /// Gets the naming convention to use for the given output language.
         /// </summary>
         /// <param name="language"></param>
         /// <param name="throwIfMissing"></param>
         /// <returns></returns>
-        IClassNamingConvention GetClassNamingConvention(string language, bool throwIfMissing = true);
+        INamingConvention GetNamingConvention(string language, bool throwIfMissing = true);
+
         /// <summary>
-        /// Registers the class naming convention for the given output language.
+        /// Registers the naming convention for the given output language.
         /// </summary>
         /// <param name="language"></param>
         /// <param name="namingConvention"></param>
         /// <param name="overwrite"></param>
         /// <returns></returns>
-        void RegisterClassNamingConvention(string language, IClassNamingConvention namingConvention, bool overwrite = true);
+        void RegisterNamingConvention(string language, INamingConvention namingConvention, bool overwrite = true);
         /// <summary>
         /// Returns the output template for the given output model type.
         /// </summary>

@@ -8,26 +8,26 @@ namespace Polygen.Core.Impl.NamingConvention
 {
     public class NamingConventionCollection : INamingConventionCollection
     {
-        private Dictionary<string, IClassNamingConvention> _classNamingConventionMap = new Dictionary<string, IClassNamingConvention>();
+        private readonly Dictionary<string, INamingConvention> _namingConventionMap = new Dictionary<string, INamingConvention>();
         
-        public NamingConventionCollection(IEnumerable<IClassNamingConvention> classNamingConventions)
+        public NamingConventionCollection(IEnumerable<INamingConvention> namingConventions)
         {
-            foreach (var classNamingConvention in classNamingConventions)
+            foreach (var namingConvention in namingConventions)
             {
-                if (_classNamingConventionMap.ContainsKey(classNamingConvention.Language))
+                if (_namingConventionMap.ContainsKey(namingConvention.Language))
                 {
-                    throw new ConfigurationException($"Duplication class naming convention for language '{classNamingConvention.Language}'.");
+                    throw new ConfigurationException($"Duplication naming convention for language '{namingConvention.Language}'.");
                 }
 
-                _classNamingConventionMap[classNamingConvention.Language] = classNamingConvention;
+                _namingConventionMap[namingConvention.Language] = namingConvention;
             }
         }
 
-        public IClassNamingConvention GetClassNamingConvention(string name, bool throwIfMissing = true)
+        public INamingConvention GetNamingConvention(string name, bool throwIfMissing = true)
         {
-            if (! _classNamingConventionMap.TryGetValue(name, out var result) && throwIfMissing)
+            if (! _namingConventionMap.TryGetValue(name, out var result) && throwIfMissing)
             {
-                throw new ConfigurationException($"Class naming convention not found for language '{name}'.");
+                throw new ConfigurationException($"Naming convention not found for language '{name}'.");
             }
 
             return result;

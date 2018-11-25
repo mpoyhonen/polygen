@@ -10,11 +10,11 @@ namespace Polygen.Core.NamingConvention
     public interface INamingConventionCollection
     {
         /// <summary>
-        /// Tries to get a class naming convention by name.
+        /// Tries to get a naming convention by name.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="throwIfMissing"></param>
         /// <returns></returns>
-        IClassNamingConvention GetClassNamingConvention(string name, bool throwIfMissing = true);
+        INamingConvention GetNamingConvention(string name, bool throwIfMissing = true);
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Xml.Linq;
 
+// ReSharper disable InconsistentNaming
 namespace Polygen.Plugins.Base
 {
     public static class BasePluginConstants
     {
         public const string DesignModel_SchemaName = "DesignModel";
-        public readonly static XNamespace DesignModel_SchemaNamespace = "uri:polygen/1.0/designmodel";
+        public static readonly XNamespace DesignModel_SchemaNamespace = "uri:polygen/1.0/designmodel";
 
         #region Data types
         public const string DataType_bool = "bool";

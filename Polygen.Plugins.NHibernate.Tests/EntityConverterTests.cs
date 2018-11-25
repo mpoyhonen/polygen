@@ -23,7 +23,7 @@ namespace Polygen.Plugins.NHibernate.Tests
             var entity = new Entity("MyClass", ns);
             var targetPlatform = new TargetPlatform("test");
 
-            targetPlatform.RegisterClassNamingConvention(BasePluginConstants.Language_CSharp, new CSharpClassNamingConvention());
+            targetPlatform.RegisterNamingConvention(BasePluginConstants.Language_CSharp, new CSharpClassNamingConvention());
 
             entity.AddAttribute(new EntityAttribute("Id", TestDataTypes.Int, null, null));
             entity.AddAttribute(new EntityAttribute("Name", TestDataTypes.String, null, null));
@@ -32,7 +32,7 @@ namespace Polygen.Plugins.NHibernate.Tests
 
             var templateCollection = new TemplateCollection();
 
-            templateCollection.LoadTemplates(typeof(NHibernatePluginConstants).Assembly, "Output/Templates", "NHibernate");
+            templateCollection.LoadTemplates(typeof(NHibernatePluginConstants).Assembly, NHibernatePluginConstants.TemplateResourcePrefix, NHibernatePluginConstants.TemplateNamePrefix);
 
             var template = templateCollection.GetTemplate(NHibernatePluginConstants.OutputTemplateName_Entity_GeneratedClass);
 
@@ -63,7 +63,7 @@ namespace Polygen.Plugins.NHibernate.Tests
             var entity = new Entity("MyClass", ns);
             var targetPlatform = new TargetPlatform("test");
 
-            targetPlatform.RegisterClassNamingConvention(BasePluginConstants.Language_CSharp, new CSharpClassNamingConvention());
+            targetPlatform.RegisterNamingConvention(BasePluginConstants.Language_CSharp, new CSharpClassNamingConvention());
 
             entity.AddAttribute(new EntityAttribute("Id", TestDataTypes.Int, null, null));
             entity.AddAttribute(new EntityAttribute("Name", TestDataTypes.String, null, null));
@@ -73,7 +73,7 @@ namespace Polygen.Plugins.NHibernate.Tests
 
             var templateCollection = new TemplateCollection();
 
-            templateCollection.LoadTemplates(typeof(NHibernatePluginConstants).Assembly, "Output/Templates", "NHibernate");
+            templateCollection.LoadTemplates(typeof(NHibernatePluginConstants).Assembly, NHibernatePluginConstants.TemplateResourcePrefix, NHibernatePluginConstants.TemplateNamePrefix);
 
             var generatedClassTemplate = templateCollection.GetTemplate(NHibernatePluginConstants.OutputTemplateName_Entity_GeneratedClass);
             var customClassTemplate = templateCollection.GetTemplate(NHibernatePluginConstants.OutputTemplateName_Entity_CustomClass);

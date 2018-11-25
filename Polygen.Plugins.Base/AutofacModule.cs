@@ -18,15 +18,12 @@ namespace Polygen.Plugins.Base
                 .As<IStageHandler>()
                 .PropertiesAutowired()
                 .SingleInstance();
-
-            // Register the default naming conventions.
+            
+            // Register all naming conventions.
             builder
-                .RegisterType<CSharpClassNamingConvention>()
-                .As<IClassNamingConvention>()
-                .SingleInstance();
-            builder
-                .RegisterType<JavascriptClassNamingConvention>()
-                .As<IClassNamingConvention>()
+                .RegisterAssemblyTypes(typeof(AutofacModule).Assembly)
+                .Where(x => x.IsAssignableTo<INamingConvention>())
+                .As<INamingConvention>()
                 .SingleInstance();
 
             // Register temporary state object needed during file parsed.

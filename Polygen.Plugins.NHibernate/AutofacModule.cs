@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Polygen.Core.NamingConvention;
 using Polygen.Core.Stage;
+using Polygen.Plugins.NHibernate.NamingConvention;
 using Polygen.Plugins.NHibernate.Output.Entity;
 
 namespace Polygen.Plugins.NHibernate
@@ -15,7 +17,14 @@ namespace Polygen.Plugins.NHibernate
                 .As<IStageHandler>()
                 .PropertiesAutowired()
                 .SingleInstance();
+            
+            // Register the default naming conventions.
+            builder
+                .RegisterType<NHibernateNamingConvention>()
+                .As<INamingConvention>()
+                .SingleInstance();            
 
+            // Register the entity output model generator.
             builder
                 .RegisterType<EntityConverter>()
                 .AsSelf()

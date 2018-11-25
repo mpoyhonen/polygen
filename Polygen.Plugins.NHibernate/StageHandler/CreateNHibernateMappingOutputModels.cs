@@ -2,6 +2,7 @@
 using System.Linq;
 using Polygen.Common.Xml;
 using Polygen.Core.DesignModel;
+using Polygen.Core.NamingConvention;
 using Polygen.Core.OutputModel;
 using Polygen.Core.Project;
 using Polygen.Core.Stage;
@@ -15,19 +16,21 @@ namespace Polygen.Plugins.NHibernate.StageHandler
     /// Creates HBM mapping XML output models for all entities. These are
     /// grouped by project and namespace.
     /// </summary>
-    public class CreateOutputModels: StageHandlerBase
+    public class CreateNHibernateMappingOutputModels: StageHandlerBase
     {
-        public CreateOutputModels(): base(StageType.GenerateOutputModels, "Entity")
+        public CreateNHibernateMappingOutputModels(): base(StageType.GenerateOutputModels, "NHibernateMapping")
         {
         }
 
         public IDesignModelCollection DesignModels { get; set; }
         public IProjectCollection Projects { get; set; }
         public IOutputModelCollection OutputModels { get; set; }
+        public INamingConventionCollection NamingConventionCollection { get; set; }
 
         public override void Execute()
         {
             var hbmConverter = new HbmMappingConverter();
+            var namingConvention = (IDatabaseNamingConvention) NamingConventionCollection.GetNamingConvention(NHibernatePluginConstants.Language_SQL);
             var designsModelByOutputFolderAndNamespace = DesignModels.RootNamespace.FindDesignModelsByType("Entity")
                 .Cast<Base.Models.Entity.Entity>()
                 .GroupBy(x => new
@@ -41,7 +44,7 @@ namespace Polygen.Plugins.NHibernate.StageHandler
                 var outputFolder = group.Key.OutputFolder;
                 var project = outputFolder.Project;
                 var ns = group.Key.Namespace;
-                var outputModel = hbmConverter.Convert(project, ns, group.OrderBy(x => x.Name));
+                var outputModel = hbmConverter.Convert(namingConvention, project, ns, group.OrderBy(x => x.Name));
                 
                 outputModel.Renderer = new XmlOutputModelRenderer();
                 outputModel.File = outputFolder.GetFile($"{project.Name}.Entity.hbm.xml"); // TODO: Get this from configuration?

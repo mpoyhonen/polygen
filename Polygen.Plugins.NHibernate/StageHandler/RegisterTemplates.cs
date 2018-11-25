@@ -18,7 +18,7 @@ namespace Polygen.Plugins.NHibernate.StageHandler
         {
             var assembly = GetType().Assembly;
             
-            TemplateCollection.LoadTemplates(assembly, $"{assembly.GetName().Name}.Output.Templates", "NHibernate");
+            TemplateCollection.LoadTemplates(assembly, NHibernatePluginConstants.TemplateResourcePrefix, NHibernatePluginConstants.TemplateNamePrefix);
         }
     }
 }
